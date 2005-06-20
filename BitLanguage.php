@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------+
 // | Authors: spider <spider@steelsun.com>
 // +----------------------------------------------------------------------+
-// $Id: BitLanguage.php,v 1.1 2005/06/19 04:54:47 bitweaver Exp $
+// $Id: BitLanguage.php,v 1.2 2005/06/20 07:23:55 squareing Exp $
 
 class BitLanguage extends BitBase {
 	// list of available (non-disabled) languages
@@ -369,7 +369,7 @@ class BitLanguage extends BitBase {
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tim.`source_hash`=tis.`source_hash` AND `lang_code`=? )
 					LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tivm.`source_hash`=tim.`source_hash` AND tivm.`version`=? )
 				  WHERE tim.`source_hash`=?";
-		$ret = $this->mDb->GetRow($query, array( $pLangCode, BITWEAVER_BRANCH, $sourceHash ) );
+		$ret = $this->mDb->GetRow($query, array( $pLangCode, BIT_MAJOR_VERSION , $sourceHash ) );
 		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
 			$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
 			$source = $this->GetOne($query, array( $this->getSourceHash( $pString ) ) );
@@ -380,7 +380,7 @@ class BitLanguage extends BitBase {
 		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'track_translation_usage' ) ) {
 			if( empty( $ret['usage_source_hash'] ) ) {
 				$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_version_map` (`source_hash`,`version`) VALUES (?,?)";
-				$trans = $this->query($query, array( $sourceHash, BITWEAVER_BRANCH ) );
+				$trans = $this->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
 			}
 		}
 		return (!empty( $ret['tran'] ) ? $ret['tran'] : NULL );
