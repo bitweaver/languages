@@ -28,13 +28,13 @@ if (isset($_REQUEST["prefs"])) {
     }
 
     $pref_byref_values = array(
-        "tikilanguage",
+        "bitlanguage",
     );
     foreach ($pref_byref_values as $britem) {
 		byref_set_value ($britem, NULL, LANGUAGES_PKG_NAME);
     }
 	global $gBitLanguage;
-	$gBitLanguage->setLanguage( $gBitSystem->getPreference( 'tikilanguage' ) );
+	$gBitLanguage->setLanguage( $gBitSystem->getPreference( 'bitlanguage' ) );
 } else {
 	$smarty->assign("language", $gBitSystem->getPreference("language", "en"));
 }

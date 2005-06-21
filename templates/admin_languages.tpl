@@ -4,9 +4,9 @@
 	<div class="row">
 		{formlabel label="Language" for="language"}
 		{forminput}
-			<select name="tikilanguage" id="tikilanguage">
+			<select name="bitlanguage" id="bitlanguage">
 				{foreach from=$languages key=langCode item=lang}
-					<option value="{$langCode}" {if $gBitSystemPrefs.tikilanguage eq $langCode}selected="selected"{/if}>{$lang.full_name|escape}</option>
+					<option value="{$langCode}" {if $gBitSystemPrefs.bitlanguage eq $langCode}selected="selected"{/if}>{$lang.full_name|escape}</option>
 				{/foreach}
 			</select>
 			{formhelp note="Select the default language of your site."}

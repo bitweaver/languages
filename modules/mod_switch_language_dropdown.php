@@ -4,7 +4,7 @@
 global $gBitLanguage, $gBitUser;
 //vd($_COOKIE);
 //vd($_SESSION);
-$sel_lang = !empty( $gBitUser->mInfo['tikilanguage'] ) ? $gBitUser->mInfo['tikilanguage'] : $gBitLanguage->mLanguage;
+$sel_lang = !empty( $gBitUser->mInfo['bitlanguage'] ) ? $gBitUser->mInfo['bitlanguage'] : $gBitLanguage->mLanguage;
 $smarty->assign( 'sel_lang', $sel_lang );
 $languages = array();
 $languages = $gBitLanguage->listLanguages( FALSE );

@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------+
 // | Authors: spider <spider@steelsun.com>
 // +----------------------------------------------------------------------+
-// $Id: BitLanguage.php,v 1.2 2005/06/20 07:23:55 squareing Exp $
+// $Id: BitLanguage.php,v 1.3 2005/06/21 17:02:21 spiderr Exp $
 
 class BitLanguage extends BitBase {
 	// list of available (non-disabled) languages
@@ -29,9 +29,9 @@ class BitLanguage extends BitBase {
 		# TODO - put '@' here due to beta1->beta2 upgrades - wolff_borg
 		$this->mLanguageList = @$this->listLanguages();
 
-		if (isset($_SESSION['tikilanguage'])) {
+		if (isset($_SESSION['bitlanguage'])) {
 			// users not logged that change the preference
-			$this->mLanguage = $_SESSION['tikilanguage'];
+			$this->mLanguage = $_SESSION['bitlanguage'];
 		} elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $gBitSystem->isFeatureActive( 'browser_languages' )) {
 			// Get supported languages
 			if( $browserLangs = split( ',', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ) ) {
@@ -50,7 +50,7 @@ class BitLanguage extends BitBase {
 			}
 		}
 		if( empty( $this->mLanguage ) ) {
-			$this->mLanguage = $gBitSystem->getPreference('tikilanguage', 'en');
+			$this->mLanguage = $gBitSystem->getPreference('bitlanguage', 'en');
 		}
 	}
 

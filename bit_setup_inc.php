@@ -22,7 +22,7 @@
 
 	if( $gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() ) {
 		if( $gBitSystem->isFeatureActive( 'change_language' ) ) {
-			if( $userLang = $gBitUser->getPreference( 'tikilanguage' ) ) {
+			if( $userLang = $gBitUser->getPreference( 'bitlanguage' ) ) {
 				$gBitLanguage->setLanguage( $userLang );
 			}
 		}
@@ -34,5 +34,5 @@
 		$gBitLanguage->setLanguage( $_REQUEST['oe'] );
 	}
 
-	$smarty->assign('tikilanguage', $gBitLanguage->mLanguage);
+	$smarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 ?>

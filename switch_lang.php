@@ -9,9 +9,9 @@ else
 
 if( !empty( $_GET['language'] ) ) {
 	if($gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() && $gBitSystem->isFeatureActive( 'change_language' ) )  {
-		$gBitUser->storePreference( 'tikilanguage', $_GET['language'] );
+		$gBitUser->storePreference( 'bitlanguage', $_GET['language'] );
 	} else {
-		$_SESSION["tikilanguage"] = $_GET['language'];
+		$_SESSION["bitlanguage"] = $_GET['language'];
 		// $gBitLanguage->mLanguage will be read again in the location: redirect
 	}
 }
