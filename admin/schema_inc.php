@@ -33,7 +33,7 @@ $tables = array(
 global $gBitInstaller;
 
 foreach( array_keys( $tables ) AS $tableName ) {
-	$gBitInstaller->registerSchemaTable( LANGUAGES_PKG_DIR, $tableName, $tables[$tableName], TRUE );
+	$gBitInstaller->registerSchemaTable( LANGUAGES_PKG_NAME, $tableName, $tables[$tableName], TRUE );
 }
 
 $indices = array (
@@ -46,7 +46,7 @@ $indices = array (
 	'tiki_i18n_version_ver_idx' => array( 'table' => 'tiki_i18n_version_map', 'cols' => '`version`', 'opts' => NULL  ),
 );
 
-$gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_DIR, $indices );
+$gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
 
 $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 	'description' => "This package allows you to translate your site into a different language.",

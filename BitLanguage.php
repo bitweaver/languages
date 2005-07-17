@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------+
 // | Authors: spider <spider@steelsun.com>
 // +----------------------------------------------------------------------+
-// $Id: BitLanguage.php,v 1.3 2005/06/21 17:02:21 spiderr Exp $
+// $Id: BitLanguage.php,v 1.4 2005/07/17 17:36:07 squareing Exp $
 
 class BitLanguage extends BitBase {
 	// list of available (non-disabled) languages
@@ -52,6 +52,10 @@ class BitLanguage extends BitBase {
 		if( empty( $this->mLanguage ) ) {
 			$this->mLanguage = $gBitSystem->getPreference('bitlanguage', 'en');
 		}
+	}
+
+	function getLanguage() {
+		return( $this->mLanguage );
 	}
 
 	function setLanguage( $pLangCode ) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1 2005/06/19 04:54:47 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.2 2005/07/17 17:36:07 squareing Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if (isset($_REQUEST["import"])) {
 
 	//vd($gBitLanguage->mStrings);
 	foreach( $gBitLanguage->mStrings[$_REQUEST['export_lang_code']] as $tran ) {
-		if( !empty( $_REQUEST['all_trans'] ) ||  ($tran['version'] == BITWEAVER_BRANCH && !empty( $tran['tran'] ) ) ) {
+		if( !empty( $_REQUEST['all_trans'] ) ||  ($tran['version'] == BIT_MAJOR_VERSION && !empty( $tran['tran'] ) ) ) {
 			$data .= "'" . str_replace( "'", "\\'", stripslashes( $tran["source"] ) ) . "' => '" . str_replace( "'", "\\'",stripslashes( $tran["tran"] ) ) . "',\n";
 		}
 	}

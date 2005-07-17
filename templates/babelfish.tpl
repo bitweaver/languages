@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/bitweaver/_bit_languages/templates/babelfish.tpl,v 1.1 2005/06/19 04:55:13 bitweaver Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_languages/templates/babelfish.tpl,v 1.2 2005/07/17 17:36:08 squareing Exp $ *}
 
-{if $gBitSystemPrefs.feature_babelfish eq 'y' and $gBitSystemPrefs.feature_babelfish_logo eq 'y'}
+{if $gBitSystem->isFeatureActive( 'feature_babelfish' ) and $gBitSystem->isFeatureActive( 'feature_babelfish_logo' )}
 
 <div class="display babelfish">
 <table>
@@ -23,7 +23,7 @@
 </table>
 </div>
 
-{elseif $gBitSystemPrefs.feature_babelfish eq 'y' and $gBitSystemPrefs.feature_babelfish_logo eq 'n'}
+{elseif $gBitSystem->isFeatureActive( 'feature_babelfish' ) and !$gBitSystemPrefs->isFeatureActive( 'feature_babelfish_logo' )}
 
 <div class="babelfish">
 <table>
@@ -35,7 +35,7 @@
 </table>
 </div>
 
-{elseif $gBitSystemPrefs.feature_babelfish eq 'n' and $gBitSystemPrefs.feature_babelfish_logo eq 'y'}
+{elseif !$gBitSystem->isFeatureActive( 'feature_babelfish' ) and $gBitSystemPrefs->isFeatureActive( 'feature_babelfish_logo' )}
 
 <div class="babelfish">
   {$babelfish_logo}
