@@ -25,7 +25,7 @@ $tables = array(
 
 'tiki_i18n_version_map' => "
   source_hash C(32) PRIMARY,
-  version C(32)
+  version C(32) PRIMARY
 "
 
 );
