@@ -20,7 +20,7 @@ $tables = array(
   source_hash C(32) PRIMARY,
   lang_code C(32) PRIMARY,
   last_modified I8 NOTNULL,
-  tran X NOTNULL
+  `tran` X NOTNULL
 ",
 
 'tiki_i18n_version_map' => "
