@@ -83,7 +83,7 @@ array( 'QUERY' =>
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tw', '中文(繁体字)', 'Traditional Chinese')",
 	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tv', 'Tuvaluan', NULL )",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('uk', 'Українська', 'Ukrainian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh', 'Chinese', 'Chinese')",
+    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', 'Chinese', 'Chinese')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Catalan', 'Catalan')",
 	)),
 ),

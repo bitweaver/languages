@@ -20,12 +20,12 @@ $tables = array(
   source_hash C(32) PRIMARY,
   lang_code C(32) PRIMARY,
   last_modified I8 NOTNULL,
-  tran X NOTNULL
+  `tran` X NOTNULL
 ",
 
 'tiki_i18n_version_map' => "
   source_hash C(32) PRIMARY,
-  version C(32)
+  version C(32) PRIMARY
 "
 
 );
@@ -101,11 +101,11 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tr', 'Turkish', 'Türkçe' )",
 	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tv', 'Tuvaluan', NULL )",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('uk', 'Українська', 'Ukrainian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh', 'Chinese', 'Chinese')",
+    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', 'Chinese', 'Chinese')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Catalan', 'Catalan')",
 ) );
 
-//  lang file is not UTF-8  'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese')",
+//  lang file is not UTF-8  'zh-cn' => array(  '中文(簡体字)',      tra("Simplified Chinese')",
 //  lang file is not UTF-8  'he' => array(  'Hebrew',    tra("Hebrew')",
 
 ?>
