@@ -1,5 +1,5 @@
 <?php
-	global $gBitSystem, $gBitLanguage, $gBitUser, $smarty;
+	global $gBitSystem, $gBitLanguage, $gBitUser, $gBitSmarty;
 
 	$gBitSystem->registerPackage( 'languages', dirname( __FILE__).'/' );
 
@@ -7,12 +7,12 @@
 	if ($gBitSystem->getPreference('feature_babelfish') == 'y')
 	{
 		require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
-		$smarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getPreference('language', 'en') ));
+		$gBitSmarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getPreference('language', 'en') ));
 	}
 	if ($gBitSystem->getPreference('feature_babelfish_logo') == 'y')
 	{
 		require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
-		$smarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
+		$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 	}
 	if( $gBitSystem->isPackageActive( 'languages' ) ) {
 		if( $gBitUser->isRegistered() ) {
@@ -34,5 +34,5 @@
 		$gBitLanguage->setLanguage( $_REQUEST['oe'] );
 	}
 
-	$smarty->assign('bitlanguage', $gBitLanguage->mLanguage);
+	$gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 ?>

@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------+
 // | Authors: spider <spider@steelsun.com>
 // +----------------------------------------------------------------------+
-// $Id: BitLanguage.php,v 1.3.2.2 2005/07/19 15:18:03 spiderr Exp $
+// $Id: BitLanguage.php,v 1.3.2.3 2005/07/26 15:50:10 drewslater Exp $
 
 class BitLanguage extends BitBase {
 	// list of available (non-disabled) languages
@@ -184,9 +184,9 @@ class BitLanguage extends BitBase {
 
 
 	function storeMasterString( $pParamHash ) {
-		global $smarty;
-		if( !empty( $smarty->mCompileRsrc ) ) {
-			list($type, $location) = split( ':', $smarty->mCompileRsrc );
+		global $gBitSmarty;
+		if( !empty( $gBitSmarty->mCompileRsrc ) ) {
+			list($type, $location) = split( ':', $gBitSmarty->mCompileRsrc );
 			list($package, $file) = split( '/', $location );
 		} else {
 			$package = NULL;

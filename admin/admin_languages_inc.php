@@ -18,7 +18,7 @@ $formLanguageToggles = array(
 		),
 	),
 );
-$smarty->assign( 'formLanguageToggles',$formLanguageToggles );
+$gBitSmarty->assign( 'formLanguageToggles',$formLanguageToggles );
 
 // Handle Update
 if (isset($_REQUEST["prefs"])) {
@@ -36,11 +36,11 @@ if (isset($_REQUEST["prefs"])) {
 	global $gBitLanguage;
 	$gBitLanguage->setLanguage( $gBitSystem->getPreference( 'bitlanguage' ) );
 } else {
-	$smarty->assign("language", $gBitSystem->getPreference("language", "en"));
+	$gBitSmarty->assign("language", $gBitSystem->getPreference("language", "en"));
 }
 
 // Get list of available languages
 $languages = array();
 $languages = $gBitLanguage->listLanguages();
-$smarty->assign_by_ref("languages",$languages );
+$gBitSmarty->assign_by_ref("languages",$languages );
 ?>

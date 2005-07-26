@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.1 2005/07/04 15:44:45 cemseker Exp $
+// $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.2 2005/07/26 15:50:10 drewslater Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,15 +20,15 @@ foreach( array_keys($impLanguages) as $langCode ) {
 		unset( $impLanguages[$langCode] );
 	}
 }
-$smarty->assign_by_ref('impLanguages', $impLanguages );
+$gBitSmarty->assign_by_ref('impLanguages', $impLanguages );
 
 // Get languages that can be exported
 $expLanguages = $gBitLanguage->getImportedLanguages();
-$smarty->assign_by_ref('expLanguages', $expLanguages );
+$gBitSmarty->assign_by_ref('expLanguages', $expLanguages );
 
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
-	$smarty->assign('exp_language', $exp_language);
+	$gBitSmarty->assign('exp_language', $exp_language);
 }
 
 // Import
@@ -79,7 +79,7 @@ if (isset($_REQUEST["import"])) {
 	}
 }
 
-$smarty->assign('impmsg', $impMsg);
+$gBitSmarty->assign('impmsg', $impMsg);
 
 $gBitSystem->display( 'bitpackage:languages/import_languages.tpl');
 
