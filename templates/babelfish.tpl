@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_languages/templates/babelfish.tpl,v 1.2 2005/07/17 17:36:08 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_languages/templates/babelfish.tpl,v 1.3 2005/08/01 18:40:46 squareing Exp $ *}
 
 {if $gBitSystem->isFeatureActive( 'feature_babelfish' ) and $gBitSystem->isFeatureActive( 'feature_babelfish_logo' )}
 
@@ -23,7 +23,7 @@
 </table>
 </div>
 
-{elseif $gBitSystem->isFeatureActive( 'feature_babelfish' ) and !$gBitSystemPrefs->isFeatureActive( 'feature_babelfish_logo' )}
+{elseif $gBitSystem->isFeatureActive( 'feature_babelfish' ) and !$gBitSystem->isFeatureActive( 'feature_babelfish_logo' )}
 
 <div class="babelfish">
 <table>
@@ -35,7 +35,7 @@
 </table>
 </div>
 
-{elseif !$gBitSystem->isFeatureActive( 'feature_babelfish' ) and $gBitSystemPrefs->isFeatureActive( 'feature_babelfish_logo' )}
+{elseif !$gBitSystem->isFeatureActive( 'feature_babelfish' ) and $gBitSystem->isFeatureActive( 'feature_babelfish_logo' )}
 
 <div class="babelfish">
   {$babelfish_logo}

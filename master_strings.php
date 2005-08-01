@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.1 2005/06/19 04:54:46 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.2 2005/08/01 18:40:39 squareing Exp $
 // Copyright (c) 2005, bitweaver.org
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -8,7 +8,7 @@ require_once( '../bit_setup_inc.php' );
 
 $gBitSystem->verifyPermission( 'bit_p_edit_master_strings' );
 
-$smarty->assign_by_ref( 'languages', $gBitLanguage->listLanguages() );
+$gBitSmarty->assign_by_ref( 'languages', $gBitLanguage->listLanguages() );
 
 if( !empty( $_REQUEST['change_master'] ) ) {
 	$newSourceHash = $gBitLanguage->getSourceHash( $_REQUEST['edit_master'] );
@@ -22,9 +22,9 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 		}
 	}
 	$gBitLanguage->loadMasterStrings( $_REQUEST['source_hash'] );
-	$smarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
-	$smarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
-	$smarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
+	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) ) {
 	if( empty( $_REQUEST['confirm'] ) ) {
 		$gBitSystem->setBrowserTitle( tra( 'Confirm Delete' ) );
@@ -39,9 +39,9 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 		die;
 	} else {
 		if( $gBitLanguage->expungeMasterString( $_REQUEST['source_hash'] ) ) {
-			$smarty->assign( 'successMsg', 'The master string was deleted successfully.' );
+			$gBitSmarty->assign( 'successMsg', 'The master string was deleted successfully.' );
 		} else {
-			$smarty->assign( 'errorMsg', 'The master string could not be deleted.' );
+			$gBitSmarty->assign( 'errorMsg', 'The master string could not be deleted.' );
 		}
 	}
 } elseif( !empty( $_REQUEST['guess_translations'] ) ) {
@@ -50,7 +50,7 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	if( strlen( $masterStrings[$_REQUEST['source_hash']]['source'] ) > 70 ) {
 		$masterStrings[$_REQUEST['source_hash']]['textarea'] = TRUE;
 	}
-	$smarty->assign_by_ref( 'masterStrings', $masterStrings );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
 	$masterString = $gBitLanguage->mStrings['master'][$_REQUEST['source_hash']];
 	$tranArray = array( 'de', 'es', 'fr', 'it', 'pt', 'ja', 'ko', 'zh-CN' );
 	$tranStrings = array();
@@ -71,11 +71,11 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 			}
 		}
 	}
-	$smarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
-	$smarty->assign_by_ref( 'tranStrings', $tranStrings );
+	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
 	$tranStrings = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
-	$smarty->assign( 'source_hash', $_REQUEST['source_hash'] );
+	$gBitSmarty->assign( 'source_hash', $_REQUEST['source_hash'] );
 	$sourceHash = $_REQUEST['source_hash'];
 	foreach( $_REQUEST['edit_trans'] as $langCode => $string ) {
 		// store if (We had a string and it is now empty) or ( we have a new string and it is different from before)
@@ -92,11 +92,11 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	if( strlen( $masterStrings[$_REQUEST['source_hash']]['source'] ) > 70 ) {
 		$masterStrings[$_REQUEST['source_hash']]['textarea'] = TRUE;
 	}
-	$smarty->assign_by_ref( 'masterStrings', $masterStrings );
-	$smarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
-	$smarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
+	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
-	$smarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
 } else {
 	$gBitLanguage->loadMasterStrings();
 	// work out what strings to display
@@ -117,11 +117,11 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 			$masterStrings[$key] = $master;
 		}
 	}
-	$smarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-	$smarty->assign_by_ref( 'masterStrings', $masterStrings );
+	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
 }
 
 // Display the template
-$smarty->assign_by_ref( 'masterMsg', $masterMsg );
+$gBitSmarty->assign_by_ref( 'masterMsg', $masterMsg );
 $gBitSystem->display( 'bitpackage:languages/language_master_strings.tpl', 'Edit Master Strings' );
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.1 2005/06/19 04:54:47 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.2 2005/08/01 18:40:39 squareing Exp $
 
 // Copyright (c) 2005, bitweaver.org
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,27 +13,27 @@ $gBitSystem->verifyPermission( 'bit_p_edit_languages' );
 
 // Get available languages from DB
 $languages = $gBitLanguage->listLanguages();
-$smarty->assign_by_ref('languages', $languages);
+$gBitSmarty->assign_by_ref('languages', $languages);
 
 if( !empty( $_REQUEST['all_trans'] ) ) {
-	$smarty->assign( 'allTrans', 1 );
+	$gBitSmarty->assign( 'allTrans', 1 );
 }
 
 if( !empty( $_REQUEST['un_trans'] ) ) {
-	$smarty->assign( 'unTrans', 1 );
+	$gBitSmarty->assign( 'unTrans', 1 );
 }
 
 
 if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$gBitLanguage->clearCache();
-	$smarty->assign( 'saveSuccess', tra( 'System template and language cache have been cleared.' ) );
+	$gBitSmarty->assign( 'saveSuccess', tra( 'System template and language cache have been cleared.' ) );
 } elseif( !empty( $_REQUEST['translate'] ) ) {
 	$editLang = $_REQUEST['lang'];
-	$smarty->assign( 'lang', $editLang );
-	$smarty->assign( 'translate', TRUE );
+	$gBitSmarty->assign( 'lang', $editLang );
+	$gBitSmarty->assign( 'translate', TRUE );
 	if( !empty( $_REQUEST['hash'] ) ) {
 		$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
-		$smarty->assign_by_ref('tranStrings', $tranStrings );
+		$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
 	} else {
 		$gBitLanguage->loadLanguage( $editLang );
 		$tranStr = $gBitLanguage->mStrings[$editLang];
@@ -59,8 +59,8 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 				}
 			}
 		}
-		$smarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-		$smarty->assign_by_ref( 'tranStrings', $tranStrings );
+		$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
+		$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 	}
 } elseif( isset($_REQUEST["delete_language"] ) ) {
 	if( $gBitUser->hasPermission( 'bit_p_delete_languages' ) ) {
@@ -81,20 +81,20 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 } elseif( isset($_REQUEST["save_language"] ) ) {
 	if( $gBitLanguage->storeLanguage( $_REQUEST ) ) {
 		$languages = $gBitLanguage->listLanguages();
-		$smarty->assign( 'saveSuccess', tra( 'The language has been saved.' ) );
-		$smarty->assign_by_ref( 'defaults', $_REQUEST );
+		$gBitSmarty->assign( 'saveSuccess', tra( 'The language has been saved.' ) );
+		$gBitSmarty->assign_by_ref( 'defaults', $_REQUEST );
 	} else {
-		$smarty->assign_by_ref( 'saveErrors', $gBitLanguage->mErrors );
-		$smarty->assign_by_ref( 'defaults', $_REQUEST );
-		$smarty->assign( 'editDescription', TRUE );
+		$gBitSmarty->assign_by_ref( 'saveErrors', $gBitLanguage->mErrors );
+		$gBitSmarty->assign_by_ref( 'defaults', $_REQUEST );
+		$gBitSmarty->assign( 'editDescription', TRUE );
 	}
 } elseif( isset($_REQUEST["new_language"] ) ) {
-	$smarty->assign( 'editDescription', TRUE );
+	$gBitSmarty->assign( 'editDescription', TRUE );
 } elseif( isset($_REQUEST["edit_language"] ) ) {
 	if( !empty( $languages[$_REQUEST['lang']] ) ) {
-		$smarty->assign_by_ref( 'defaults', $languages[$_REQUEST['lang']] );
+		$gBitSmarty->assign_by_ref( 'defaults', $languages[$_REQUEST['lang']] );
 	}
-	$smarty->assign( 'editDescription', TRUE );
+	$gBitSmarty->assign( 'editDescription', TRUE );
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
 	$editLang = $_REQUEST['lang'];
 	$gBitLanguage->loadLanguage( $editLang );
@@ -109,10 +109,10 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		}
 	}
 	$tranStrings = $gBitLanguage->getTranslationString( $sourceHash, $editLang );
-	$smarty->assign_by_ref('tranStrings', $tranStrings );
-	$smarty->assign( 'lang', $editLang );
-	$smarty->assign( 'translate', TRUE );
-	$smarty->assign( 'saveSuccess', $saveSuccess );
+	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+	$gBitSmarty->assign( 'lang', $editLang );
+	$gBitSmarty->assign( 'translate', TRUE );
+	$gBitSmarty->assign( 'saveSuccess', $saveSuccess );
 }
 
 $gBitSystem->display( 'bitpackage:languages/edit_languages.tpl');
