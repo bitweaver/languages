@@ -1,24 +1,24 @@
 <?php
+/**
+ * @package languages
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/Babelfish.php,v 1.1.1.1.2.1 2005/08/03 19:07:28 lsces Exp $
+ *
+ * Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
+ * This file copyright (c) 2002-2003, Ross Smith II
+ */
 
-// $Header: /cvsroot/bitweaver/_bit_languages/Babelfish.php,v 1.1 2005/06/19 04:54:46 bitweaver Exp $
-
-// Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-// This file copyright (c) 2002-2003, Ross Smith II
-
-/*!
-	\static
-*/
+/**
+ * @package languages
+ */
 class Babelfish {
-	/*!
-		Return the host name of the server
-		
-		\todo move to BitBase class
-
-		\static
-	*/
+	/**
+	 *	Return the host name of the server
+	 *
+	 *	@todo move to BitBase class
+	 */
 	function host() {
 		if (isset($_SERVER['HTTP_HOST'])) {
 			// HTTP_HOST already includes a ':port' if it is used
@@ -48,11 +48,12 @@ class Babelfish {
 		return $rv;
 	}
 	
-	/*!
-		Return babelfish URL to translate \c $lang_from to \c $lang_to
-
-		\static
-	*/
+	/**
+	 *	Return babelfish URL to translate \c $lang_from to \c $lang_to
+	 *
+	 * @param lang_from
+	 * @param lang_to
+	 */
 	function url($lang_from, $lang_to) {
 		static $url_map = array(
 			'en'	=> 'english',
@@ -84,11 +85,11 @@ class Babelfish {
 		return $url;
 	}
 
-	/*!
-		Return HTML of babelfish links
-
-		\static
-	*/
+	/**
+	 *	Return HTML of babelfish links
+	 *
+	 *	@param lang_from Language to translate from
+	 */
 	function links($lang_from = 'en') {
 		static $fishes = array(
 			'en' => array(	# English
@@ -146,11 +147,11 @@ class Babelfish {
 		return $a;
 	}
 
-	/*!
-		Return javascript code to display babelfish logo
-		
-		\static
-	*/
+	/**
+	 *	Return javascript code to display babelfish logo
+	 *	
+	 *	\static
+	 */
 	function logo($lang = 'en') {
 		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>";
 

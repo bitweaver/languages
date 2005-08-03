@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package languages
+ * @subpackage functions
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.2.2.1 2005/08/03 19:07:28 lsces Exp $
+ */
+
+/**
+ * Initialization
+ */
 require_once( '../bit_setup_inc.php' );
 include_once( KERNEL_PKG_PATH.'BitBase.php' );
 

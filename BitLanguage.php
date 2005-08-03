@@ -1,21 +1,18 @@
 <?php
-// +----------------------------------------------------------------------+
-// | PHP version 4.x
-// +----------------------------------------------------------------------+
-// | Copyright (c) 2005 bitweaver.org
-// +----------------------------------------------------------------------+
-// | Copyright (c) 2004-2005, Christian Fowler, et. al.
-// | All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// | Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
-// |
-// | For comments, please use PEAR documentation standards!!!
-// | -> see http://pear.php.net/manual/en/standards.comments.php
-// |    and http://www.phpdoc.org/
-// +----------------------------------------------------------------------+
-// | Authors: spider <spider@steelsun.com>
-// +----------------------------------------------------------------------+
-// $Id: BitLanguage.php,v 1.3.2.3 2005/07/26 15:50:10 drewslater Exp $
+/**
+ * @package languages
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.4 2005/08/03 19:07:28 lsces Exp $
+ *
+ * Copyright (c) 2005 bitweaver.org
+ * Copyright (c) 2004-2005, Christian Fowler, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
+ * @author spider <spider@steelsun.com>
+ */
 
+/**
+ * @package languages
+ */
 class BitLanguage extends BitBase {
 	// list of available (non-disabled) languages
 	var $mLanguageList;
