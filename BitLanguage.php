@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.4 2005/08/03 19:07:28 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.5 2005/08/06 18:31:30 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -90,23 +90,23 @@ class BitLanguage extends BitBase {
 
 	function expungeLanguage( $pLangCode ) {
 		if( !empty( $pLangCode ) ) {
-			$this->mDb->StartTrans();
+			$this->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `lang_code`=?";
 			$result = $this->query( $query, array( $pLangCode ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_languages` WHERE `lang_code`=?";
 			$result = $this->query( $query, array( $pLangCode ) );
-			$this->mDb->CompleteTrans();
+			$this->CompleteTrans();
 		}
 	}
 
 	function expungeMasterString( $pSourceHash ) {
 		if( !empty( $pSourceHash ) ) {
-			$this->mDb->StartTrans();
+			$this->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `source_hash`=?";
 			$result = $this->query( $query, array( $pSourceHash ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
 			$result = $this->query( $query, array( $pSourceHash ) );
-			$this->mDb->CompleteTrans();
+			$this->CompleteTrans();
 			return TRUE;
 		}
 	}
@@ -189,7 +189,7 @@ class BitLanguage extends BitBase {
 			$package = NULL;
 		}
 
-		$this->mDb->mDb->StartTrans();
+		$this->StartTrans();
 		$newSourceHash = $this->getSourceHash( $pParamHash['new_source'] );
 		if( $this->masterStringExists( $newSourceHash ) ) {
 			$oldCount = $this->getOne( "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `source_hash`=?",  array( $pParamHash['source_hash'] ) );
@@ -217,7 +217,7 @@ class BitLanguage extends BitBase {
 			$this->mStrings['master'][$newSourceHash]['source'] = $pParamHash['new_source'];
 			$this->mStrings['master'][$newSourceHash]['source_hash'] = $newSourceHash;
 		}
-		$this->mDb->mDb->CompleteTrans();
+		$this->CompleteTrans();
 		return( count( $this->mErrors ) == 0 );
 	}
 
@@ -370,7 +370,7 @@ class BitLanguage extends BitBase {
 					LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tivm.`source_hash`=tim.`source_hash` AND tivm.`version`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tim.`source_hash`=tis.`source_hash` AND `lang_code`=? )
 				  WHERE tim.`source_hash`=?";
-		$ret = $this->mDb->GetRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
+		$ret = $this->GetRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
 		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
 			$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
 			$source = $this->GetOne($query, array( $this->getSourceHash( $pString ) ) );
