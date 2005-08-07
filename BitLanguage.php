@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.7 2005/08/07 16:23:54 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.8 2005/08/07 19:42:44 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -370,7 +370,7 @@ class BitLanguage extends BitBase {
 					LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tivm.`source_hash`=tim.`source_hash` AND tivm.`version`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tim.`source_hash`=tis.`source_hash` AND `lang_code`=? )
 				  WHERE tim.`source_hash`=?";
-		$ret = $this->GetRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
+		$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
 		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
 			$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
 			$source = $this->GetOne($query, array( $this->getSourceHash( $pString ) ) );
