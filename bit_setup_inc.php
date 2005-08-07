@@ -14,10 +14,8 @@
 		require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
 		$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 	}
-	if( $gBitSystem->isPackageActive( 'languages' ) ) {
-		if( $gBitUser->isRegistered() ) {
-				$gBitSystem->registerAppMenu( 'languages', 'Languages', LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
-		}
+	if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'bit_p_edit_languages' ) ) {
+		$gBitSystem->registerAppMenu( 'languages', 'Languages', LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
 	}
 
 	if( $gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() ) {

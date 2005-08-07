@@ -1,12 +1,18 @@
 <?php
+/**
+ * @package languages
+ * @subpackage functions
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.3 2005/08/07 17:39:17 squareing Exp $
+ *
+ * Copyright (c) 2005 bitweaver.org
+ * Copyright (c) 2004-2005, Christian Fowler, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
+ */
 
-// $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.2 2005/08/01 18:40:39 squareing Exp $
-
-// Copyright (c) 2005, bitweaver.org
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-// Initialization
+/**
+ * Initialization
+ */
 require_once( '../bit_setup_inc.php' );
 
 $gBitSystem->verifyPermission( 'bit_p_edit_languages' );

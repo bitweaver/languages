@@ -1,22 +1,29 @@
 <?php
+/**
+ * @package languages
+ * @subpackage functions
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/get_strings.php,v 1.2 2005/08/07 17:39:18 squareing Exp $
+ *
+ * Copyright (c) 2005 bitweaver.org
+ * Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 
-// $Header: /cvsroot/bitweaver/_bit_languages/get_strings.php,v 1.1 2005/06/19 04:54:47 bitweaver Exp $
+/**
+ * Initialization
+ */
 
-// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-/** \file
- * $Header: /cvsroot/tikiwiki/tiki/get_strings.php
- * \brief Update the language.php files
+/**
+ * Update the language.php files
  * call example: get_strings.php?lang=fr&close
- * \param lang=xx    : only translate lang 'xx' - if the parameter is not given all languages are translated
- * \param comments   : generate all comments (equal to close&module)
- * \param close      : look for similar strings that are allready translated and generate a commet if a 'match' is made
- * \param module     : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
- * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
- * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
- * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
+ * @param lang=xx    : only translate lang 'xx' - if the parameter is not given all languages are translated
+ * @param comments   : generate all comments (equal to close&module)
+ * @param close      : look for similar strings that are allready translated and generate a commet if a 'match' is made
+ * @param module     : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
+ * @param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
+ * @param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
+ * @param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
  */
 
 
