@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.8 2005/08/07 21:11:47 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.9 2005/08/07 21:52:10 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -79,10 +79,10 @@ class BitLanguage extends BitBase {
 		if( $this->verifyLanguage( $pParamHash ) ) {
 			if( empty( $pParamHash['update_lang_code'] ) ) {
 				$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`english_name`,`native_name`) values (?,?,?)";
-				$result = $this->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'] ) );
+				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'] ) );
 			} else {
 				$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_languages` SET `lang_code`=?, `english_name`=?, `native_name`=? WHERE `lang_code`=?";
-				$result = $this->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'], $pParamHash['update_lang_code'] ) );
+				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'], $pParamHash['update_lang_code'] ) );
 			}
 		}
 		return( count( $this->mErrors ) == 0 );
@@ -92,9 +92,9 @@ class BitLanguage extends BitBase {
 		if( !empty( $pLangCode ) ) {
 			$this->mDb->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `lang_code`=?";
-			$result = $this->query( $query, array( $pLangCode ) );
+			$result = $this->mDb->query( $query, array( $pLangCode ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_languages` WHERE `lang_code`=?";
-			$result = $this->query( $query, array( $pLangCode ) );
+			$result = $this->mDb->query( $query, array( $pLangCode ) );
 			$this->mDb->CompleteTrans();
 		}
 	}
@@ -103,9 +103,9 @@ class BitLanguage extends BitBase {
 		if( !empty( $pSourceHash ) ) {
 			$this->mDb->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `source_hash`=?";
-			$result = $this->query( $query, array( $pSourceHash ) );
+			$result = $this->mDb->query( $query, array( $pSourceHash ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
-			$result = $this->query( $query, array( $pSourceHash ) );
+			$result = $this->mDb->query( $query, array( $pSourceHash ) );
 			$this->mDb->CompleteTrans();
 			return TRUE;
 		}
@@ -113,7 +113,7 @@ class BitLanguage extends BitBase {
 
 	function getImportedLanguages() {
 		$ret = array();
-		if( $rs = $this->query( 'SELECT DISTINCT(`lang_code`) AS `lang_code` FROM `'.BIT_DB_PREFIX.'tiki_i18n_strings`' ) ) {
+		if( $rs = $this->mDb->query( 'SELECT DISTINCT(`lang_code`) AS `lang_code` FROM `'.BIT_DB_PREFIX.'tiki_i18n_strings`' ) ) {
 			$res = array();
 			while( !$rs->EOF ) {
 				$res[] = $rs->fields['lang_code'];
@@ -199,19 +199,19 @@ class BitLanguage extends BitBase {
 			} else {
 				// we have updated a master string to an existing master string
 				$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_strings` SET `source_hash`=?, `last_modified`=? WHERE `source_hash`=?";
-				$trans = $this->query($query, array( $newSourceHash, time(), $pParamHash['source_hash'] ) );
+				$trans = $this->mDb->query($query, array( $newSourceHash, time(), $pParamHash['source_hash'] ) );
 				$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
-				$trans = $this->query($query, array( $pParamHash['source_hash'] ) );
+				$trans = $this->mDb->query($query, array( $pParamHash['source_hash'] ) );
 			}
 		} elseif( $this->masterStringExists( $pParamHash['source_hash'] ) ) {
 			$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_strings` SET `source_hash`=?, `last_modified`=? WHERE `source_hash`=?";
-			$trans = $this->query($query, array( $newSourceHash, time(), $pParamHash['source_hash'] ) );
+			$trans = $this->mDb->query($query, array( $newSourceHash, time(), $pParamHash['source_hash'] ) );
 			$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_masters` SET `source_hash`=?, `source`=?, `created`=? WHERE `source_hash`=?";
-			$trans = $this->query($query, array( $newSourceHash, $pParamHash['new_source'], time(), $pParamHash['source_hash'] ) );
+			$trans = $this->mDb->query($query, array( $newSourceHash, $pParamHash['new_source'], time(), $pParamHash['source_hash'] ) );
 			unset( $this->mStrings[$pParamHash['source_hash']] );
 		} else {
 			$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_masters` (`source`,`source_hash`, `created`, `package`) VALUES (?,?,?,?)";
-			$trans = $this->query($query, array( $pParamHash['new_source'], $this->getSourceHash( $pParamHash['new_source'] ), time(), $package ) );
+			$trans = $this->mDb->query($query, array( $pParamHash['new_source'], $this->getSourceHash( $pParamHash['new_source'] ), time(), $package ) );
 		}
 		if( count( $this->mErrors ) == 0 ) {
 			$this->mStrings['master'][$newSourceHash]['source'] = $pParamHash['new_source'];
@@ -234,7 +234,7 @@ class BitLanguage extends BitBase {
 			if( $trans ) {
 				if( $pOverwrite ) {
 					$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_masters` SET `source`=?, `created`=? WHERE `source_hash`=?";
-					$trans = $this->query($query, array( $val, time(), $sourceHash ) );
+					$trans = $this->mDb->query($query, array( $val, time(), $sourceHash ) );
 					$count++;
 				}
 			} else {
@@ -247,11 +247,11 @@ class BitLanguage extends BitBase {
 
 	function storeTranslationString( $pLangCode, $pString, $pSourceHash ) {
 		$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_i18n_strings` WHERE `source_hash`=? AND `lang_code`=?";
-		$result = $this->query( $query, array($pSourceHash, $pLangCode) );
+		$result = $this->mDb->query( $query, array($pSourceHash, $pLangCode) );
 
 		if( !empty( $pString ) ) {
 			$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_strings` (`lang_code`,`tran`,`source_hash`, `last_modified`) values (?,?,?,?)";
-			$result = $this->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
+			$result = $this->mDb->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
 		}
 
 		$this->mStrings[$pLangCode][$pSourceHash]['tran'] = $pString;
@@ -294,12 +294,12 @@ class BitLanguage extends BitBase {
 				if( $trans ) {
 					if( $pOverwrite ) {
 						$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_strings` SET `tran`=?, `last_modified`=? WHERE `source_hash`=? AND `lang_code`=?";
-						$trans = $this->query($query, array( $val, time(), $hashKey, $pLangCode ) );
+						$trans = $this->mDb->query($query, array( $val, time(), $hashKey, $pLangCode ) );
 						$count++;
 					}
 				} else {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_strings` (`tran`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
-					$trans = $this->query($query, array( $val, $hashKey, $pLangCode, time() ) );
+					$trans = $this->mDb->query($query, array( $val, $hashKey, $pLangCode, time() ) );
 					$count++;
 				}
 			}
@@ -381,7 +381,7 @@ class BitLanguage extends BitBase {
 		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'track_translation_usage' ) ) {
 			if( empty( $ret['usage_source_hash'] ) ) {
 				$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_version_map` (`source_hash`,`version`) VALUES (?,?)";
-				$trans = $this->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
+				$trans = $this->mDb->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
 			}
 		}
 		return (!empty( $ret['tran'] ) ? $ret['tran'] : NULL );
