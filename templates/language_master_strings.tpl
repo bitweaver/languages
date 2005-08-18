@@ -11,7 +11,7 @@
 			{form legend="Edit Master String"}
 				<input type="hidden" name="source_hash" value="{$sourceHash}" />
 				{formfeedback hash=$masterMsg}
-				{formfeedback warning="{tr}You will need to <a href=\"`$smarty.const.LANGUAGES_PKG_URL`edit_language.php\">clear the System Cache</a> to see the changes.{/tr}"}
+				{formfeedback warning="{tr}You will need to <a href=\"`$smarty.const.LANGUAGES_PKG_URL`edit_languages.php\">clear the System Cache</a> to see the changes.{/tr}"}
 
 				<div class="row">
 					{formlabel label="Master String" for="master_string"}
