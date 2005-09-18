@@ -30,11 +30,14 @@
 					<div class="row">
 						{formlabel label="Options"}
 						{forminput}
-							<label><input type="radio" name="overwrite" value="0" checked="checked" />
+							<label><input type="radio" name="overwrite" value="n" />
 								{tr}Do not import string if it has been changed in the local database{/tr}</label>
 							<br/>
-							<label><input type="radio" name="overwrite" value="1" />
+							<label><input type="radio" name="overwrite" value="y" />
 								{tr}Overwrite changes in the local database{/tr}</label>
+       <br/>
+							<label><input type="radio" name="overwrite" value="r" checked="checked" />
+								{tr}Manually resolve conflicts between database and import file{/tr}</label>
 						{/forminput}
 					</div>
 

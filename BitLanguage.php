@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.14 2005/09/18 18:50:11 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.15 2005/09/18 20:11:03 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -296,6 +296,9 @@ class BitLanguage extends BitBase {
 						$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_strings` SET `tran`=?, `last_modified`=? WHERE `source_hash`=? AND `lang_code`=?";
 						$trans = $this->mDb->query($query, array( $val, time(), $hashKey, $pLangCode ) );
 						$count++;
+					} elseif( strtolower( $trans ) != strtolower( $val ) ) {
+						$this->mImportConflicts[$pLangCode][$hashKey]['import'] = $val;
+						$this->mImportConflicts[$pLangCode][$hashKey]['existing'] = $trans;
 					}
 				} elseif( !empty( $val ) ) {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_strings` (`tran`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
@@ -304,6 +307,7 @@ class BitLanguage extends BitBase {
 				}
 			}
 		}
+
 		return( $count );
 	}
 
