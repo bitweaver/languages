@@ -133,7 +133,7 @@
 
 				{foreach from=$tranStrings key=sourceHash item=tran}
 					{if $allTrans || (!$gBitSystem->isFeatureActive( 'track_translation_usage' ) || $tran.version)}
-						<div class="row{if !$tran.version} warning{/if}">
+						<div class="row{if !$tran.version and !allTrans} warning{/if}">
 							{formlabel label="Translate" for="h_$sourceHash"}
 							{forminput}
 								{$tran.source|escape}<br/>
