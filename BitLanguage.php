@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.12 2005/09/18 14:26:43 toggg Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.13 2005/09/18 15:41:14 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -333,7 +333,7 @@ class BitLanguage extends BitBase {
 		if( $this->mLanguage == 'en' ) {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
-			$ret = $this->mStrings[$this->mLanguage][$sourceHash];
+			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['tran'];
 		} elseif( file_exists( $cacheFile ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
@@ -356,7 +356,7 @@ class BitLanguage extends BitBase {
 			$fp = fopen( $cacheFile, 'w' );
 			fwrite( $fp, $tran );
 			fclose( $fp );
-			$this->mStrings[$this->mLanguage][$sourceHash] = $tran;
+			$this->mStrings[$this->mLanguage][$sourceHash]['tran'] = $tran;
 			$ret = $tran;
 		}
 		return $ret;
