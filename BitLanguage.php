@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.13 2005/09/18 15:41:14 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.14 2005/09/18 18:50:11 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -297,7 +297,7 @@ class BitLanguage extends BitBase {
 						$trans = $this->mDb->query($query, array( $val, time(), $hashKey, $pLangCode ) );
 						$count++;
 					}
-				} else {
+				} elseif( !empty( $val ) ) {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_strings` (`tran`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
 					$trans = $this->mDb->query($query, array( $val, $hashKey, $pLangCode, time() ) );
 					$count++;
