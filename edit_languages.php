@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.1.1.1.2.2 2005/08/03 19:07:27 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.1.1.1.2.3 2005/09/18 12:23:22 toggg Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -41,8 +41,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
 		$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
 	} else {
-		$gBitLanguage->loadLanguage( $editLang );
-		$tranStr = $gBitLanguage->mStrings[$editLang];
+		$tranStr = $gBitLanguage->loadLanguage( $editLang );
 		if( empty( $_REQUEST['char'] ) ) {
 			$pattern = "/^a/i";
 		} elseif ( $_REQUEST['char'] == '0-9' ) {
@@ -103,18 +102,15 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$gBitSmarty->assign( 'editDescription', TRUE );
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
 	$editLang = $_REQUEST['lang'];
-	$gBitLanguage->loadLanguage( $editLang );
+	$dbTranStr = $gBitLanguage->loadLanguage( $editLang );
 	$saveSuccess = NULL;
 	foreach( $_REQUEST['edit_trans'] as $sourceHash => $string ) {
-		if( $string != $gBitLanguage->mStrings[$editLang][$sourceHash]['tran'] ) {
+		if( $string != $dbTranStr[$sourceHash]['tran'] ) {
 			$gBitLanguage->storeTranslationString( $editLang, $string, $sourceHash );
-			// update string in template as well
-			$tranStrings[$sourceHash]['tran'] = $string;
-			// this has to be the source, otherwise the translated string will enter the db and be recognised as a used master
-			$saveSuccess[] = $gBitLanguage->mStrings[$editLang][$sourceHash]['source'];
+			$saveSuccess[] = $gBitLanguage->mStrings[$editLang][$sourceHash];
 		}
 	}
-	$tranStrings = $gBitLanguage->getTranslationString( $sourceHash, $editLang );
+	$tranStrings = array();
 	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
 	$gBitSmarty->assign( 'lang', $editLang );
 	$gBitSmarty->assign( 'translate', TRUE );
