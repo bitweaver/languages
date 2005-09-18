@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.11 2005/09/18 12:23:22 toggg Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.12 2005/09/18 14:26:43 toggg Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -254,7 +254,7 @@ class BitLanguage extends BitBase {
 			$result = $this->mDb->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
 		}
 
-		$this->mStrings[$pLangCode][$pSourceHash] = $pString;
+		$this->mStrings[$pLangCode][$pSourceHash]['tran'] = $pString;
 	}
 
 	function getTranslatedStrings( $pSourceHash ) {
@@ -324,7 +324,7 @@ class BitLanguage extends BitBase {
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tis.`source_hash`=tim.`source_hash` AND tis.`lang_code`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tim.`source_hash`=tivm.`source_hash` )
 				  ORDER BY tim.`source`";
-		return $this->mDb->getAssoc($query,array( $pLangCode ) );
+		$this->mStrings[$pLangCode] = $this->mDb->getAssoc($query,array( $pLangCode ) );
 	}
 
 	function translate( $pString ) {
