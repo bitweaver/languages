@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.4 2005/09/18 20:11:03 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.5 2005/09/19 03:35:34 spiderr Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -48,17 +48,22 @@ if (isset($_REQUEST["import"])) {
 				$impMsg['error'][] = "Language could not be imported";
 			}
 		}
-		if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {
-			unset( $impMsg['error'] );
-			$impMsg['warning'][] = tra( "Conflicts occured during language import" );
-			$gBitSmarty->assign_by_ref( 'impConflicts', $gBitLanguage->mImportConflicts );
-			$mid = 'bitpackage:languages/import_resolve.tpl';
-		}
 	}
 
 	if( !empty( $_REQUEST["import_master"] ) && $gBitUser->isAdmin() ) {
 		$gBitLanguage->importMasterStrings( $_REQUEST['overwrite'] );
 		$impMsg['success'] = "Imported lang/masters.php";
+	}
+
+	if( !empty( $_FILES['upload_file']['tmp_name'] ) ) {
+		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ($_REQUEST['overwrite'] == 'y'), 'tiki_i18n_strings`', $_FILES['upload_file']['tmp_name'] );
+	}
+
+	if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {
+		unset( $impMsg['error'] );
+		$impMsg['warning'][] = tra( "Conflicts occured during language import" );
+		$gBitSmarty->assign_by_ref( 'impConflicts', $gBitLanguage->mImportConflicts );
+		$mid = 'bitpackage:languages/import_resolve.tpl';
 	}
 
 } elseif (isset($_REQUEST["resolve"])) {

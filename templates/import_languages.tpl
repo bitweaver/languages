@@ -11,10 +11,11 @@
 	<div class="body">
 		{jstabs}
 			{jstab title="Import Languages"}
-				{form legend="Import languages"}
+				{form legend="Import languages" enctype="multipart/form-data"}
 					<div class="row">
 						{formlabel label="Select the languages to Import"}
 						{forminput}
+							{formhelp note="Languages that are checked below will be imported from the language string files in the bitweaver distribution. If you have your own language file, please choose it below."}
 							{foreach from=$impLanguages key=langCode item=lang}
 								<label><input type="checkbox" name="imp_languages[]" value="{$langCode}" /> {$lang.full_name}</label><br/>
 							{/foreach}
@@ -24,6 +25,22 @@
 								<label><input type="checkbox" name="import_master" value="1" /> Master Strings</label><br/>
 								{formhelp note="The English strings file will be used to set up the language database and will be used as a reference for translations."}
 							{/if}
+						{/forminput}
+					</div>
+
+					<div class="row">
+						{formlabel label="Upload Language File"}
+						{forminput}
+							{formhelp note="Choose a language file to upload..."}
+								<input type="file" name="upload_file" size="40" /><br/>
+						{/forminput}
+						{forminput}
+							{formhelp note="Upload File Language..."}
+							<select name="upload_lang_code" id="upload_lang_code">
+								{foreach from=$impLanguages key=langCode item=lang}
+									<option value="{$langCode}" >{$lang.full_name}</option>
+								{/foreach}
+							</select>
 						{/forminput}
 					</div>
 

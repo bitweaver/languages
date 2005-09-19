@@ -14,6 +14,12 @@
 				<h2>{tr}Conflicts{/tr}: {$impLanguages.$lang.translated_name}</h2>
 				{foreach from=$langConflicts key=sourceHash item=conflict}
 				<div class="row">
+					{formlabel label="Master String"}
+					{forminput}
+							{$conflict.master}
+					{/forminput}
+				</div>
+				<div class="row">
 					{formlabel label="Existing"}
 					{forminput}
 							<input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing}
