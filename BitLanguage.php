@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.16 2005/09/19 03:35:33 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.17 2005/09/27 10:34:04 wolff_borg Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -129,19 +129,21 @@ class BitLanguage extends BitBase {
 
 	function listLanguages( $pListDisabled=TRUE ) {
 		$whereSql = '';
+		$langs = array();
 		if( !$pListDisabled ) {
 			$whereSql = " WHERE `is_disabled` IS NULL ";
 		}
 		$ret = $this->mDb->getAssoc( "SELECT til.`lang_code` AS `hash_key`, til.* FROM `".BIT_DB_PREFIX."tiki_i18n_languages` til $whereSql ORDER BY til.`lang_code`" );
 		if( !empty( $ret ) ) {
 			foreach( array_keys( $ret ) as $langCode ) {
+				if ($langCode != 'en' && !isImportFileAvailable($langCode))
+					continue;
 				$ret[$langCode]['translated_name'] = $this->translate( $ret[$langCode]['english_name'] );
 				$ret[$langCode]['full_name'] = $ret[$langCode]['native_name'].' ('.$this->translate( $ret[$langCode]['english_name'] ).', '.$langCode.')';
+				$langs[$langCode] = $ret[$langCode];
 			}
-		} else {
-			$ret = array();
 		}
-		return $ret;
+		return $langs;
 	}
 
 
