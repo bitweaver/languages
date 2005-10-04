@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.18 2005/09/27 14:04:17 wolff_borg Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.19 2005/10/04 07:33:58 toggg Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -300,12 +300,14 @@ class BitLanguage extends BitBase {
 
 			// read the file and parse out the master/trans string pairs manually to prevent any evil shit from getting exec'ed
 			$handle = fopen( $pFile, "r" );
+			$line = '';
 			while (!feof($handle)) {
-				$line = fgets( $handle );
-				$match = array();
-				preg_match( '/.*[\'"]([^\'"]*)[\'"].*=>.*[\'"]([^\'"]*)[\'"].*/', $line, $match );
-				if( !empty( $match[1] ) && !empty( $match[2] ) ) {
-					$lang[$match[1]] = $match[2];
+				$line .= fgets( $handle );
+				if (preg_match(
+					'/([\'"])(.*?)(?<!\\\\)\1[\n\r\s]*=>[\n\r\s]*([\'"])(.*?)(?<!\\\\)\3/msS',
+						    $line, $match )) {
+					$lang[stripslashes($match[2])] = stripslashes($match[4]);
+					$line = '';
 				}
 			}
 			fclose($handle);
