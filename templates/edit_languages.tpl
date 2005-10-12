@@ -133,12 +133,12 @@
 
 				{foreach from=$tranStrings key=sourceHash item=tran}
 					{if $allTrans || (!$gBitSystem->isFeatureActive( 'track_translation_usage' ) || $tran.version)}
-						<div class="row{if !$tran.version} warning{/if}">
+						<div class="row{if !$tran.version and !allTrans} warning{/if}">
 							{formlabel label="Translate" for="h_$sourceHash"}
 							{forminput}
 								{$tran.source|escape}<br/>
 								{if $tran.textarea}
-									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="80">{$tran.tran|escape}</textarea> 
+									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="80">{$tran.tran|escape}</textarea>
 								{else}
 									<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.tran|escape}" size="45" maxlength="255" />
 								{/if}

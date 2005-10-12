@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.9 2005/08/07 21:52:10 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.10 2005/10/12 15:13:52 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -129,19 +129,21 @@ class BitLanguage extends BitBase {
 
 	function listLanguages( $pListDisabled=TRUE ) {
 		$whereSql = '';
+		$langs = array();
 		if( !$pListDisabled ) {
 			$whereSql = " WHERE `is_disabled` IS NULL ";
 		}
 		$ret = $this->mDb->getAssoc( "SELECT til.`lang_code` AS `hash_key`, til.* FROM `".BIT_DB_PREFIX."tiki_i18n_languages` til $whereSql ORDER BY til.`lang_code`" );
 		if( !empty( $ret ) ) {
 			foreach( array_keys( $ret ) as $langCode ) {
+				if ($langCode != 'en' && !$this->isImportFileAvailable($langCode))
+					continue;
 				$ret[$langCode]['translated_name'] = $this->translate( $ret[$langCode]['english_name'] );
 				$ret[$langCode]['full_name'] = $ret[$langCode]['native_name'].' ('.$this->translate( $ret[$langCode]['english_name'] ).', '.$langCode.')';
+				$langs[$langCode] = $ret[$langCode];
 			}
-		} else {
-			$ret = array();
 		}
-		return $ret;
+		return $langs;
 	}
 
 
@@ -275,35 +277,66 @@ class BitLanguage extends BitBase {
 		return( $this->mDb->getAssoc($query, array( $pLangCode, $pSourceHash ) ) );
 	}
 
-	function isImportFileAvailable( $pLangCode ) {
-		return( file_exists( LANGUAGES_PKG_PATH.'lang/'.$pLangCode.'/language.php' ) );
+	function getLanguageFile( $pLangCode ) {
+		return( LANGUAGES_PKG_PATH.'lang/'.$pLangCode.'/language.php' );
 	}
 
+	function isImportFileAvailable( $pLangCode ) {
+		return( file_exists( $this->getLanguageFile( $pLangCode ) ) );
+	}
 
-	function importTranslationStrings( $pLangCode, $pOverwrite=FALSE, $pTable='tiki_i18n_strings`' ) {
+	function importTranslationStrings( $pLangCode, $pOverwrite=FALSE, $pTable='tiki_i18n_strings`', $pFile=FALSE ) {
 		$count = 0;
-		if( $this->isImportFileAvailable( $pLangCode ) ) {
+
+		if( empty( $pFile ) ) {
+			if( $this->isImportFileAvailable( $pLangCode ) ) {
+				$pFile = $this->getLanguageFile( $pLangCode );
+			}
+		}
+
+		if( file_exists( $pFile ) ) {
 			$this->loadMasterStrings();
-			include_once ( LANGUAGES_PKG_PATH.'lang/'.$pLangCode.'/language.php' );
+
+			// read the file and parse out the master/trans string pairs manually to prevent any evil shit from getting exec'ed
+			$handle = fopen( $pFile, "r" );
+			$line = '';
+			while (!feof($handle)) {
+				$line .= fgets( $handle );
+				if (preg_match(
+					'/([\'"])(.*?)(?<!\\\\)\1[\n\r\s]*=>[\n\r\s]*([\'"])(.*?)(?<!\\\\)\3/msS',
+						    $line, $match )) {
+					$lang[stripslashes($match[2])] = stripslashes($match[4]);
+					$line = '';
+				}
+			}
+			fclose($handle);
+
 			foreach( $lang as $key=>$val ) {
 				$hashKey = $this->getSourceHash( $key );
 				if( !$this->masterStringExists( $hashKey ) ) {
 					$this->storeMasterString( array( 'source_hash' => $hashKey, 'new_source' => $key ) );
 				}
 				$trans = $this->lookupTranslation( $key, $pLangCode, FALSE );
-				if( $trans ) {
+				if( !is_null( $trans ) ) {
 					if( $pOverwrite ) {
 						$query = "UPDATE `".BIT_DB_PREFIX."tiki_i18n_strings` SET `tran`=?, `last_modified`=? WHERE `source_hash`=? AND `lang_code`=?";
 						$trans = $this->mDb->query($query, array( $val, time(), $hashKey, $pLangCode ) );
 						$count++;
+					} elseif( !empty( $val ) && strtolower( $trans ) != strtolower( $val ) ) {
+						$this->mImportConflicts[$pLangCode][$hashKey]['import'] = $val;
+						$this->mImportConflicts[$pLangCode][$hashKey]['existing'] = $trans;
+						if( !empty( $this->mStrings['master'][$hashKey]['source'] ) ) {
+							$this->mImportConflicts[$pLangCode][$hashKey]['master'] = $this->mStrings['master'][$hashKey]['source'];
+						}
 					}
-				} else {
+				} elseif( !empty( $val ) && (strtolower( $key ) != strtolower( $val )) ) {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_strings` (`tran`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
 					$trans = $this->mDb->query($query, array( $val, $hashKey, $pLangCode, time() ) );
 					$count++;
 				}
 			}
 		}
+
 		return( $count );
 	}
 
@@ -333,7 +366,7 @@ class BitLanguage extends BitBase {
 		if( $this->mLanguage == 'en' ) {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
-			$ret = $this->mStrings[$this->mLanguage][$sourceHash];
+			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['tran'];
 		} elseif( file_exists( $cacheFile ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
@@ -356,7 +389,7 @@ class BitLanguage extends BitBase {
 			$fp = fopen( $cacheFile, 'w' );
 			fwrite( $fp, $tran );
 			fclose( $fp );
-			$this->mStrings[$this->mLanguage][$sourceHash] = $tran;
+			$this->mStrings[$this->mLanguage][$sourceHash]['tran'] = $tran;
 			$ret = $tran;
 		}
 		return $ret;
@@ -384,7 +417,7 @@ class BitLanguage extends BitBase {
 				$trans = $this->mDb->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
 			}
 		}
-		return (!empty( $ret['tran'] ) ? $ret['tran'] : NULL );
+		return (isset( $ret['tran'] ) ? $ret['tran'] : NULL );
 	}
 
 	function getSourceHash( $pString ) {

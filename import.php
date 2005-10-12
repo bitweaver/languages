@@ -2,9 +2,9 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.4 2005/08/07 17:39:18 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.5 2005/10/12 15:13:52 spiderr Exp $
  */
- 
+
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,6 +17,8 @@ require_once( '../bit_setup_inc.php' );
 $gBitSystem->verifyPermission( 'bit_p_import_languages' );
 
 $impMsg = array();
+
+$mid = 'bitpackage:languages/import_languages.tpl';
 
 // Lookup translated names for the languages
 $impLanguages = $gBitLanguage->listLanguages();
@@ -40,18 +42,41 @@ if (isset($_REQUEST["exp_language"])) {
 if (isset($_REQUEST["import"])) {
 	if( !empty( $_REQUEST['imp_languages'] ) ) {
 		foreach( $_REQUEST['imp_languages'] as $impLang ) {
-			if( $gBitLanguage->importTranslationStrings( $impLang, $_REQUEST['overwrite'] ) ) {
+			if( $gBitLanguage->importTranslationStrings( $impLang, ($_REQUEST['overwrite'] ) == 'y') ) {
 				$impMsg['success'][] = "Imported lang/" . $impLang . "/language.php";
 			} else {
 				$impMsg['error'][] = "Language could not be imported";
 			}
 		}
 	}
+
 	if( !empty( $_REQUEST["import_master"] ) && $gBitUser->isAdmin() ) {
 		$gBitLanguage->importMasterStrings( $_REQUEST['overwrite'] );
 		$impMsg['success'] = "Imported lang/masters.php";
 	}
 
+	if( !empty( $_FILES['upload_file']['tmp_name'] ) ) {
+		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ($_REQUEST['overwrite'] == 'y'), 'tiki_i18n_strings`', $_FILES['upload_file']['tmp_name'] );
+	}
+
+	if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {
+		unset( $impMsg['error'] );
+		$impMsg['warning'][] = tra( "Conflicts occured during language import" );
+		$gBitSmarty->assign_by_ref( 'impConflicts', $gBitLanguage->mImportConflicts );
+		$mid = 'bitpackage:languages/import_resolve.tpl';
+	}
+
+} elseif (isset($_REQUEST["resolve"])) {
+	if( !empty( $_REQUEST['conflict'] ) ) {
+		foreach( array_keys( $_REQUEST['conflict'] ) as $langCode ) {
+			foreach( array_keys( $_REQUEST['conflict'][$langCode] ) as $sourceHash ) {
+				if( !empty( $_REQUEST['conflict'][$langCode][$sourceHash] ) ) {
+					$gBitLanguage->storeTranslationString( $langCode, $_REQUEST['conflict'][$langCode][$sourceHash], $sourceHash );
+				}
+			}
+		}
+		$impMsg['success'][] = "Language conflicts have been resolved.";
+	}
 } elseif (isset($_REQUEST["export"])) {
 	$langCode = $_REQUEST['export_lang_code'];
 	$gBitLanguage->loadLanguage( $langCode );
@@ -86,6 +111,6 @@ if (isset($_REQUEST["import"])) {
 
 $gBitSmarty->assign('impmsg', $impMsg);
 
-$gBitSystem->display( 'bitpackage:languages/import_languages.tpl');
+$gBitSystem->display( $mid, 'Languages Im/Export' );
 
 ?>

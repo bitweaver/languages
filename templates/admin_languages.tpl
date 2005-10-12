@@ -2,7 +2,7 @@
 	<input type="hidden" name="page" value="{$page}" />
 
 	<div class="row">
-		{formlabel label="Language" for="language"}
+		{formlabel label="Language" for="bitlanguage"}
 		{forminput}
 			<select name="bitlanguage" id="bitlanguage">
 				{foreach from=$languages key=langCode item=lang}
