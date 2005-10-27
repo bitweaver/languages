@@ -103,9 +103,11 @@
 							</dl>
 						"}
 
-						<div class="row submit">
-							<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
-						</div>
+						{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
+							<div class="row submit">
+								<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
+							</div>
+						{/if}
 					{/form}
 				{/jstab}
 
