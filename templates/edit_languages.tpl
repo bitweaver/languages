@@ -10,7 +10,7 @@
 		{if !$translate}
 			{jstabs}
 				{if $editDescription}
-					{if $gBitUser->hasPermission( 'bit_p_edit_languages' )}
+					{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
 						{jstab title="Create or Edit Language"}
 							{form legend="Create or Edit Language"}
 							{formfeedback error=$saveErrors }
@@ -103,7 +103,7 @@
 							</dl>
 						"}
 
-						{if $gBitUser->hasPermission( 'bit_p_edit_languages' )}
+						{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
 							<div class="row submit">
 								<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
 							</div>

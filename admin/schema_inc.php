@@ -65,10 +65,11 @@ $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
 
 // ### Default UserPermissions
 $gBitInstaller->registerUserPermissions( LANGUAGES_PKG_NAME, array(
-	array('bit_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki'),
-	array('bit_p_delete_languages', 'Can delete languages', 'admin', 'tiki'),
-	array('bit_p_edit_master_strings', 'Can edit master translation strings', 'admin', 'tiki'),
-	array('bit_p_import_languages', 'Can import and export language files', 'editors', 'tiki'),
+	array('bit_p_create_languages', 'Can create new languages', 'admin', LANGUAGES_PKG_NAME),
+	array('bit_p_edit_languages', 'Can edit translations', 'editors', LANGUAGES_PKG_NAME),
+	array('bit_p_delete_languages', 'Can delete languages', 'admin', LANGUAGES_PKG_NAME),
+	array('bit_p_edit_master_strings', 'Can edit master translation strings', 'admin', LANGUAGES_PKG_NAME),
+	array('bit_p_import_languages', 'Can import and export language files', 'editors', LANGUAGES_PKG_NAME),
 ) );
 
 $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
