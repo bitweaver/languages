@@ -13,7 +13,7 @@
 					{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
 						{jstab title="Create or Edit Language"}
 							{form legend="Create or Edit Language"}
-							{formfeedback error=$saveErrors }
+								{formfeedback error=$saveErrors }
 								<input type="hidden" name="update_lang_code" value="{$defaults.lang_code}" />
 								<div class="row">
 									{formlabel label="Native name of the langugage" for="native_name"}

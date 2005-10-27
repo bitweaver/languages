@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.1.1.1.2.5 2005/09/18 15:41:14 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.1.1.1.2.6 2005/10/27 12:19:17 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -84,7 +84,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 			$gBitSystem->confirmDialog( $formHash,$msgHash );
 		}
 	}
-} elseif( isset($_REQUEST["save_language"] ) ) {
+} elseif( isset( $_REQUEST["save_language"] ) && $gBitUser->hasPermission( 'bit_p_create_languages' ) ) {
 	if( $gBitLanguage->storeLanguage( $_REQUEST ) ) {
 		$languages = $gBitLanguage->listLanguages();
 		$gBitSmarty->assign( 'saveSuccess', tra( 'The language has been saved.' ) );
