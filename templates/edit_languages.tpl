@@ -13,7 +13,7 @@
 					{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
 						{jstab title="Create or Edit Language"}
 							{form legend="Create or Edit Language"}
-							{formfeedback error=$saveErrors }
+								{formfeedback error=$saveErrors }
 								<input type="hidden" name="update_lang_code" value="{$defaults.lang_code}" />
 								<div class="row">
 									{formlabel label="Native name of the langugage" for="native_name"}
@@ -103,9 +103,11 @@
 							</dl>
 						"}
 
-						<div class="row submit">
-							<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
-						</div>
+						{if $gBitUser->hasPermission( 'bit_p_create_languages' )}
+							<div class="row submit">
+								<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
+							</div>
+						{/if}
 					{/form}
 				{/jstab}
 
@@ -138,7 +140,7 @@
 							{forminput}
 								{$tran.source|escape}<br/>
 								{if $tran.textarea}
-									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="80">{$tran.tran|escape}</textarea>
+									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.tran|escape}</textarea>
 								{else}
 									<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.tran|escape}" size="45" maxlength="255" />
 								{/if}

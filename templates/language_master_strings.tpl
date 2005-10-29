@@ -16,7 +16,7 @@
 				<div class="row">
 					{formlabel label="Master String" for="master_string"}
 					{forminput}
-						<textarea cols="80" rows="5" name="edit_master" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
+						<textarea cols="50" rows="5" name="edit_master" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
 					{/forminput}
 				</div>
 
@@ -38,7 +38,7 @@
 						{forminput}
 							{* if results are guessed, we don't need to escape *}
 							{if $masterStrings.$sourceHash.textarea}
-								<textarea name="edit_trans[{$langCode}]" id="h_{$sourceHash}" rows="5" cols="80">{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.tran}{else}{$tranStrings.$langCode.tran|escape}{/if}</textarea>
+								<textarea name="edit_trans[{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.tran}{else}{$tranStrings.$langCode.tran|escape}{/if}</textarea>
 							{else}
 								<input type="text" name="edit_trans[{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.tran}{else}{$tranStrings.$langCode.tran|escape}{/if}" size="45" maxlength="255" />
 							{/if}
