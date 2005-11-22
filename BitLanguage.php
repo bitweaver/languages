@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.10 2005/10/12 15:13:52 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.11 2005/11/22 07:27:01 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -294,7 +294,7 @@ class BitLanguage extends BitBase {
 			}
 		}
 
-		if( file_exists( $pFile ) ) {
+		if( !empty ($pFile ) && file_exists( $pFile ) ) {
 			$this->loadMasterStrings();
 
 			// read the file and parse out the master/trans string pairs manually to prevent any evil shit from getting exec'ed

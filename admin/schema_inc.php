@@ -78,7 +78,7 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('da', 'Dansk', 'Danish')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('de', 'Deutsch', 'German')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en', 'English', 'English')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en-uk', 'British English', NULL)",
+    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en-uk', 'British English', 'British English')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('es', 'Español', 'Spanish')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('el', 'Greek', 'Greek')",
     "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('fr', 'Français', 'French')",
