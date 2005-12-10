@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.5 2005/09/19 03:35:34 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.1.1.1.2.6 2005/12/10 13:59:21 squareing Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -21,7 +21,7 @@ $impMsg = array();
 $mid = 'bitpackage:languages/import_languages.tpl';
 
 // Lookup translated names for the languages
-$impLanguages = $gBitLanguage->listLanguages();
+$impLanguages = $gBitLanguage->listLanguages( TRUE, TRUE );
 foreach( array_keys($impLanguages) as $langCode ) {
 	if( !$gBitLanguage->isImportFileAvailable( $langCode ) ) {
 		unset( $impLanguages[$langCode] );
