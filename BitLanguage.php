@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.23 2005/12/15 20:38:00 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.24 2005/12/15 21:42:00 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -368,7 +368,7 @@ class BitLanguage extends BitBase {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
 			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['tran'];
-		} elseif( file_exists( $cacheFile ) ) {
+		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
 			if( empty( $this->mStrings[$this->mLanguage] ) ) {
@@ -401,10 +401,9 @@ class BitLanguage extends BitBase {
 			}
 			if( !$index = array_search( $sourceHash, $gBitTranslationHash ) ) {
 				$gBitTranslationHash[] = $sourceHash;
-				$ret .= '&nbsp;'.( count( $gBitTranslationHash ) - 1 );
-			} else {
-				$ret .= '&nbsp;'.$index;
+				$index = count( $gBitTranslationHash ) - 1;
 			}
+			$ret .= '&nbsp;'.$index;
 		}
 
 		return $ret;

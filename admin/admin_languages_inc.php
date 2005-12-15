@@ -6,7 +6,7 @@ $formLanguageToggles = array(
 	),
 	'interactive_translation' => array(
 		'label' => 'Interactive Translations',
-		'note' => 'This will help you translate your site very effitiently by giving you direct access to the correct translation page.<br />Once you are done translating, make sure you turn this feature off and clear the language cache.',
+		'note' => 'This will help you translate your site very effitiently by giving you direct access to the correct translation page.<br />Once you are done translating, make sure you turn this feature off and clear the language cache.<br />This feature only works when you set <em>$smarty_force_compile</em> to TRUE in your <em>kernel/config_inc.php</em> file',
 		'page' => 'TranslationTutorial',
 		'link' => array(
 			'title' => 'Language cache',
