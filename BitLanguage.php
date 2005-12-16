@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.24 2005/12/15 21:42:00 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.25 2005/12/16 16:29:35 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -403,7 +403,7 @@ class BitLanguage extends BitBase {
 				$gBitTranslationHash[] = $sourceHash;
 				$index = count( $gBitTranslationHash ) - 1;
 			}
-			$ret .= '&nbsp;'.$index;
+			$ret .= '_'.$index;
 		}
 
 		return $ret;
