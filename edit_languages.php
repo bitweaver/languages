@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.5 2005/10/29 17:54:10 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.6 2005/12/18 22:30:05 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -121,6 +121,6 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$gBitSmarty->assign( 'saveSuccess', $saveSuccess );
 }
 
-$gBitSystem->display( 'bitpackage:languages/edit_languages.tpl');
+$gBitSystem->display( 'bitpackage:languages/edit_languages.tpl', tra( 'Edit Translations' ) );
 
 ?>

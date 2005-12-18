@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.11 2005/11/22 07:27:01 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.12 2005/12/18 22:30:05 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -127,7 +127,7 @@ class BitLanguage extends BitBase {
 		return $ret;
 	}
 
-	function listLanguages( $pListDisabled=TRUE ) {
+	function listLanguages( $pListDisabled=TRUE, $pListOnlyImportable=FALSE ) {
 		$whereSql = '';
 		$langs = array();
 		if( !$pListDisabled ) {
@@ -136,7 +136,7 @@ class BitLanguage extends BitBase {
 		$ret = $this->mDb->getAssoc( "SELECT til.`lang_code` AS `hash_key`, til.* FROM `".BIT_DB_PREFIX."tiki_i18n_languages` til $whereSql ORDER BY til.`lang_code`" );
 		if( !empty( $ret ) ) {
 			foreach( array_keys( $ret ) as $langCode ) {
-				if ($langCode != 'en' && !$this->isImportFileAvailable($langCode))
+				if( $langCode != 'en' && !$this->isImportFileAvailable( $langCode ) && $pListOnlyImportable )
 					continue;
 				$ret[$langCode]['translated_name'] = $this->translate( $ret[$langCode]['english_name'] );
 				$ret[$langCode]['full_name'] = $ret[$langCode]['native_name'].' ('.$this->translate( $ret[$langCode]['english_name'] ).', '.$langCode.')';
@@ -361,13 +361,14 @@ class BitLanguage extends BitBase {
 	}
 
 	function translate( $pString ) {
+		global $gBitTranslationHash, $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
 		$cacheFile = TEMP_PKG_PATH."lang/".$this->mLanguage."/".$sourceHash;
 		if( $this->mLanguage == 'en' ) {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
 			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['tran'];
-		} elseif( file_exists( $cacheFile ) ) {
+		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
 			if( empty( $this->mStrings[$this->mLanguage] ) ) {
@@ -392,6 +393,19 @@ class BitLanguage extends BitBase {
 			$this->mStrings[$this->mLanguage][$sourceHash]['tran'] = $tran;
 			$ret = $tran;
 		}
+
+		// interactive translation process
+		if( $gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
+			if( empty( $gBitTranslationHash ) ) {
+				$gBitTranslationHash = array();
+			}
+			if( !$index = array_search( $sourceHash, $gBitTranslationHash ) ) {
+				$gBitTranslationHash[] = $sourceHash;
+				$index = count( $gBitTranslationHash ) - 1;
+			}
+			$ret .= '_'.$index;
+		}
+
 		return $ret;
 	}
 

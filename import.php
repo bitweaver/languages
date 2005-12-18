@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.5 2005/10/12 15:13:52 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.6 2005/12/18 22:30:05 squareing Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -21,7 +21,7 @@ $impMsg = array();
 $mid = 'bitpackage:languages/import_languages.tpl';
 
 // Lookup translated names for the languages
-$impLanguages = $gBitLanguage->listLanguages();
+$impLanguages = $gBitLanguage->listLanguages( TRUE, TRUE );
 foreach( array_keys($impLanguages) as $langCode ) {
 	if( !$gBitLanguage->isImportFileAvailable( $langCode ) ) {
 		unset( $impLanguages[$langCode] );
@@ -107,6 +107,9 @@ if (isset($_REQUEST["import"])) {
 		fclose( $file );
 		$impMsg['success'] = "Language file has been exported to <a href=\"".TEMP_PKG_URL.$fileName."\">$fileName</a>";
 	}
+
+	// unset this massive array to free up memory
+	unset( $gBitLanguage->mStrings[$_REQUEST['export_lang_code']] );
 }
 
 $gBitSmarty->assign('impmsg', $impMsg);
