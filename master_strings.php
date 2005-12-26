@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.3 2005/08/07 17:39:18 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.4 2005/12/26 12:24:49 squareing Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -15,7 +15,8 @@ require_once( '../bit_setup_inc.php' );
 
 $gBitSystem->verifyPermission( 'bit_p_edit_master_strings' );
 
-$gBitSmarty->assign_by_ref( 'languages', $gBitLanguage->listLanguages() );
+$languages = $gBitLanguage->listLanguages();
+$gBitSmarty->assign_by_ref( 'languages', $languages );
 
 if( !empty( $_REQUEST['change_master'] ) ) {
 	$newSourceHash = $gBitLanguage->getSourceHash( $_REQUEST['edit_master'] );
@@ -100,7 +101,8 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 		$masterStrings[$_REQUEST['source_hash']]['textarea'] = TRUE;
 	}
 	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
+	$translate = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $translate );
 	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
 	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
