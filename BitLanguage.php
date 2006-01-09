@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.25 2005/12/16 16:29:35 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.3.2.26 2006/01/09 14:44:04 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -341,11 +341,13 @@ class BitLanguage extends BitBase {
 	}
 
 	function verifyTranslationLoaded( $pLangCode ) {
-		// see if there is anything in the table
-		$query = "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."tiki_i18n_strings` tis WHERE tis.`lang_code`=?";
-		$count = $this->mDb->getOne($query, array( $pLangCode ) );
-		if( empty( $count ) ) {
-			$this->importTranslationStrings( $pLangCode );
+		if ( $pLangCode ) {
+			// see if there is anything in the table
+			$query = "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."tiki_i18n_strings` tis WHERE tis.`lang_code`=?";
+			$count = $this->mDb->getOne($query, array( $pLangCode ) );
+			if( empty( $count ) ) {
+				$this->importTranslationStrings( $pLangCode );
+			}
 		}
 	}
 
@@ -412,23 +414,25 @@ class BitLanguage extends BitBase {
 	function lookupTranslation( $pString, $pLangCode, $pOverrideUsage = TRUE ) {
 		global $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
-		$query = "SELECT `tran`, tivm.`version`, tivm.`source_hash` AS `usage_source_hash`
-				  FROM `".BIT_DB_PREFIX."tiki_i18n_masters` tim
-					LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tivm.`source_hash`=tim.`source_hash` AND tivm.`version`=? )
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tim.`source_hash`=tis.`source_hash` AND `lang_code`=? )
-				  WHERE tim.`source_hash`=?";
-		$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
-		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
-			$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
-			$source = $this->mDb->getOne($query, array( $this->getSourceHash( $pString ) ) );
-			if( empty( $source ) ) {
-				$this->storeMasterString( array( 'source_hash' => $this->getSourceHash( $pString ), 'new_source' => $pString ) );
+		if ( $pLangCode ) {
+			$query = "SELECT `tran`, tivm.`version`, tivm.`source_hash` AS `usage_source_hash`
+				FROM `".BIT_DB_PREFIX."tiki_i18n_masters` tim
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_version_map` tivm ON( tivm.`source_hash`=tim.`source_hash` AND tivm.`version`=? )
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."tiki_i18n_strings` tis ON( tim.`source_hash`=tis.`source_hash` AND `lang_code`=? )
+				WHERE tim.`source_hash`=?";
+			$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
+			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
+				$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."tiki_i18n_masters` WHERE `source_hash`=?";
+				$source = $this->mDb->getOne($query, array( $this->getSourceHash( $pString ) ) );
+				if( empty( $source ) ) {
+					$this->storeMasterString( array( 'source_hash' => $this->getSourceHash( $pString ), 'new_source' => $pString ) );
+				}
 			}
-		}
-		if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'track_translation_usage' ) ) {
-			if( empty( $ret['usage_source_hash'] ) ) {
-				$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_version_map` (`source_hash`,`version`) VALUES (?,?)";
-				$trans = $this->mDb->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
+			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'track_translation_usage' ) ) {
+				if( empty( $ret['usage_source_hash'] ) ) {
+					$query = "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_version_map` (`source_hash`,`version`) VALUES (?,?)";
+					$trans = $this->mDb->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
+				}
 			}
 		}
 		return (isset( $ret['tran'] ) ? $ret['tran'] : NULL );
