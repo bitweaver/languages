@@ -15,7 +15,7 @@
 		$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 	}
 	if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'bit_p_edit_languages' ) ) {
-		$gBitSystem->registerAppMenu( LANGUAGES_PKG_DIR, 'Languages', LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
+		$gBitSystem->registerAppMenu( LANGUAGES_PKG_NAME, ucfirst( LANGUAGES_PKG_DIR ), LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
 	}
 
 	if( $gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() ) {
