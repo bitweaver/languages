@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.6 2005/12/18 22:30:05 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.7 2006/01/31 20:18:17 bitweaver Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -56,7 +56,7 @@ if (isset($_REQUEST["import"])) {
 	}
 
 	if( !empty( $_FILES['upload_file']['tmp_name'] ) ) {
-		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ($_REQUEST['overwrite'] == 'y'), 'tiki_i18n_strings`', $_FILES['upload_file']['tmp_name'] );
+		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ($_REQUEST['overwrite'] == 'y'), 'i18n_strings`', $_FILES['upload_file']['tmp_name'] );
 	}
 
 	if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {

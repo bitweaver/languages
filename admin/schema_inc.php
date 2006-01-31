@@ -2,28 +2,28 @@
 
 $tables = array(
 
-'tiki_i18n_languages' => "
+'i18n_languages' => "
   lang_code C(32) PRIMARY,
   native_name C(255),
   english_name C(255),
   is_disabled C(1)
 ",
 
-'tiki_i18n_masters' => "
+'i18n_masters' => "
   source_hash C(32) PRIMARY,
   package C(100),
   created I8 NOTNULL,
   source X NOTNULL
 ",
 
-'tiki_i18n_strings' => "
+'i18n_strings' => "
   source_hash C(32) PRIMARY,
   lang_code C(32) PRIMARY,
   last_modified I8 NOTNULL,
   `tran` X NOTNULL
 ",
 
-'tiki_i18n_version_map' => "
+'i18n_version_map' => "
   source_hash C(32) PRIMARY,
   version C(32) PRIMARY
 "
@@ -37,13 +37,13 @@ foreach( array_keys( $tables ) AS $tableName ) {
 }
 
 $indices = array (
-	'tiki_i18n_masters_pkg_idx' => array( 'table' => 'tiki_i18n_masters', 'cols' => '`package`', 'opts' => NULL ),
-	'tiki_i18n_masters_created_idx' => array( 'table' => 'tiki_i18n_masters', 'cols' => '`created`', 'opts' => NULL ),
-	'tiki_i18n_strings_lang_idx' => array( 'table' => 'tiki_i18n_strings', 'cols' => '`lang_code`', 'opts' => NULL ),
-	'tiki_i18n_strings_lang_idx' => array( 'table' => 'tiki_i18n_strings', 'cols' => '`source_hash`', 'opts' => NULL ),
-	'tiki_i18n_strings_modif_idx' => array( 'table' => 'tiki_i18n_strings', 'cols' => '`last_modified`', 'opts' => NULL ),
-	'tiki_i18n_version_src_idx' => array( 'table' => 'tiki_i18n_version_map', 'cols' => '`source_hash`', 'opts' => NULL ),
-	'tiki_i18n_version_ver_idx' => array( 'table' => 'tiki_i18n_version_map', 'cols' => '`version`', 'opts' => NULL  ),
+	'i18n_masters_pkg_idx' => array( 'table' => 'i18n_masters', 'cols' => '`package`', 'opts' => NULL ),
+	'i18n_masters_created_idx' => array( 'table' => 'i18n_masters', 'cols' => '`created`', 'opts' => NULL ),
+	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => '`lang_code`', 'opts' => NULL ),
+	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => '`source_hash`', 'opts' => NULL ),
+	'i18n_strings_modif_idx' => array( 'table' => 'i18n_strings', 'cols' => '`last_modified`', 'opts' => NULL ),
+	'i18n_version_src_idx' => array( 'table' => 'i18n_version_map', 'cols' => '`source_hash`', 'opts' => NULL ),
+	'i18n_version_ver_idx' => array( 'table' => 'i18n_version_map', 'cols' => '`version`', 'opts' => NULL  ),
 );
 
 $gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
@@ -73,37 +73,37 @@ $gBitInstaller->registerUserPermissions( LANGUAGES_PKG_NAME, array(
 ) );
 
 $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ar', 'ﺎﻠﻋﺮﺒﻳﺓ', 'Arabic' )",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('cs', 'Český', 'Czech')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('da', 'Dansk', 'Danish')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('de', 'Deutsch', 'German')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en', 'English', 'English')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en-uk', 'British English', 'British English')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('es', 'Español', 'Spanish')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('el', 'Greek', 'Greek')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('fr', 'Français', 'French')",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hr', 'Hrvatski', 'Croatian' )",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hu', 'Magyar', 'Hungarian' )",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('it', 'Italiano', 'Italian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ja', '日本語', 'Japanese')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ko', '한국�?', 'Korean')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('nl', 'Nederlands', 'Dutch')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('no', 'Norwegian', 'Norwegian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pl', 'Polish', 'Polish')",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pt', 'Português', 'Portuguese' )",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pt-br', 'Português Brasileiro', 'Brazilian Portuguese')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ru', 'Russian', 'Russian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sb', 'Pijin Solomon', 'Pijin Solomon')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sk', 'Slovenský', 'Slovak')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sr', 'Срп�?ки', 'Serbian')",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sr-latn', 'Srpski', 'Serbian Latin' )",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sv', 'Svenska', 'Swedish')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tw', '中文(�?体字)', 'Traditional Chinese')",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tr', 'Türkçe', 'Turkish'  )",
-	"INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tv', 'Tuvaluan', 'Tuvaluan' )",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('uk', 'Україн�?ька', 'Ukrainian')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', 'Chinese', 'Chinese')",
-    "INSERT INTO `".BIT_DB_PREFIX."tiki_i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Catalan', 'Catalan')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ar', 'ﺎﻠﻋﺮﺒﻳﺓ', 'Arabic' )",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('cs', 'Český', 'Czech')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('da', 'Dansk', 'Danish')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('de', 'Deutsch', 'German')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en', 'English', 'English')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en-uk', 'British English', 'British English')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('es', 'Español', 'Spanish')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('el', 'Greek', 'Greek')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('fr', 'Français', 'French')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hr', 'Hrvatski', 'Croatian' )",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hu', 'Magyar', 'Hungarian' )",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('it', 'Italiano', 'Italian')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ja', '日本語', 'Japanese')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ko', '한국�?', 'Korean')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('nl', 'Nederlands', 'Dutch')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('no', 'Norwegian', 'Norwegian')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pl', 'Polish', 'Polish')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pt', 'Português', 'Portuguese' )",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('pt-br', 'Português Brasileiro', 'Brazilian Portuguese')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ru', 'Russian', 'Russian')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sb', 'Pijin Solomon', 'Pijin Solomon')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sk', 'Slovenský', 'Slovak')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sr', 'Срп�?ки', 'Serbian')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sr-latn', 'Srpski', 'Serbian Latin' )",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('sv', 'Svenska', 'Swedish')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tw', '中文(�?体字)', 'Traditional Chinese')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tr', 'Türkçe', 'Turkish'  )",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tv', 'Tuvaluan', 'Tuvaluan' )",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('uk', 'Україн�?ька', 'Ukrainian')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', 'Chinese', 'Chinese')",
+    "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Catalan', 'Catalan')",
 ) );
 
 ?>
