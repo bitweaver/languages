@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.15 2006/02/01 08:05:07 bitweaver Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.16 2006/02/01 17:11:08 bitweaver Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -64,7 +64,7 @@ class BitLanguage extends BitBase {
 		if( empty( $pParamHash['lang_code'] ) || strlen( $pParamHash['lang_code'] ) < 2 ) {
 			$this->mErrors['lang_code'] = tra( 'The language code must be at least 2 characters.' );
 		} elseif( !empty( $langs[$pParamHash['lang_code']] ) && empty( $pParamHash['update_lang_code'] ) ) {
-			$this->mErrors['lang_code'] = tra( 'This language code ist already used by ' ).$langs[$pParamHash['lang_code']]['native_name'];
+			$this->mErrors['lang_code'] = tra( 'This language code is already used by ' ).$langs[$pParamHash['lang_code']]['native_name'];
 		}
 		if( empty( $pParamHash['native_name'] ) ) {
 			$this->mErrors['native_name'] = 'You must provide the native language name';
