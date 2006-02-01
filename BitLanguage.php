@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.14 2006/01/31 20:18:16 bitweaver Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.15 2006/02/01 08:05:07 bitweaver Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -64,7 +64,7 @@ class BitLanguage extends BitBase {
 		if( empty( $pParamHash['lang_code'] ) || strlen( $pParamHash['lang_code'] ) < 2 ) {
 			$this->mErrors['lang_code'] = tra( 'The language code must be at least 2 characters.' );
 		} elseif( !empty( $langs[$pParamHash['lang_code']] ) && empty( $pParamHash['update_lang_code'] ) ) {
-			$this->mErrors['lang_code'] = tra( 'This language code is already used by ' ).$langs[$pParamHash['lang_code']]['native_name'];
+			$this->mErrors['lang_code'] = tra( 'This language code ist already used by ' ).$langs[$pParamHash['lang_code']]['native_name'];
 		}
 		if( empty( $pParamHash['native_name'] ) ) {
 			$this->mErrors['native_name'] = 'You must provide the native language name';
@@ -131,7 +131,7 @@ class BitLanguage extends BitBase {
 		$whereSql = '';
 		$langs = array();
 		if( !$pListDisabled ) {
-			$whereSql = " WHERE `is_disabled` IS NULL ";
+			$whereSql = " WHERE `is_disabled` ItS NULL ";
 		}
 		$ret = $this->mDb->getAssoc( "SELECT il.`lang_code` AS `hash_key`, il.* FROM `".BIT_DB_PREFIX."i18n_languages` il $whereSql ORDER BY il.`lang_code`" );
 		if( !empty( $ret ) ) {
@@ -260,10 +260,10 @@ class BitLanguage extends BitBase {
 	}
 
 	function getTranslatedStrings( $pSourceHash ) {
-		$query = "SELECT is.`lang_code` AS `hash_key`, `tran`, is.`source_hash`, is.`lang_code`
-				  FROM `".BIT_DB_PREFIX."i18n_strings` is
-					WHERE is.`source_hash`=?
-				  ORDER BY is.`lang_code`";
+		$query = "SELECT ist.`lang_code` AS `hash_key`, `tran`, ist.`source_hash`, ist.`lang_code`
+				  FROM `".BIT_DB_PREFIX."i18n_strings` ist
+					WHERE ist.`source_hash`=?
+				  ORDER BY ist.`lang_code`";
 		return( $this->mDb->getAssoc($query, array( $pSourceHash ) ) );
 	}
 
@@ -271,7 +271,7 @@ class BitLanguage extends BitBase {
 		$this->verifyTranslationLoaded( $pLangCode );
 		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `tran`, im.`source_hash`
 				  FROM `".BIT_DB_PREFIX."i18n_masters` im
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` is ON( is.`source_hash`=im.`source_hash` AND is.`lang_code`=? )
+				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  WHERE im.`source_hash`=?
 				  ORDER BY im.`source`";
 		return( $this->mDb->getAssoc($query, array( $pLangCode, $pSourceHash ) ) );
@@ -343,7 +343,7 @@ class BitLanguage extends BitBase {
 	function verifyTranslationLoaded( $pLangCode ) {
 		if ( $pLangCode ) {
 			// see if there is anything in the table
-			$query = "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."i18n_strings` is WHERE is.`lang_code`=?";
+			$query = "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."i18n_strings` ist WHERE ist.`lang_code`=?";
 			$count = $this->mDb->getOne($query, array( $pLangCode ) );
 			if( empty( $count ) ) {
 				$this->importTranslationStrings( $pLangCode );
@@ -356,7 +356,7 @@ class BitLanguage extends BitBase {
 		$this->verifyTranslationLoaded( $pLangCode );
 		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `tran`, im.`source_hash`, ivm.`version`
 				  FROM `".BIT_DB_PREFIX."i18n_masters` im
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` is ON( is.`source_hash`=im.`source_hash` AND is.`lang_code`=? )
+				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( im.`source_hash`=ivm.`source_hash` )
 				  ORDER BY im.`source`";
 		$this->mStrings[$pLangCode] = $this->mDb->getAssoc($query,array( $pLangCode ) );
@@ -418,7 +418,7 @@ class BitLanguage extends BitBase {
 			$query = "SELECT `tran`, ivm.`version`, ivm.`source_hash` AS `usage_source_hash`
 				FROM `".BIT_DB_PREFIX."i18n_masters` im
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( ivm.`source_hash`=im.`source_hash` AND ivm.`version`=? )
-				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` is ON( im.`source_hash`=is.`source_hash` AND `lang_code`=? )
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( im.`source_hash`=ist.`source_hash` AND `lang_code`=? )
 				WHERE im.`source_hash`=?";
 			$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
 			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
