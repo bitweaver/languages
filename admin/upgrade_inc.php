@@ -89,8 +89,21 @@ array( 'QUERY' =>
 ),
 
 	)
-)
+),
 
+	'BWR1' => array(
+		'BWR2' => array(
+// de-tikify tables
+array( 'DATADICT' => array(
+	array( 'RENAMETABLE' => array(
+		'tiki_i18n_languages' => 'i18n_languages',
+		'tiki_i18n_masters' => 'i18n_masters',
+		'tiki_i18n_strings' => 'i18n_strings',
+		'tiki_i18n_version_map' => 'i18n_version_map',
+	)),
+)),
+		)
+	),
 );
 
 if( isset( $upgrades[$gUpgradeFrom][$gUpgradeTo] ) ) {
