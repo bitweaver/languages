@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.16 2006/02/01 17:11:08 bitweaver Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.17 2006/02/03 12:39:57 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -131,7 +131,7 @@ class BitLanguage extends BitBase {
 		$whereSql = '';
 		$langs = array();
 		if( !$pListDisabled ) {
-			$whereSql = " WHERE `is_disabled` ItS NULL ";
+			$whereSql = " WHERE `is_disabled` IS NULL ";
 		}
 		$ret = $this->mDb->getAssoc( "SELECT il.`lang_code` AS `hash_key`, il.* FROM `".BIT_DB_PREFIX."i18n_languages` il $whereSql ORDER BY il.`lang_code`" );
 		if( !empty( $ret ) ) {
