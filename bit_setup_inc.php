@@ -20,7 +20,7 @@
 
 	if( $gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() ) {
 		if( $gBitSystem->isFeatureActive( 'change_language' ) ) {
-			if( $userLang = $gBitUser->getPreference( 'bitlanguage' ) ) {
+			if( $userLang = $gBitUser->getPreference( 'bitLanguage' ) ) {
 				$gBitLanguage->setLanguage( $userLang );
 			}
 		}
