@@ -18,7 +18,7 @@
 		$gBitSystem->registerAppMenu( LANGUAGES_PKG_NAME, ucfirst( LANGUAGES_PKG_DIR ), LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
 	}
 
-	if( $gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() ) {
+	if( $gBitSystem->isFeatureActive( 'feature_user_preferences' ) && $gBitUser->isRegistered() ) {
 		if( $gBitSystem->isFeatureActive( 'change_language' ) ) {
 			if( $userLang = $gBitUser->getPreference( 'bitLanguage' ) ) {
 				$gBitLanguage->setLanguage( $userLang );

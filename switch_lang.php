@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.4 2005/10/12 15:13:52 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.5 2006/02/06 00:08:19 squareing Exp $
  */
 
 /**
@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 }
 
 if( !empty( $_GET['language'] ) ) {
-	if($gBitSystem->isFeatureActive( 'feature_userPreferences' ) && $gBitUser->isRegistered() && $gBitSystem->isFeatureActive( 'change_language' ) )  {
+	if($gBitSystem->isFeatureActive( 'feature_user_preferences' ) && $gBitUser->isRegistered() && $gBitSystem->isFeatureActive( 'change_language' ) )  {
 		$gBitUser->storePreference( 'bitlanguage', $_GET['language'] );
 	} else {
 		$_SESSION["bitlanguage"] = $_GET['language'];
