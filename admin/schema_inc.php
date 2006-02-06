@@ -58,8 +58,8 @@ $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
-	array(LANGUAGES_PKG_NAME, 'feature_babelfish','n'),
-	array(LANGUAGES_PKG_NAME, 'feature_babelfish_logo','n'),
+	//array(LANGUAGES_PKG_NAME, 'babelfish','n'),
+	//array(LANGUAGES_PKG_NAME, 'babelfish_logo','n'),
 	array(LANGUAGES_PKG_NAME, 'record_untranslated','y'),
 ) );
 

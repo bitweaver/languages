@@ -4,13 +4,11 @@
 	$gBitSystem->registerPackage( 'languages', dirname( __FILE__).'/' );
 
 	// **********  BABELFISH  ************
-	if ($gBitSystem->getPreference('feature_babelfish') == 'y')
-	{
+	if ($gBitSystem->isFeatureActive('babelfish') ) {
 		require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
 		$gBitSmarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getPreference('language', 'en') ));
 	}
-	if ($gBitSystem->getPreference('feature_babelfish_logo') == 'y')
-	{
+	if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
 		require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
 		$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 	}
