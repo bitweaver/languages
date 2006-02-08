@@ -36,17 +36,16 @@ $gBitSmarty->assign( 'formLanguageToggles',$formLanguageToggles );
 
 // Handle Update
 if (isset($_REQUEST["prefs"])) {
-	
-    foreach ($formLanguageToggles as $toggle => $data) {
-        simple_set_toggle ($toggle);
-    }
+	foreach ($formLanguageToggles as $toggle => $data) {
+		simple_set_toggle ($toggle, LANGUAGES_PKG_NAME);
+	}
 
-    $pref_byref_values = array(
-        "bitlanguage",
-    );
-    foreach ($pref_byref_values as $britem) {
+	$pref_byref_values = array(
+		"bitlanguage",
+	);
+	foreach ($pref_byref_values as $britem) {
 		byref_set_value ($britem, NULL, LANGUAGES_PKG_NAME);
-    }
+	}
 	global $gBitLanguage;
 	$gBitLanguage->setLanguage( $gBitSystem->getPreference( 'bitlanguage' ) );
 } else {
