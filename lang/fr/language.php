@@ -2724,7 +2724,7 @@ the mapfile:' => '',
 'Hi' => 'Bonjour',
 'Hi,' => 'Bonjour,',
 'Hi,
-A new message was posted to you. To respond, please visit http://{$mail_site}{$gBitLoc.MESSU_PKG_URL}message_box.php
+A new message was posted to you. To respond, please visit http://{$mail_site}{$gBitLoc.MESSAGES_PKG_URL}message_box.php
 
 From: {$mail_from}
 Subject: {$mail_subject}
@@ -2736,7 +2736,7 @@ From: toggg
 Subject: fRench
 Date:' => '',
 'Hi,
-A new message was posted to you. To respond, please visit http://{$smarty.const.BIT_ROOT_URL}{$smarty.const.MESSU_PKG_URL}message_box.php
+A new message was posted to you. To respond, please visit http://{$smarty.const.BIT_ROOT_URL}{$smarty.const.MESSAGES_PKG_URL}message_box.php
 
 From: {$mail_from}
 Subject: {$mail_subject}
@@ -3537,7 +3537,7 @@ address.' => '',
 'Message to display when site is closed' => 'Message à afficher quand le site est fermé',
 'message tpl' => '',
 'Message will be sent to: ' => 'Le message va être envoyé à : ',
-'messu' => '',
+'messages' => '',
 'Mest besøkte blogger' => '',
 'Meta Tag Settings' => '',
 'Method' => 'Méthode',
@@ -4930,7 +4930,7 @@ All your tables will be replaced with the information in the backup.' => '',
 'Return to HomePage' => 'Retourner à la PageAccueil',
 'Return to mailbox' => '',
 'Return to messages' => 'Retourner à la liste des messages',
-'Return to your {smartlink ititle="Message Box" ipackage=messu ifile="message_box.php"}' => '',
+'Return to your {smartlink ititle="Message Box" ipackage=messages ifile="message_box.php"}' => '',
 'Reuse question' => 'Réutiliser une question',
 'Review' => '',
 'right' => 'droit',
@@ -5085,8 +5085,8 @@ All your tables will be replaced with the information in the backup.' => '',
 'Self Portrait' => 'Auto portrait',
 'semester' => '',
 'send' => 'envoyer',
-'Send a <a href="{$gBitLoc.MESSU_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => 'Envoyer un <a href="{$gBitLoc.MESSU_PKG_URL}compose.php?to={$userInfo.login}">message personnel</a> à cet utilisateur',
-'Send a <a href="{$gTikiLoc.MESSU_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => '',
+'Send a <a href="{$gBitLoc.MESSAGES_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => 'Envoyer un <a href="{$gBitLoc.MESSAGES_PKG_URL}compose.php?to={$userInfo.login}">message personnel</a> à cet utilisateur',
+'Send a <a href="{$gTikiLoc.MESSAGES_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => '',
 'Send a <a href="/messages/compose.php?to=arnaudherve">personal message</a> to this user' => '',
 'Send a <a href="/messages/compose.php?to=cemseker">personal message</a> to this user' => '',
 'Send a <a href="/messages/compose.php?to=davidm">personal message</a> to this user' => 'Envoyer un <a href="/messages/compose.php?to=davidm">message personnel</a> à cet utilisateur',
@@ -5094,7 +5094,7 @@ All your tables will be replaced with the information in the backup.' => '',
 'Send a <a href="/messages/compose.php?to=seite7">personal message</a> to this user' => '',
 'Send a <a href="/messages/compose.php?to=wolff_borg">personal message</a> to this user' => '',
 'Send a <a href="/messages/compose.php?to=xing">personal message</a> to this user' => '',
-'Send a <a href="{$smarty.const.MESSU_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => '',
+'Send a <a href="{$smarty.const.MESSAGES_PKG_URL}compose.php?to={$userInfo.login}">personal message</a> to this user' => '',
 'Send all to' => 'Envoyer à tous',
 'Send a message to' => 'Envoyer un message à',
 'Send a message to us' => 'Nous envoyer un message',
