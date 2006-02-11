@@ -43,4 +43,14 @@
 		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
 		//'content_icon_tpl' => 'bitpackage:languages/translate_service_icon.tpl',
 	) );
+
+	if( !empty( $_POST['translate'] ) ) {
+		if( is_numeric( $_POST['translate_id'] ) ) {
+			$get = 'content_id='.$_POST['translate_content_id'];
+		} else {
+			$get = 'lang_code='.$_POST['translate_id'];
+		}
+		header( 'Location: '.$_SERVER['SCRIPT_URL'].'?'.$get );
+		die;
+	}
 ?>

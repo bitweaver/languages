@@ -32,11 +32,10 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 	$trans = new LibertyTranslations( $pObject->mContentId );
 	$translations = $trans->getContentTranslations();
 	foreach( $gBitLanguage->mLanguageList as $lang_code => $language ) {
-		if( !empty( $translations[$lang_code] ) ) {
-			$translationsList['from'][$lang_code] = $language['translated_name'].": ".$translations[$lang_code]['title'];
-			$translationsList['to'][tra( 'Translated' )][$lang_code] = $language['translated_name'].": ".$translations[$lang_code]['title'];
-		} else {
-			$translationsList['to'][tra( 'Untranslated' )][$lang_code] = $language['translated_name'];
+		$translationsList[$lang_code] = $language;
+		if( !empty( $translations[$lang_code]['content_id'] ) ) {
+			$translationsList[$lang_code]['content_id'] = $translations[$lang_code]['content_id'];
+			$translationsList[$lang_code]['title'] = $translations[$lang_code]['title'];
 		}
 	}
 	$gBitSmarty->assign( 'translationsList', $translationsList );
