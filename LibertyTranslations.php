@@ -9,7 +9,7 @@ class LibertyTranslations extends BitBase {
 		global $gBitSystem;
 		$ret = array();
 		if( @BitBase::verifyId( $this->mContentId ) ) {
-			$query = "SELECT lc.`content_id`, lc.`title`, lc.`lang_code`
+			$query = "SELECT lc.`content_id`, lc.`title`, lc.`lang_code`, ictm.`translation_id`
 				FROM `".BIT_DB_PREFIX."liberty_content` lc
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_content_translation_map` ictm ON( lc.`content_id`=ictm.`content_id` )
 				WHERE ictm.`content_id`=?";
@@ -30,15 +30,18 @@ class LibertyTranslations extends BitBase {
 function translation_content_edit( &$pObject, &$pParamHash ) {
 	global $gBitLanguage, $gBitSmarty, $gBitUser;
 	$trans = new LibertyTranslations( $pObject->mContentId );
+	$translationId = NULL;
 	$translations = $trans->getContentTranslations();
 	foreach( $gBitLanguage->mLanguageList as $lang_code => $language ) {
 		$translationsList[$lang_code] = $language;
 		if( !empty( $translations[$lang_code]['content_id'] ) ) {
 			$translationsList[$lang_code]['content_id'] = $translations[$lang_code]['content_id'];
 			$translationsList[$lang_code]['title'] = $translations[$lang_code]['title'];
+			$translationId = $translations[$lang_code]['translation_id'];
 		}
 	}
 	$gBitSmarty->assign( 'translationsList', $translationsList );
+	$gBitSmarty->assign( 'translationId', $translationId );
 }
 
 // store the content

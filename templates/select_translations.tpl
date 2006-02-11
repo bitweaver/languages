@@ -2,7 +2,10 @@
 <div class="row">
 	{formlabel label="Translations" for=""}
 	{forminput}
-		<select name="translate_id">
+		{if $translationId}
+			<input type="hidden" name="translation_id" value="{$translationId}" />
+		{/if}
+		<select name="translate_content_id">
 		{foreach from=$translationsList key=langCode item=lang}
 			<option value="{$lang.content_id|default:$langCode}">{$lang.native_name}: {$lang.title|default:"~~Create New~~"}</option>
 		{/foreach}

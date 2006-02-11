@@ -45,10 +45,15 @@
 	) );
 
 	if( !empty( $_POST['translate'] ) ) {
-		if( is_numeric( $_POST['translate_id'] ) ) {
+		if( is_numeric( $_POST['translate_content_id'] ) ) {
 			$get = 'content_id='.$_POST['translate_content_id'];
 		} else {
-			$get = 'lang_code='.$_POST['translate_id'];
+			$get = 'lang_code='.$_POST['translate_content_id'];
+		}
+		if( LibertyBase::verifyId( $_POST['translate_id'] ) ) {
+			$get .= '&translate_group_id='.$_POST['translate_id'];
+		} else {
+			$get .= '&translate_from_id='.$_POST['content_id'];
 		}
 		header( 'Location: '.$_SERVER['SCRIPT_URL'].'?'.$get );
 		die;
