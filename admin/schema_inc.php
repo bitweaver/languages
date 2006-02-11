@@ -26,7 +26,7 @@ $tables = array(
 'i18n_version_map' => "
   source_hash C(32) PRIMARY,
   version C(32) PRIMARY
-"
+",
 
 'i18n_content_translation_map' => "
 	content_id I4 NOTNULL,
