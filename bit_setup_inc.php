@@ -1,5 +1,5 @@
 <?php
-	global $gBitSystem, $gBitLanguage, $gBitUser, $gBitSmarty;
+	global $gBitSystem, $gLibertySystem, $gBitLanguage, $gBitUser, $gBitSmarty;
 
 	$gBitSystem->registerPackage( 'languages', dirname( __FILE__).'/' );
 
