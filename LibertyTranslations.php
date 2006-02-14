@@ -1,4 +1,4 @@
-<?
+<?php
 class LibertyTranslations extends BitBase {
 	function LibertyTranslations( $pContentId = NULL ) {
 		$this->mContentId = $pContentId;
