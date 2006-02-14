@@ -31,7 +31,7 @@ $tables = array(
 
 'i18n_content_translation_map' => "
 	content_id I4 NOTNULL,
-	translation_id I4 NOTNULL,
+	translation_id I4 NOTNULL
 	CONSTRAINT ', CONSTRAINT `liberty_translation_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )'
 ",
 
