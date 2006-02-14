@@ -38,8 +38,8 @@
 		//'content_preview_function' => 'translation_content_edit',
 		'content_edit_function' => 'translation_content_edit',
 		'content_store_function' => 'translation_content_store',
-		//'content_list_function' => 'translation_content_list',
-		//'content_load_function' => 'translation_content_load',
+		//'content_list_sql_function' => 'translation_content_list',
+		//'content_load_sql_function' => 'translation_content_load',
 		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
 		//'content_icon_tpl' => 'bitpackage:languages/translate_service_icon.tpl',
 	) );
