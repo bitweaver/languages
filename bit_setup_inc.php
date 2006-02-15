@@ -32,17 +32,19 @@
 
 	$gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
-	require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
-	$gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
-		//'content_display_function' => 'translation_content_display',
-		//'content_preview_function' => 'translation_content_edit',
-		'content_edit_function' => 'translation_content_edit',
-		'content_store_function' => 'translation_content_store',
-		//'content_list_sql_function' => 'translation_content_list',
-		//'content_load_sql_function' => 'translation_content_load',
-		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
-		//'content_icon_tpl' => 'bitpackage:languages/translate_service_icon.tpl',
-	) );
+    if (!empty($gLibertySystem)) {
+	    require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
+	    $gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
+		    //'content_display_function' => 'translation_content_display',
+		    //'content_preview_function' => 'translation_content_edit',
+		    'content_edit_function' => 'translation_content_edit',
+		    'content_store_function' => 'translation_content_store',
+		    //'content_list_sql_function' => 'translation_content_list',
+		    //'content_load_sql_function' => 'translation_content_load',
+		    'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
+		    //'content_icon_tpl' => 'bitpackage:languages/translate_service_icon.tpl',
+	    ) );
+    }
 
 	if( !empty( $_POST['translate'] ) ) {
 		if( is_numeric( $_POST['translate_content_id'] ) ) {
