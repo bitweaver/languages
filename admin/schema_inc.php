@@ -29,7 +29,7 @@ $tables = array(
 	version C(32) PRIMARY
 ",
 
-'i18n_content_translation_map' => "
+'i18n_content_trans_map' => "
 	content_id I4 NOTNULL,
 	translation_id I4 NOTNULL
 	CONSTRAINT ', CONSTRAINT `liberty_translation_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )'
@@ -44,13 +44,13 @@ foreach( array_keys( $tables ) AS $tableName ) {
 }
 
 $indices = array (
-	'i18n_masters_pkg_idx' => array( 'table' => 'i18n_masters', 'cols' => '`package`', 'opts' => NULL ),
-	'i18n_masters_created_idx' => array( 'table' => 'i18n_masters', 'cols' => '`created`', 'opts' => NULL ),
-	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => '`lang_code`', 'opts' => NULL ),
-	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => '`source_hash`', 'opts' => NULL ),
-	'i18n_strings_modif_idx' => array( 'table' => 'i18n_strings', 'cols' => '`last_modified`', 'opts' => NULL ),
-	'i18n_version_src_idx' => array( 'table' => 'i18n_version_map', 'cols' => '`source_hash`', 'opts' => NULL ),
-	'i18n_version_ver_idx' => array( 'table' => 'i18n_version_map', 'cols' => '`version`', 'opts' => NULL  ),
+	'i18n_masters_pkg_idx' => array( 'table' => 'i18n_masters', 'cols' => 'package', 'opts' => NULL ),
+	'i18n_masters_created_idx' => array( 'table' => 'i18n_masters', 'cols' => 'created', 'opts' => NULL ),
+	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => 'lang_code', 'opts' => NULL ),
+	'i18n_strings_lang_idx' => array( 'table' => 'i18n_strings', 'cols' => 'source_hash', 'opts' => NULL ),
+	'i18n_strings_modif_idx' => array( 'table' => 'i18n_strings', 'cols' => 'last_modified', 'opts' => NULL ),
+	'i18n_version_src_idx' => array( 'table' => 'i18n_version_map', 'cols' => 'source_hash', 'opts' => NULL ),
+	'i18n_version_ver_idx' => array( 'table' => 'i18n_version_map', 'cols' => 'version', 'opts' => NULL  ),
 );
 
 $gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
