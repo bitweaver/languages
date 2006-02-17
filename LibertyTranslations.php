@@ -11,7 +11,7 @@ class LibertyTranslations extends BitBase {
 		if( @BitBase::verifyId( $this->mContentId ) ) {
 			$query = "SELECT lc.`content_id`, lc.`title`, lc.`lang_code`, ictm.`translation_id`
 				FROM `".BIT_DB_PREFIX."liberty_content` lc
-				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_content_translation_map` ictm ON( lc.`content_id`=ictm.`content_id` )
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_content_trans_map` ictm ON( lc.`content_id`=ictm.`content_id` )
 				WHERE ictm.`content_id`=?";
 			$result = $this->mDb->query( $query, array( $this->mContentId ) );
 			while( $aux = $result->fetchRow() ) {
