@@ -37,7 +37,7 @@ if( !empty( $_REQUEST['oe'] ) && !empty( $gBitLanguage->mLanguageList[$_REQUEST[
 
 $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
-if (!empty($gLibertySystem)) {
+if (!empty($gLibertySystem) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {
 	require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
 	$gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
 		//'content_display_function' => 'translation_content_display',

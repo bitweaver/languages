@@ -4,6 +4,10 @@ $formLanguageToggles = array(
 		'label' => 'Browser Language Recognition',
 		'note' => 'This will automatically recognise what the browsers default language is set to and display that language.<br />Please make sure you import appropriate languages first and disable / remove languages you don\'t want to support since loading a language for the first time will induce a lot of database traffic and might cause your system to slow down temporarily.',
 	),
+	'i18n_content_translation' => array(
+		'label' => 'Content Translation',
+		'note' => 'This will activate the content translation service. Users will be given links to content in alternate languages, and prompted to create translation while editing content.',
+	),
 	'interactive_translation' => array(
 		'label' => 'Interactive Translations',
 		'note' => 'This will help you translate your site very effitiently by giving you direct access to the correct translation page.<br />Once you are done translating, make sure you turn this feature off and clear the language cache.<br />This feature only works when you set <em>$smarty_force_compile</em> to TRUE in your <em>kernel/config_inc.php</em> file',
