@@ -37,13 +37,14 @@ if( !empty( $_REQUEST['oe'] ) && !empty( $gBitLanguage->mLanguageList[$_REQUEST[
 
 $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
-if (!empty($gLibertySystem) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {
+if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {
 	require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
 	$gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
 		//'content_display_function' => 'translation_content_display',
 		//'content_preview_function' => 'translation_content_edit',
 		'content_edit_function' => 'translation_content_edit',
 		'content_store_function' => 'translation_content_store',
+		'content_expunge_function' => 'translation_content_exunge',
 		//'content_list_sql_function' => 'translation_content_list',
 		//'content_load_sql_function' => 'translation_content_load',
 		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
@@ -51,18 +52,18 @@ if (!empty($gLibertySystem) && $gBitSystem->isFeatureActive( 'i18n_content_trans
 	) );
 }
 
-if( !empty( $_POST['translate'] ) ) {
-	if( is_numeric( $_POST['translate_content_id'] ) ) {
-		$get = 'content_id='.$_POST['translate_content_id'];
+if( !empty( $_POST['i18n']['translate'] ) ) {
+	if( @BitBase::verifyId( $_POST['i18n']['to_id'] ) ) {
+		$get = 'i18n[to_id]='.$_POST['i18n']['to_id'];
 	} else {
-		$get = 'lang_code='.$_POST['translate_content_id'];
+		$get = 'i18n[lang_code]='.$_POST['i18n']['to_id'];
 	}
-	if( LibertyBase::verifyId( $_POST['translate_id'] ) ) {
-		$get .= '&translate_group_id='.$_POST['translate_id'];
+	if( @BitBase::verifyId( $_POST['i18n']['translation_id'] ) ) {
+		$get .= '&i18n[translation_id]='.$_POST['i18n']['translation_id'];
 	} else {
-		$get .= '&translate_from_id='.$_POST['content_id'];
+		$get .= '&i18n[from_id]='.$_POST['i18n']['from_id'];
 	}
-	header( 'Location: '.$_SERVER['SCRIPT_URL'].'?'.$get );
+	header( 'Location: '.$_SERVER['PHP_SELF'].'?'.$get );
 	die;
 }
 ?>

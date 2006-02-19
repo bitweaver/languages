@@ -52,8 +52,13 @@ $indices = array (
 	'i18n_version_src_idx' => array( 'table' => 'i18n_version_map', 'cols' => 'source_hash', 'opts' => NULL ),
 	'i18n_version_ver_idx' => array( 'table' => 'i18n_version_map', 'cols' => 'version', 'opts' => NULL  ),
 );
-
 $gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
+
+// ### Sequences
+$sequences = array (
+	'i18n_content_trans_id_seq' => array( 'start' => 1 ),
+);
+$gBitInstaller->registerSchemaSequences( LIBERTY_PKG_NAME, $sequences );
 
 $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 	'description' => "This package allows you to translate your site into a different language.",
