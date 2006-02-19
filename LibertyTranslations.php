@@ -114,7 +114,6 @@ function translation_content_store( $pObject, $pParamHash ) {
 			// error
 		}
 	}
-	die;
 }
 
 function translation_content_exunge( $pObject, $pParamHash ) {
