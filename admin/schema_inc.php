@@ -55,10 +55,10 @@ $indices = array (
 $gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
 
 // ### Sequences
-$sequences = array (
-	'i18n_content_trans_id_seq' => array( 'start' => 1 ),
-);
-$gBitInstaller->registerSchemaSequences( LIBERTY_PKG_NAME, $sequences );
+//$sequences = array (
+//	'i18n_content_trans_id_seq' => array( 'start' => 1 ),
+//);
+//$gBitInstaller->registerSchemaSequences( LIBERTY_PKG_NAME, $sequences );
 
 $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 	'description' => "This package allows you to translate your site into a different language.",
