@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.7 2006/01/31 20:18:17 bitweaver Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.8 2006/02/20 23:33:31 lsces Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -86,7 +86,7 @@ if (isset($_REQUEST["import"])) {
 
 	//vd($gBitLanguage->mStrings);
 	foreach( $gBitLanguage->mStrings[$_REQUEST['export_lang_code']] as $tran ) {
-		if( !empty( $_REQUEST['all_trans'] ) ||  ($tran['version'] == BIT_MAJOR_VERSION && !empty( $tran['tran'] ) ) ) {
+		if( !empty( $_REQUEST['all_trans'] ) ||  ($tran['version'] == BIT_MAJOR_VERSION && !empty( $tran['trans'] ) ) ) {
 			$data .= "'" . str_replace( "'", "\\'", stripslashes( $tran["source"] ) ) . "' => '" . str_replace( "'", "\\'",stripslashes( $tran["tran"] ) ) . "',\n";
 		}
 	}

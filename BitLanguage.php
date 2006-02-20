@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.17 2006/02/03 12:39:57 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.18 2006/02/20 23:33:31 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -252,15 +252,15 @@ class BitLanguage extends BitBase {
 		$result = $this->mDb->query( $query, array($pSourceHash, $pLangCode) );
 
 		if( !empty( $pString ) ) {
-			$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`lang_code`,`tran`,`source_hash`, `last_modified`) values (?,?,?,?)";
+			$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`lang_code`,`trans`,`source_hash`, `last_modified`) values (?,?,?,?)";
 			$result = $this->mDb->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
 		}
 
-		$this->mStrings[$pLangCode][$pSourceHash]['tran'] = $pString;
+		$this->mStrings[$pLangCode][$pSourceHash]['trans'] = $pString;
 	}
 
 	function getTranslatedStrings( $pSourceHash ) {
-		$query = "SELECT ist.`lang_code` AS `hash_key`, `tran`, ist.`source_hash`, ist.`lang_code`
+		$query = "SELECT ist.`lang_code` AS `hash_key`, `trans`, ist.`source_hash`, ist.`lang_code`
 				  FROM `".BIT_DB_PREFIX."i18n_strings` ist
 					WHERE ist.`source_hash`=?
 				  ORDER BY ist.`lang_code`";
@@ -269,7 +269,7 @@ class BitLanguage extends BitBase {
 
 	function getTranslationString( $pSourceHash, $pLangCode ) {
 		$this->verifyTranslationLoaded( $pLangCode );
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `tran`, im.`source_hash`
+		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`
 				  FROM `".BIT_DB_PREFIX."i18n_masters` im
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  WHERE im.`source_hash`=?
@@ -319,7 +319,7 @@ class BitLanguage extends BitBase {
 				$trans = $this->lookupTranslation( $key, $pLangCode, FALSE );
 				if( !is_null( $trans ) ) {
 					if( $pOverwrite ) {
-						$query = "UPDATE `".BIT_DB_PREFIX."i18n_strings` SET `tran`=?, `last_modified`=? WHERE `source_hash`=? AND `lang_code`=?";
+						$query = "UPDATE `".BIT_DB_PREFIX."i18n_strings` SET `trans`=?, `last_modified`=? WHERE `source_hash`=? AND `lang_code`=?";
 						$trans = $this->mDb->query($query, array( $val, time(), $hashKey, $pLangCode ) );
 						$count++;
 					} elseif( !empty( $val ) && strtolower( $trans ) != strtolower( $val ) ) {
@@ -330,7 +330,7 @@ class BitLanguage extends BitBase {
 						}
 					}
 				} elseif( !empty( $val ) && (strtolower( $key ) != strtolower( $val )) ) {
-					$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`tran`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
+					$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`trans`,`source_hash`,`lang_code`,`last_modified`) VALUES (?,?,?,?)";
 					$trans = $this->mDb->query($query, array( $val, $hashKey, $pLangCode, time() ) );
 					$count++;
 				}
@@ -354,7 +354,7 @@ class BitLanguage extends BitBase {
 	function loadLanguage( $pLangCode ) {
 		$this->verifyMastersLoaded();
 		$this->verifyTranslationLoaded( $pLangCode );
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `tran`, im.`source_hash`, ivm.`version`
+		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`, ivm.`version`
 				  FROM `".BIT_DB_PREFIX."i18n_masters` im
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( im.`source_hash`=ivm.`source_hash` )
@@ -369,7 +369,7 @@ class BitLanguage extends BitBase {
 		if( $this->mLanguage == 'en' ) {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
-			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['tran'];
+			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['trans'];
 		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
@@ -392,7 +392,7 @@ class BitLanguage extends BitBase {
 			$fp = fopen( $cacheFile, 'w' );
 			fwrite( $fp, $tran );
 			fclose( $fp );
-			$this->mStrings[$this->mLanguage][$sourceHash]['tran'] = $tran;
+			$this->mStrings[$this->mLanguage][$sourceHash]['trans'] = $tran;
 			$ret = $tran;
 		}
 
@@ -415,7 +415,7 @@ class BitLanguage extends BitBase {
 		global $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
 		if ( $pLangCode ) {
-			$query = "SELECT `tran`, ivm.`version`, ivm.`source_hash` AS `usage_source_hash`
+			$query = "SELECT `trans`, ivm.`version`, ivm.`source_hash` AS `usage_source_hash`
 				FROM `".BIT_DB_PREFIX."i18n_masters` im
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( ivm.`source_hash`=im.`source_hash` AND ivm.`version`=? )
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( im.`source_hash`=ist.`source_hash` AND `lang_code`=? )
@@ -435,7 +435,7 @@ class BitLanguage extends BitBase {
 				}
 			}
 		}
-		return (isset( $ret['tran'] ) ? $ret['tran'] : NULL );
+		return (isset( $ret['trans'] ) ? $ret['trans'] : NULL );
 	}
 
 	function getSourceHash( $pString ) {

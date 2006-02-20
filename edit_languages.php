@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.6 2005/12/18 22:30:05 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.7 2006/02/20 23:33:31 lsces Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -56,7 +56,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		}
 		foreach( $tranStr as $key => $tran ) {
 			// display only the wanted strings and apply a textbox if the string is too long
-			if( !empty( $_REQUEST['un_trans'] ) && empty( $tran['tran'] ) || empty( $_REQUEST['un_trans'] ) ) {
+			if( !empty( $_REQUEST['un_trans'] ) && empty( $tran['trans'] ) || empty( $_REQUEST['un_trans'] ) ) {
 				if( preg_match( $pattern, $tran['source'] ) ) {
 					$tranStrings[$key] = $tran;
 					if( strlen( $tran['source'] ) > 70 ) {
@@ -106,10 +106,10 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$gBitLanguage->loadLanguage( $editLang );
 	$saveSuccess = NULL;
 	foreach( $_REQUEST['edit_trans'] as $sourceHash => $string ) {
-		if( $string != $gBitLanguage->mStrings[$editLang][$sourceHash]['tran'] ) {
+		if( $string != $gBitLanguage->mStrings[$editLang][$sourceHash]['trans'] ) {
 			$gBitLanguage->storeTranslationString( $editLang, $string, $sourceHash );
 			// update string in template as well
-			$tranStrings[$sourceHash]['tran'] = $string;
+			$tranStrings[$sourceHash]['trans'] = $string;
 			// this has to be the source, otherwise the translated string will enter the db and be recognised as a used master
 			$saveSuccess[] = $gBitLanguage->mStrings[$editLang][$sourceHash]['source'];
 		}

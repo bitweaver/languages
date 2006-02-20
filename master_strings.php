@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.4 2005/12/26 12:24:49 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.5 2006/02/20 23:33:31 lsces Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -74,7 +74,7 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 			if( isset( $matches[3][0] ) ) {
 				$tranStrings[$toLangCode]['guessed'] = TRUE;
 				$tranStrings[$toLangCode]['source_hash'] = $_REQUEST['source_hash'];
-				$tranStrings[$toLangCode]['tran'] = $matches[3][0];
+				$tranStrings[$toLangCode]['trans'] = $matches[3][0];
 				$tranStrings[$toLangCode]['lang_code'] = $toLangCode;
 			}
 		}
@@ -88,7 +88,7 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	foreach( $_REQUEST['edit_trans'] as $langCode => $string ) {
 		// store if (We had a string and it is now empty) or ( we have a new string and it is different from before)
 		if( (empty( $string ) && !empty( $tranStrings[$langCode] ))
-			|| (!empty( $string ) && (empty( $tranStrings[$langCode] ) || $string != $tranStrings[$langCode]['tran']) ) ) {
+			|| (!empty( $string ) && (empty( $tranStrings[$langCode] ) || $string != $tranStrings[$langCode]['trans']) ) ) {
 			$gBitLanguage->storeTranslationString( $langCode, $string, $sourceHash );
 		}
 	}
