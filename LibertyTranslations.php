@@ -28,10 +28,6 @@ class LibertyTranslations extends LibertyBase {
 		if( $this->verify( $pParamHash ) ) {
 			$table = BIT_DB_PREFIX."i18n_content_trans_map";
 			if( !@BitBase::verifyId( $pParamHash['translation_store']['translation_id'] ) && is_array( $pParamHash['translation_store'] ) ) {
-				// if we want to use a sequence
-				//$translationId = $this->mDb->GenID( 'i18n_content_trans_id_seq' );
-
-				// --- i can't work out why this isn't storing! driving me nuts ----
 				foreach( $pParamHash['translation_store'] as $store ) {
 					$result = $this->mDb->associateInsert( $table, $store );
 				}
@@ -50,13 +46,14 @@ class LibertyTranslations extends LibertyBase {
 		}
 
 		// if we have this page in this translation, we should inform the user somehow.
-		// in theory, this shouldn't happen, but there might be a situation where we end up with 2 users translating the same page at the same time.
+		// in theory, this shouldn't happen, but there might be a situation where we end up with 2 users translating the same page at the same time. (is this true?)
 
-		// we have a from_id but no translation_id, this is a new entry in the translation map and we need both, the original and the new content_id entered
+		// if we have a translation_id, we add this content to the same group of translations
 		if( @BitBase::verifyId( $pParamHash['translation_id'] ) ) {
 			$pParamHash['translation_store']['translation_id']     = $pParamHash['translation_id'];
 			$pParamHash['translation_store']['content_id']         = $pParamHash['content_id'];
-			} elseif( @BitBase::verifyId( $pParamHash['from_id'] ) ) {
+		} elseif( @BitBase::verifyId( $pParamHash['from_id'] ) ) {
+			// we have a from_id but no translation_id, this is a new entry in the translation map and we need both, the original and the new content_id entered
 			// we can simply use the from_id as the translation_id
 			$pParamHash['translation_store'][$i]['translation_id'] = $pParamHash['from_id'];
 			$pParamHash['translation_store'][$i]['content_id']     = $pParamHash['from_id'];
@@ -81,7 +78,6 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 	$trans = new LibertyTranslations( $pObject->mContentId );
 	$translationId = NULL;
 	$translations = $trans->getContentTranslations();
-	//vd($translations);
 	foreach( $gBitLanguage->mLanguageList as $lang_code => $language ) {
 		$translationsList[$lang_code] = $language;
 		if( !empty( $translations[$lang_code]['content_id'] ) ) {
@@ -90,8 +86,6 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 			$translationId = $translations[$lang_code]['translation_id'];
 		}
 	}
-	//vd($translationsList);
-	//vd($translationId);
 	$gBitSmarty->assign( 'translationsList', $translationsList );
 	$gBitSmarty->assign( 'translationId', $translationId );
 
