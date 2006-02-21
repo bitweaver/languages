@@ -85,7 +85,7 @@ $gBitInstaller->registerUserPermissions( LANGUAGES_PKG_NAME, array(
 ) );
 
 $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
-	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ar', 'ﺎﻠﻋﺮﺒﻳﺓ', 'Arabic' )",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`,`right_to_left`) VALUES ('ar', 'ﺎﻠﻋﺮﺒﻳﺓ', 'Arabic','y' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Català', 'Catalan')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('cs', 'Český', 'Czech')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('cy', 'Cymraeg', 'Welsh')",
@@ -95,9 +95,10 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('en-uk', 'British English', 'British English')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('es', 'Español', 'Spanish')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('el', 'Ελληνικά', 'Greek')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`,`right_to_left`) VALUES ('fa', 'فارسی', 'Farsi', 'y' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('fi', 'suomi', 'Finish')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('fr', 'Français', 'French')",
-	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('he', 'עברית', 'Hebrew' )",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`,`right_to_left`) VALUES ('he', 'עברית', 'Hebrew', 'y' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hr', 'Hrvatski', 'Croatian' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('hu', 'Magyar', 'Hungarian' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('it', 'Italiano', 'Italian')",
@@ -121,7 +122,7 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tr', 'Türkçe', 'Turkish'  )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('tv', 'Tuvaluan', 'Tuvaluan' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('uk', 'Українська', 'Ukrainian')",
-	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ur', 'اردو', 'Urdu')",
+	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`,`right_to_left`) VALUES ('ur', 'اردو', 'Urdu', 'y')",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', '简体中文', 'Chinese')",
 ) );
 
