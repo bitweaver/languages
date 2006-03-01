@@ -51,9 +51,9 @@ if (isset($_REQUEST["prefs"])) {
 		byref_set_value ($britem, NULL, LANGUAGES_PKG_NAME);
 	}
 	global $gBitLanguage;
-	$gBitLanguage->setLanguage( $gBitSystem->getPreference( 'bitlanguage' ) );
+	$gBitLanguage->setLanguage( $gBitSystem->getConfig( 'bitlanguage' ) );
 } else {
-	$gBitSmarty->assign("language", $gBitSystem->getPreference("language", "en"));
+	$gBitSmarty->assign("language", $gBitSystem->getConfig("language", "en"));
 }
 
 // Get list of available languages

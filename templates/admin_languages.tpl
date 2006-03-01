@@ -6,7 +6,7 @@
 		{forminput}
 			<select name="bitlanguage" id="bitlanguage">
 				{foreach from=$languages key=langCode item=lang}
-					<option value="{$langCode}" {if $gBitSystemPrefs.bitlanguage eq $langCode}selected="selected"{/if}>{$lang.full_name|escape}</option>
+					<option value="{$langCode}" {if $gBitSystem->getConfig('bitlanguage') eq $langCode}selected="selected"{/if}>{$lang.full_name|escape}</option>
 				{/foreach}
 			</select>
 			{formhelp note="Select the default language of your site."}
@@ -17,7 +17,7 @@
 		<div class="row">
 			{formlabel label=`$output.label` for=$feature}
 			{forminput}
-				{html_checkboxes name=$feature values="y" checked=`$gBitSystemPrefs.$feature` labels=false id=$feature}
+				{html_checkboxes name=$feature values="y" checked=`$gBitSystem->getConfig('')$feature` labels=false id=$feature}
 				{formhelp hash=$output}
 			{/forminput}
 		</div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.18 2006/02/20 23:33:31 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.19 2006/03/01 18:35:15 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -47,7 +47,7 @@ class BitLanguage extends BitBase {
 			}
 		}
 		if( empty( $this->mLanguage ) ) {
-			$this->mLanguage = $gBitSystem->getPreference('bitlanguage', 'en');
+			$this->mLanguage = $gBitSystem->getConfig('bitlanguage', 'en');
 		}
 	}
 

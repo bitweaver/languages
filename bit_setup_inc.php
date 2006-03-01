@@ -11,7 +11,7 @@ $gBitSystem->registerPackage( $registerHash );
 // **********  BABELFISH  ************
 if ($gBitSystem->isFeatureActive('babelfish') ) {
 	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
-	$gBitSmarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getPreference('language', 'en') ));
+	$gBitSmarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getConfig('language', 'en') ));
 }
 if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
 	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
