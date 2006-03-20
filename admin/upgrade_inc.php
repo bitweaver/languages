@@ -14,29 +14,29 @@ array( 'DATADICT' => array(
 	)),
 	array( 'CREATE' => array (
 		'tiki_i18n_languages' => "
-		lang_code C(32) PRIMARY,
-		native_name C(255),
-		english_name C(255),
-		is_disabled C(1)
+			lang_code C(32) PRIMARY,
+			native_name C(255),
+			english_name C(255),
+			is_disabled C(1)
 		",
 
 		'tiki_i18n_masters' => "
-		source_hash C(32) PRIMARY,
-		package C(100),
-		created I8 NOTNULL,
-		source X NOTNULL
+			source_hash C(32) PRIMARY,
+			package C(100),
+			created I8 NOTNULL,
+			source X NOTNULL
 		",
 
 		'tiki_i18n_strings' => "
-		source_hash C(32) PRIMARY,
-		lang_code C(32) PRIMARY,
-		last_modified I8 NOTNULL,
-		tran X NOTNULL
+			source_hash C(32) PRIMARY,
+			lang_code C(32) PRIMARY,
+			last_modified I8 NOTNULL,
+			tran X NOTNULL
 		",
 
 		'tiki_i18n_version_map' => "
-		source_hash C(32) PRIMARY,
-		version C(32)
+			source_hash C(32) PRIMARY,
+			version C(32)
 		"
 	)),
 )),
