@@ -101,6 +101,21 @@ array( 'DATADICT' => array(
 		'tiki_i18n_strings' => 'i18n_strings',
 		'tiki_i18n_version_map' => 'i18n_version_map',
 	)),
+	array( 'ALTER' => array(
+		'i18n_languages' => array( '`left_to_right`', 'VARCHAR(1)' ),
+	)),
+	array( 'CREATE' => array (
+		'i18n_content_trans_map' => "
+			content_id I4 NOTNULL,
+			translation_id I4 NOTNULL
+			CONSTRAINT ', CONSTRAINT `liberty_translation_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )'
+		",
+	)),
+	array( 'RENAMECOLUMN' => array(
+		'i18n_strings' => array(
+			'`value`' => 'pref_value'
+		),
+	)),
 )),
 		)
 	),
