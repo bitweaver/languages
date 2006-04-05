@@ -102,7 +102,9 @@ array( 'DATADICT' => array(
 		'tiki_i18n_version_map' => 'i18n_version_map',
 	)),
 	array( 'ALTER' => array(
-		'i18n_languages' => array( '`left_to_right`', 'VARCHAR(1)' ),
+		'i18n_languages' => array(
+			'left_to_right' => array( '`left_to_right`', 'VARCHAR(1)' ),
+		)
 	)),
 	array( 'CREATE' => array (
 		'i18n_content_trans_map' => "
@@ -113,7 +115,7 @@ array( 'DATADICT' => array(
 	)),
 	array( 'RENAMECOLUMN' => array(
 		'i18n_strings' => array(
-			'`value`' => 'pref_value'
+			'`tran`' => '`trans` X NOTNULL'
 		),
 	)),
 )),
