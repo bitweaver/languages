@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.7 2006/02/20 23:33:31 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.8 2006/04/11 13:05:29 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -15,7 +15,7 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-$gBitSystem->verifyPermission( 'bit_p_edit_languages' );
+$gBitSystem->verifyPermission( 'p_languages_edit' );
 
 // Get available languages from DB
 $languages = $gBitLanguage->listLanguages();
@@ -69,7 +69,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 	}
 } elseif( isset($_REQUEST["delete_language"] ) ) {
-	if( $gBitUser->hasPermission( 'bit_p_delete_languages' ) ) {
+	if( $gBitUser->hasPermission( 'p_languages_delete' ) ) {
 		if( isset( $_REQUEST["confirm"] ) ) {
 			$gBitLanguage->expungeLanguage( $_REQUEST['delete_lang_code'] );
 			unset( $languages[$_REQUEST['delete_lang_code']] );
@@ -84,7 +84,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 			$gBitSystem->confirmDialog( $formHash,$msgHash );
 		}
 	}
-} elseif( isset( $_REQUEST["save_language"] ) && $gBitUser->hasPermission( 'bit_p_create_languages' ) ) {
+} elseif( isset( $_REQUEST["save_language"] ) && $gBitUser->hasPermission( 'p_languages_create' ) ) {
 	if( $gBitLanguage->storeLanguage( $_REQUEST ) ) {
 		$languages = $gBitLanguage->listLanguages();
 		$gBitSmarty->assign( 'saveSuccess', tra( 'The language has been saved.' ) );

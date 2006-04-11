@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.5 2006/02/20 23:33:31 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.6 2006/04/11 13:05:29 squareing Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -13,7 +13,7 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-$gBitSystem->verifyPermission( 'bit_p_edit_master_strings' );
+$gBitSystem->verifyPermission( 'p_languages_edit_master' );
 
 $languages = $gBitLanguage->listLanguages();
 $gBitSmarty->assign_by_ref( 'languages', $languages );

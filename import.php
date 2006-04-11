@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.8 2006/02/20 23:33:31 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.9 2006/04/11 13:05:29 squareing Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -14,7 +14,7 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-$gBitSystem->verifyPermission( 'bit_p_import_languages' );
+$gBitSystem->verifyPermission( 'p_languages_import' );
 
 $impMsg = array();
 
