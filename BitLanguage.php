@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.19 2006/03/01 18:35:15 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.20 2006/04/14 20:25:51 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -421,7 +421,7 @@ class BitLanguage extends BitBase {
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( im.`source_hash`=ist.`source_hash` AND `lang_code`=? )
 				WHERE im.`source_hash`=?";
 			$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
-			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'record_untranslated' ) ) {
+			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'languages_record_untranslated' ) ) {
 				$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."i18n_masters` WHERE `source_hash`=?";
 				$source = $this->mDb->getOne($query, array( $this->getSourceHash( $pString ) ) );
 				if( empty( $source ) ) {

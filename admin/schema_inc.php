@@ -72,7 +72,7 @@ $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
 	//array(LANGUAGES_PKG_NAME, 'babelfish','n'),
 	//array(LANGUAGES_PKG_NAME, 'babelfish_logo','n'),
-	array(LANGUAGES_PKG_NAME, 'record_untranslated','y'),
+	array(LANGUAGES_PKG_NAME, 'languages_record_untranslated','y'),
 ) );
 
 // ### Default UserPermissions
