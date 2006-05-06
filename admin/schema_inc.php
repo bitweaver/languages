@@ -63,15 +63,10 @@ $gBitInstaller->registerSchemaIndexes( LANGUAGES_PKG_NAME, $indices );
 $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 	'description' => "This package allows you to translate your site into a different language.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-	'version' => '0.1',
-	'state' => 'experimental',
-	'dependencies' => '',
 ) );
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
-	//array(LANGUAGES_PKG_NAME, 'babelfish','n'),
-	//array(LANGUAGES_PKG_NAME, 'babelfish_logo','n'),
 	array(LANGUAGES_PKG_NAME, 'languages_record_untranslated','y'),
 ) );
 
