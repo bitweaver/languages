@@ -5,6 +5,7 @@ $registerHash = array(
 	'package_name' => 'languages',
 	'package_path' => dirname( __FILE__ ).'/',
 	'service' => LIBERTY_SERVICE_TRANSLATION,
+	'required_package'=> TRUE,
 );
 $gBitSystem->registerPackage( $registerHash );
 
