@@ -1,5 +1,4 @@
 <?php
-global $gBitSystem, $gLibertySystem, $gBitLanguage, $gBitUser, $gBitSmarty;
 
 $registerHash = array(
 	'package_name' => 'languages',
