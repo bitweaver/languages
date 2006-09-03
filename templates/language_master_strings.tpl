@@ -69,7 +69,7 @@
 
 				<ol>
 					{foreach from=$masterStrings key=sourceHash item=master}
-						<li><a href="{$smarty.server.PHP_SELF}?source_hash={$sourceHash}">{$master.source|escape}</a> {smartlink ititle="Delete Master String" ibiticon="liberty/delete_small" delete_master=1 source_hash=$sourceHash}</li>
+						<li><a href="{$smarty.server.PHP_SELF}?source_hash={$sourceHash}">{$master.source|escape}</a> {smartlink ititle="Delete Master String" ibiticon="icons/edit-delete" delete_master=1 source_hash=$sourceHash}</li>
 					{/foreach}
 				</ol>
 
