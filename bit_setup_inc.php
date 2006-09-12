@@ -18,7 +18,12 @@ if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
 	$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 }
 if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'p_languages_edit' ) ) {
-	$gBitSystem->registerAppMenu( LANGUAGES_PKG_NAME, ucfirst( LANGUAGES_PKG_DIR ), LANGUAGES_PKG_URL.'edit_languages.php', 'bitpackage:languages/menu_languages.tpl', 'Languages');
+	$menuHash = array(
+		'package_name'  => LANGUAGES_PKG_NAME,
+		'index_url'     => LANGUAGES_PKG_URL.'edit_languages.php',
+		'menu_template' => 'bitpackage:languages/menu_languages.tpl',
+	);
+	$gBitSystem->registerAppMenu( $menuHash );
 }
 
 if( $gBitSystem->isFeatureActive( 'users_preferences' ) && $gBitUser->isRegistered() ) {
