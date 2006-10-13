@@ -1,5 +1,15 @@
 <?php
-class LibertyTranslations extends LibertyBase {
+/**
+ * @package languages
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.10 2006/10/13 12:44:38 lsces Exp $
+ *
+ * @author ?
+ */
+
+/**
+ * @package languages
+ */
+ class LibertyTranslations extends LibertyBase {
 	function LibertyTranslations( $pContentId = NULL ) {
 		$this->mContentId = $pContentId;
 		LibertyBase::LibertyBase();
