@@ -38,9 +38,9 @@
 						{forminput}
 							{* if results are guessed, we don't need to escape *}
 							{if $masterStrings.$sourceHash.textarea}
-								<textarea name="edit_trans[{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.tran}{else}{$tranStrings.$langCode.tran|escape}{/if}</textarea>
+								<textarea name="edit_trans[{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.trans}{else}{$tranStrings.$langCode.trans|escape|stripslashes}{/if}</textarea>
 							{else}
-								<input type="text" name="edit_trans[{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.tran}{else}{$tranStrings.$langCode.tran|escape}{/if}" size="45" maxlength="255" />
+								<input type="text" name="edit_trans[{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.trans}{else}{$tranStrings.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="255" />
 							{/if}
 						{/forminput}
 					</div>

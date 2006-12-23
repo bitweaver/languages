@@ -140,9 +140,9 @@
 							{forminput}
 								{$tran.source|escape}<br/>
 								{if $tran.textarea}
-									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.tran|escape}</textarea>
+									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 								{else}
-									<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.tran|escape}" size="45" maxlength="255" />
+									<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
 								{/if}
 							{/forminput}
 						</div>

@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.8 2006/04/11 13:05:29 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.9 2006/12/23 09:05:46 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -41,8 +41,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
 		$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
 	} else {
-		$gBitLanguage->loadLanguage( $editLang );
-		$tranStr = $gBitLanguage->mStrings[$editLang];
+		// what strings do we want to display?
 		if( empty( $_REQUEST['char'] ) ) {
 			$pattern = "/^a/i";
 		} elseif ( $_REQUEST['char'] == '0-9' ) {
@@ -54,6 +53,8 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 		} else {
 			$pattern = "/^".$_REQUEST['char']."/i";
 		}
+		$gBitLanguage->loadLanguage( $editLang );
+		$tranStr = $gBitLanguage->mStrings[$editLang];
 		foreach( $tranStr as $key => $tran ) {
 			// display only the wanted strings and apply a textbox if the string is too long
 			if( !empty( $_REQUEST['un_trans'] ) && empty( $tran['trans'] ) || empty( $_REQUEST['un_trans'] ) ) {

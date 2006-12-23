@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.20 2006/04/14 20:25:51 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.21 2006/12/23 09:05:46 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -264,7 +264,7 @@ class BitLanguage extends BitBase {
 				  FROM `".BIT_DB_PREFIX."i18n_strings` ist
 					WHERE ist.`source_hash`=?
 				  ORDER BY ist.`lang_code`";
-		return( $this->mDb->getAssoc($query, array( $pSourceHash ) ) );
+		return( $this->mDb->getAssoc( $query, array( $pSourceHash ) ) );
 	}
 
 	function getTranslationString( $pSourceHash, $pLangCode ) {
@@ -274,7 +274,7 @@ class BitLanguage extends BitBase {
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  WHERE im.`source_hash`=?
 				  ORDER BY im.`source`";
-		return( $this->mDb->getAssoc($query, array( $pLangCode, $pSourceHash ) ) );
+		return( $this->mDb->getAssoc( $query, array( $pLangCode, $pSourceHash ) ) );
 	}
 
 	function getLanguageFile( $pLangCode ) {
@@ -359,7 +359,7 @@ class BitLanguage extends BitBase {
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( im.`source_hash`=ivm.`source_hash` )
 				  ORDER BY im.`source`";
-		$this->mStrings[$pLangCode] = $this->mDb->getAssoc($query,array( $pLangCode ) );
+		$this->mStrings[$pLangCode] = $this->mDb->getAssoc( $query, array( $pLangCode ) );
 	}
 
 	function translate( $pString ) {

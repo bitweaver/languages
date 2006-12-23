@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.6 2006/04/11 13:05:29 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.7 2006/12/23 09:05:46 squareing Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -60,7 +60,7 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	}
 	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
 	$masterString = $gBitLanguage->mStrings['master'][$_REQUEST['source_hash']];
-	$tranArray = array( 'de', 'es', 'fr', 'it', 'pt', 'ja', 'ko', 'zh-CN' );
+	$tranArray = array( 'ar', 'de', 'es', 'fr', 'it', 'pt', 'ja', 'ko', 'ru', 'zh-CN' );
 	$tranStrings = array();
 	foreach( $tranArray as $toLangCode ) {
 		$handle = fopen("http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $masterString['source'] )."&langpair=en|$toLangCode", "r");
@@ -70,11 +70,11 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 				$contents .= fread($handle, 8192);
 			}
 			fclose($handle);
-			preg_match_all( "/(.*)(<textarea name=q[^>]*>)([^>]*)<\/textarea>.*/", $contents, $matches );
-			if( isset( $matches[3][0] ) ) {
+			preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $contents, $matches );
+			if( isset( $matches[1][0] ) ) {
 				$tranStrings[$toLangCode]['guessed'] = TRUE;
 				$tranStrings[$toLangCode]['source_hash'] = $_REQUEST['source_hash'];
-				$tranStrings[$toLangCode]['trans'] = $matches[3][0];
+				$tranStrings[$toLangCode]['trans'] = trim( $matches[1][0] );
 				$tranStrings[$toLangCode]['lang_code'] = $toLangCode;
 			}
 		}
