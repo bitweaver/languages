@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.21 2006/12/23 09:05:46 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.22 2006/12/25 15:56:42 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -249,9 +249,11 @@ class BitLanguage extends BitBase {
 
 	function storeTranslationString( $pLangCode, $pString, $pSourceHash ) {
 		$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_strings` WHERE `source_hash`=? AND `lang_code`=?";
-		$result = $this->mDb->query( $query, array($pSourceHash, $pLangCode) );
+		$result = $this->mDb->query( $query, array( $pSourceHash, $pLangCode ) );
 
-		if( !empty( $pString ) ) {
+		// we don't need things where '{$menu.menu_title}' is the full string in the database
+		// if you change this regexp, please modify the one in kernel/smarty_bit/prefilter.tr.php as well (approx line 76)
+		if( !empty( $pString ) && !preg_match( '!^(\{\$[^\}]*\})+$!', $pString ) ) {
 			$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`lang_code`,`trans`,`source_hash`, `last_modified`) values (?,?,?,?)";
 			$result = $this->mDb->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
 		}
