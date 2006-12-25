@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.9 2006/12/23 09:05:46 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.10 2006/12/25 15:23:03 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -108,7 +108,11 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$saveSuccess = NULL;
 	foreach( $_REQUEST['edit_trans'] as $sourceHash => $string ) {
 		if( $string != $gBitLanguage->mStrings[$editLang][$sourceHash]['trans'] ) {
-			$gBitLanguage->storeTranslationString( $editLang, $string, $sourceHash );
+			// we need to remove the $_REQUEST slashes here to avoid stuff like: 
+			// {$gBitSystem->getConfig(\'stuff\')} in the translated strings - 
+			// it will kill the site since smarty won't be able to interpret 
+			// the template anymore --xing
+			$gBitLanguage->storeTranslationString( $editLang, stripslashes( $string ), $sourceHash );
 			// update string in template as well
 			$tranStrings[$sourceHash]['trans'] = $string;
 			// this has to be the source, otherwise the translated string will enter the db and be recognised as a used master
