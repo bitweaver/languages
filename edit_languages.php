@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.10 2006/12/25 15:23:03 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.11 2006/12/27 15:37:14 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -105,25 +105,29 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
 	$editLang = $_REQUEST['lang'];
 	$gBitLanguage->loadLanguage( $editLang );
-	$saveSuccess = NULL;
+	$storedStrings = NULL;
 	foreach( $_REQUEST['edit_trans'] as $sourceHash => $string ) {
 		if( $string != $gBitLanguage->mStrings[$editLang][$sourceHash]['trans'] ) {
 			// we need to remove the $_REQUEST slashes here to avoid stuff like: 
 			// {$gBitSystem->getConfig(\'stuff\')} in the translated strings - 
 			// it will kill the site since smarty won't be able to interpret 
 			// the template anymore --xing
-			$gBitLanguage->storeTranslationString( $editLang, stripslashes( $string ), $sourceHash );
+			if( ini_get( 'magic_quotes_gpc' ) ) {
+				$string = stripslashes( $string );
+			}
+			$gBitLanguage->storeTranslationString( $editLang, $string, $sourceHash );
 			// update string in template as well
 			$tranStrings[$sourceHash]['trans'] = $string;
 			// this has to be the source, otherwise the translated string will enter the db and be recognised as a used master
-			$saveSuccess[] = $gBitLanguage->mStrings[$editLang][$sourceHash]['source'];
+			$storedStrings[] = $gBitLanguage->mStrings[$editLang][$sourceHash]['source'];
 		}
 	}
 	$tranStrings = $gBitLanguage->getTranslationString( $sourceHash, $editLang );
 	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
 	$gBitSmarty->assign( 'lang', $editLang );
 	$gBitSmarty->assign( 'translate', TRUE );
-	$gBitSmarty->assign( 'saveSuccess', $saveSuccess );
+	$gBitSmarty->assign( 'saveSuccess', tra( "The following items have been saved successfully" ).":" );
+	$gBitSmarty->assign( 'storedStrings', $storedStrings );
 }
 
 $gBitSystem->display( 'bitpackage:languages/edit_languages.tpl', tra( 'Edit Translations' ) );

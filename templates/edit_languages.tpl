@@ -115,11 +115,11 @@
 					{formfeedback success=$saveSuccess}
 					{form legend="Clear Language Cache"}
 						<div class="row">
-							{tr}Clear the cached language translations for all languages.{/tr}
-						</div>
-
-						<div class="row submit">
-							<input type="submit" name="clear_cache" value="{tr}Clear Cache{/tr}" />
+							{formlabel label="Clear Language Cache" for="clear_cache"}
+							{forminput}
+								<input type="submit" name="clear_cache" id="clear_cache" value="{tr}Clear Cache{/tr}" />
+								{formhelp note="Clear the cached language translations for all languages. It is necessary to clear the cache when you have made changes to the language database."}
+							{/forminput}
 						</div>
 					{/form}
 				{/jstab}
@@ -127,38 +127,54 @@
 
 		{else}
 
-			{form legend="Edit `$languages.$lang.full_name` Language"}
+			{form}
 				{alphabar iall=1 lang=$lang translate=1 un_trans=$unTrans all_trans=$allTrans}
 
 				<input type="hidden" name="lang" value="{$lang}" />
 				<input type="hidden" name="char" value="{$char}" />
 
-				{foreach from=$tranStrings key=sourceHash item=tran}
-					{if $allTrans || (!$gBitSystem->isFeatureActive( 'track_translation_usage' ) || $tran.version)}
-						<div class="row{if !$tran.version and !allTrans} warning{/if}">
-							{formlabel label="Translate" for="h_$sourceHash"}
+				{if $storedStrings}
+					{formfeedback success=$saveSuccess}
+					<ul>
+						{foreach from=$storedStrings item=string}
+							<li>{$string}</li>
+						{/foreach}
+					</ul>
+
+					{legend legend="Clear Language Cache"}
+						<div class="row">
+							{formlabel label="Clear Language Cache" for="clear_cache"}
 							{forminput}
-								{$tran.source|escape}<br/>
-								{if $tran.textarea}
-									<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
-								{else}
-									<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
-								{/if}
+								<input type="submit" name="clear_cache" id="clear_cache" value="{tr}Clear Cache{/tr}" />
+								{formhelp note="Clear the cached language translations for all languages. It is necessary to clear the cache when you have made changes to the language database."}
 							{/forminput}
 						</div>
-					{/if}
-				{/foreach}
-
-				{if $saveSuccess}
-					{tr}The following items have been saved successfully{/tr}
-					{formfeedback success=$saveSuccess}
+					{/legend}
 				{else}
-					<div class="row submit">
-						<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
-						<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
-					</div>
+					{legend legend="Edit `$languages.$lang.full_name` Language"}
+						{foreach from=$tranStrings key=sourceHash item=tran}
+							{if $allTrans || (!$gBitSystem->isFeatureActive( 'track_translation_usage' ) || $tran.version)}
+								<div class="row{if !$tran.version and !allTrans} warning{/if}">
+									{formlabel label="Translate" for="h_$sourceHash"}
+									{forminput}
+										{$tran.source|escape}<br/>
+										{if $tran.textarea}
+											<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
+										{else}
+											<input name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
+										{/if}
+									{/forminput}
+								</div>
+							{/if}
+						{/foreach}
 
-					{alphabar iall=1 lang=$lang translate=1 un_trans=$unTrans all_trans=$allTrans}
+						<div class="row submit">
+							<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
+							<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
+						</div>
+
+						{alphabar iall=1 lang=$lang translate=1 un_trans=$unTrans all_trans=$allTrans}
+					{/legend}
 				{/if}
 			{/form}
 		{/if}
