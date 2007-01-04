@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.7 2006/12/23 09:05:46 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.8 2007/01/04 16:16:50 squareing Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -17,6 +17,7 @@ $gBitSystem->verifyPermission( 'p_languages_edit_master' );
 
 $languages = $gBitLanguage->listLanguages();
 $gBitSmarty->assign_by_ref( 'languages', $languages );
+$feedback = $masterMsg = array();
 
 if( !empty( $_REQUEST['change_master'] ) ) {
 	$newSourceHash = $gBitLanguage->getSourceHash( $_REQUEST['edit_master'] );
@@ -33,23 +34,33 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
 	$gBitSmarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
 	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
-} elseif( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) ) {
+} elseif( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) && is_array( $_REQUEST['source_hash'] ) ) {
 	if( empty( $_REQUEST['confirm'] ) ) {
 		$gBitSystem->setBrowserTitle( tra( 'Confirm Delete' ) );
 		$formHash['delete_master'] = TRUE;
-		$formHash['source_hash'] = $_REQUEST['source_hash'];
 		$msgHash = array(
-			'label' => tra( 'Delete Master String' ),
-			'confirm_item' => empty( $_REQUEST['edit_master'] ) ? NULL : $_REQUEST['edit_master'],
+			'label' => tra( 'Delete Master Strings' ),
 			'warning' => tra( 'This will remove the language master string. If you are tracking translations and the string is still used, it will be inserted again, however, any translations associated with it will be lost.' ),
+			'confirm_item' => tra( "The following Master Strings will be removed" ).":",
 		);
+		foreach( $_REQUEST['source_hash'] as $source_hash ) {
+			$gBitLanguage->loadMasterStrings( $source_hash );
+			$formHash['input'][] = '<input type="hidden" name="source_hash[]" value="'.$source_hash.'"/>'.$gBitLanguage->mStrings['master'][$source_hash]['source'];
+		}
 		$gBitSystem->confirmDialog( $formHash, $msgHash );
-		die;
 	} else {
-		if( $gBitLanguage->expungeMasterString( $_REQUEST['source_hash'] ) ) {
-			$gBitSmarty->assign( 'successMsg', 'The master string was deleted successfully.' );
-		} else {
-			$gBitSmarty->assign( 'errorMsg', 'The master string could not be deleted.' );
+		foreach( $_REQUEST['source_hash'] as $source_hash ) {
+			if( $gBitLanguage->expungeMasterString( $source_hash ) ) {
+				$success = TRUE;
+			} else {
+				$error = TRUE;
+			}
+		}
+
+		if( !empty( $error ) ) {
+			$feedback['error'] = 'At least one of the master strings could not be deleted.';
+		} elseif( !empty( $success ) ) {
+			$feedback['success'] = 'The requested master strings were successfully deleted.';
 		}
 	}
 } elseif( !empty( $_REQUEST['guess_translations'] ) ) {
@@ -131,6 +142,7 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 }
 
 // Display the template
-$gBitSmarty->assign_by_ref( 'masterMsg', $masterMsg );
+$gBitSmarty->assign( 'masterMsg', $masterMsg );
+$gBitSmarty->assign( 'feedback', $feedback );
 $gBitSystem->display( 'bitpackage:languages/language_master_strings.tpl', 'Edit Master Strings' );
 ?>

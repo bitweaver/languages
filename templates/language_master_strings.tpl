@@ -11,7 +11,7 @@
 			{form legend="Edit Master String"}
 				<input type="hidden" name="source_hash" value="{$sourceHash}" />
 				{formfeedback hash=$masterMsg}
-				{formfeedback warning="{tr}You will need to <a href=\"`$smarty.const.LANGUAGES_PKG_URL`edit_languages.php\">clear the System Cache</a> to see the changes.{/tr}"}
+				{formfeedback warning="You will need to clear the System Cache to see the changes." link="languages/edit_languages.php/System Cache"}
 
 				<div class="row">
 					{formlabel label="Master String" for="master_string"}
@@ -60,21 +60,24 @@
 
 		{else}
 
-			{legend legend="Translations"}
-				{minifind name="Search master strings" sort_mode=$sort_mode}
-
+			{minifind name="Search master strings" sort_mode=$sort_mode}
+			{form legend="Translations"}
 				{alphabar iall=1}
 
-				{formfeedback error=$errorMsg success=$successMsg}
+				{formfeedback hash=$feedback}
 
 				<ol>
 					{foreach from=$masterStrings key=sourceHash item=master}
-						<li><a href="{$smarty.server.PHP_SELF}?source_hash={$sourceHash}">{$master.source|escape}</a> {smartlink ititle="Delete Master String" ibiticon="icons/edit-delete" delete_master=1 source_hash=$sourceHash}</li>
+					<li><input type="checkbox" title="{tr}Delete{/tr}" name="source_hash[]" value="{$sourceHash}" /> <a href="{$smarty.server.PHP_SELF}?source_hash={$sourceHash}">{$master.source|escape}</a></li>
 					{/foreach}
 				</ol>
 
+				<div class="submit">
+					<input type="submit" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
+				</div>
+
 				{alphabar iall=1}
-			{/legend}
+			{/form}
 
 		{/if}
 	</div><!-- end .body -->
