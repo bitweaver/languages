@@ -61,10 +61,17 @@
 		{else}
 
 			{minifind name="Search master strings" sort_mode=$sort_mode}
-			{form legend="Translations"}
+			{form legend="Translations" id=formid}
 				{alphabar iall=1}
 
 				{formfeedback hash=$feedback}
+
+				{if $masterStrings}
+					<script type="text/javascript">/* <![CDATA[ check / uncheck all */
+						document.write("<input name=\"switcher\" id=\"switcher\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form.id,'source_hash[]','switcher')\" />");
+						document.write("<label for=\"switcher\">{tr}Select All{/tr}</label> ");
+					/* ]]> */</script>
+				{/if}
 
 				<ol>
 					{foreach from=$masterStrings key=sourceHash item=master}
