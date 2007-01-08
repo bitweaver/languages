@@ -157,7 +157,7 @@
 								<div class="row{if !$tran.version and !allTrans} warning{/if}">
 									{formlabel label="Translate" for="h_$sourceHash"}
 									{forminput}
-										{$tran.source|escape}<br/>
+										{$tran.source|escape|nl2br}<br/>
 										{if $tran.textarea}
 											<textarea name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 										{else}
