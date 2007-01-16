@@ -52,7 +52,7 @@
 							<br/>
 							<label><input type="radio" name="overwrite" value="y" />
 								{tr}Overwrite changes in the local database{/tr}</label>
-       <br/>
+							<br/>
 							<label><input type="radio" name="overwrite" value="r" checked="checked" />
 								{tr}Manually resolve conflicts between database and import file{/tr}</label>
 						{/forminput}
@@ -78,20 +78,32 @@
 						{/forminput}
 					</div>
 
+					{$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
+						<div class="row">
+							{formlabel label="Export All Translations" for="all_trans"}
+							{forminput}
+								<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />
+								{formhelp note="This will export strings for all versions of bitweaver. It is generally a good idea to export these."}
+							{/forminput}
+						</div>
+					{else}
+						<input type="hidden" name="all_trans" value="y" />
+					{/if}
+
 					<div class="row">
-						{formlabel label="Export All Translations" for="all_trans"}
+						{formlabel label="Include Empty" for="include_empty"}
 						{forminput}
-							<input type="checkbox" name="all_trans" id="all_trans" {if $allTrans}checked="checked"{/if} value="y" />
-							{formhelp note="This will export all strings, even ones that are not in use. if you have not modified these strings, there isn't really much point in including them."}
+							<input type="checkbox" name="include_empty" id="include_empty" value="y" />
+							{formhelp note="This will include empty translation strings as well. This is generally not needed."}
 						{/forminput}
 					</div>
 
 					<div class="row">
 						{formlabel label="Destination" for="is_disabled"}
 						{forminput}
-							<input type="radio" name="target" value="temp" />Save to temporary file<br/>
+							<label><input type="radio" name="target" value="temp" /> {tr}Save to temporary file{/tr}</label><br />
 							{formhelp note="This will save the file to a temporary location on the server."}
-							<input type="radio" name="target" value="download" checked="checked" />Download translation file<br/>
+							<label><input type="radio" name="target" value="download" checked="checked" /> {tr}Download translation file{/tr}</label><br/>
 							{formhelp note="Save this to languages/lang/(lang_code)/language.php where lang_code is the language your are downloading."}
 						{/forminput}
 					</div>

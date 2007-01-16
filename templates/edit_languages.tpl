@@ -66,7 +66,7 @@
 							{/forminput}
 						</div>
 
-						{if $gBitSystem->isFeatureActive( 'track_translation_usage' )}
+						{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
 							<div class="row">
 								{formlabel label="Display all strings" for="all_trans"}
 								{forminput}
@@ -153,7 +153,7 @@
 				{else}
 					{legend legend="Edit `$languages.$lang.full_name` Language"}
 						{foreach from=$tranStrings key=sourceHash item=tran}
-							{if $allTrans || (!$gBitSystem->isFeatureActive( 'track_translation_usage' ) || $tran.version)}
+							{if $allTrans || (!$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) || $tran.version)}
 								<div class="row{if !$tran.version and !allTrans} warning{/if}">
 									{formlabel label="Translate" for="h_$sourceHash"}
 									{forminput}

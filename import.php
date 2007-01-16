@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.10 2007/01/10 20:48:23 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.11 2007/01/16 11:40:37 squareing Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -86,15 +86,18 @@ if (isset($_REQUEST["import"])) {
 
 	//vd($gBitLanguage->mStrings);
 	foreach( $gBitLanguage->mStrings[$_REQUEST['export_lang_code']] as $tran ) {
-		if( !empty( $_REQUEST['all_trans'] ) ||  ($tran['version'] == BIT_MAJOR_VERSION && !empty( $tran['trans'] ) ) ) {
-			$data .= "'" . str_replace( "'", "\\'", stripslashes( $tran["source"] ) ) . "' => '" . str_replace( "'", "\\'",stripslashes( $tran["trans"] ) ) . "',\n";
+		if( !empty( $_REQUEST['all_trans'] ) ||  ( $tran['version'] == BIT_MAJOR_VERSION && !empty( $tran['trans'] ))) {
+			if( !empty( $_REQUEST['include_empty'] ) || !empty( $tran['trans'] )) {
+				//$data .= "'" . str_replace( "'", "\\'", stripslashes( $tran["source"] )) . "' => '" . str_replace( "'", "\\'",stripslashes( $tran["trans"] )) . "',\n";
+				$data .= stripslashes( $tran["version"] ) . "\n";
+			}
 		}
 	}
 
 	$data = $data . ");\n?>";
 	if( $_REQUEST['target'] == 'download' ) {
 		header ("Content-type: application/unknown");
-		header ("Content-Disposition: inline; filename=language-".$langCode.".php");
+		header ("Content-Disposition: attachment; filename=language-".$langCode.".php");
 		echo $data;
 		exit (0);
 	} else {

@@ -67,7 +67,7 @@ $gBitInstaller->registerPackageInfo( LANGUAGES_PKG_NAME, array(
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
-	array(LANGUAGES_PKG_NAME, 'languages_record_untranslated','y'),
+	array( LANGUAGES_PKG_NAME, 'i18n_record_untranslated','y' ),
 ) );
 
 // ### Default UserPermissions

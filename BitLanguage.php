@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.22 2006/12/25 15:56:42 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.23 2007/01/16 11:40:37 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -29,7 +29,7 @@ class BitLanguage extends BitBase {
 		if (isset($_SESSION['bitlanguage'])) {
 			// users not logged that change the preference
 			$this->mLanguage = $_SESSION['bitlanguage'];
-		} elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $gBitSystem->isFeatureActive( 'browser_languages' )) {
+		} elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $gBitSystem->isFeatureActive( 'i18n_browser_languages' )) {
 			// Get supported languages
 			if( $browserLangs = split( ',', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ) ) {
 				foreach( $browserLangs as $bl ) {
@@ -372,7 +372,7 @@ class BitLanguage extends BitBase {
 			$ret = $pString;
 		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
 			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['trans'];
-		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
+		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
 			$ret = file_get_contents( $cacheFile );
 		} else {
 			if( empty( $this->mStrings[$this->mLanguage] ) ) {
@@ -399,7 +399,7 @@ class BitLanguage extends BitBase {
 		}
 
 		// interactive translation process
-		if( $gBitSystem->isFeatureActive( 'interactive_translation' ) ) {
+		if( $gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
 			if( empty( $gBitTranslationHash ) ) {
 				$gBitTranslationHash = array();
 			}
@@ -423,14 +423,14 @@ class BitLanguage extends BitBase {
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( im.`source_hash`=ist.`source_hash` AND `lang_code`=? )
 				WHERE im.`source_hash`=?";
 			$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
-			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'languages_record_untranslated' ) ) {
+			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'i18n_record_untranslated' ) ) {
 				$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."i18n_masters` WHERE `source_hash`=?";
 				$source = $this->mDb->getOne($query, array( $this->getSourceHash( $pString ) ) );
 				if( empty( $source ) ) {
 					$this->storeMasterString( array( 'source_hash' => $this->getSourceHash( $pString ), 'new_source' => $pString ) );
 				}
 			}
-			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'track_translation_usage' ) ) {
+			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) ) {
 				if( empty( $ret['usage_source_hash'] ) ) {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_version_map` (`source_hash`,`version`) VALUES (?,?)";
 					$trans = $this->mDb->query($query, array( $sourceHash, BIT_MAJOR_VERSION ) );
