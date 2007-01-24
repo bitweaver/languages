@@ -16,21 +16,21 @@
 					<div class="row">
 						{formlabel label="Master String"}
 						{forminput}
-								{$conflict.master}
+								{$conflict.master|escape|nl2br}
 						{/forminput}
 					</div>
 
 					<div class="row">
 						{formlabel label="Existing"}
 						{forminput}
-							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing}</label>
+							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing|escape|nl2br}</label>
 						{/forminput}
 					</div>
 
 					<div class="row">
 						{formlabel label="Imported"}
 						{forminput}
-							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="{$conflict.import}" /> {$conflict.import}</label>
+							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="{$conflict.import}" /> {$conflict.import|escape|nl2br}</label>
 						{/forminput}
 					</div>
 					<br/>
