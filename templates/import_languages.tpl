@@ -78,7 +78,7 @@
 						{/forminput}
 					</div>
 
-					{$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
+					{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
 						<div class="row">
 							{formlabel label="Export All Translations" for="all_trans"}
 							{forminput}
