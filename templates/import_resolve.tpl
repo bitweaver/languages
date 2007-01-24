@@ -2,9 +2,9 @@
 <div class="floaticon">{bithelp}</div>
 
 <div class="admin languages">
-    <div class="header">
-        <h1>{tr}Resolve Language Import Conflicts{/tr}</h1>
-    </div>
+	<div class="header">
+		<h1>{tr}Resolve Language Import Conflicts{/tr}</h1>
+	</div>
 
 	{formfeedback hash=$impmsg}
 
@@ -13,25 +13,27 @@
 			{foreach from=$impConflicts key=lang item=langConflicts}
 				<h2>{tr}Conflicts{/tr}: {$impLanguages.$lang.translated_name}</h2>
 				{foreach from=$langConflicts key=sourceHash item=conflict}
-				<div class="row">
-					{formlabel label="Master String"}
-					{forminput}
-							{$conflict.master}
-					{/forminput}
-				</div>
-				<div class="row">
-					{formlabel label="Existing"}
-					{forminput}
-							<input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing}
-					{/forminput}
-				</div>
-				<div class="row">
-					{formlabel label="Imported"}
-					{forminput}
-							<input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="{$conflict.import}" /> {$conflict.import}
-					{/forminput}
-				</div>
-				<br/>
+					<div class="row">
+						{formlabel label="Master String"}
+						{forminput}
+								{$conflict.master}
+						{/forminput}
+					</div>
+
+					<div class="row">
+						{formlabel label="Existing"}
+						{forminput}
+							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing}</label>
+						{/forminput}
+					</div>
+
+					<div class="row">
+						{formlabel label="Imported"}
+						{forminput}
+							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="{$conflict.import}" /> {$conflict.import}</label>
+						{/forminput}
+					</div>
+					<br/>
 				{/foreach}
 			{/foreach}
 
