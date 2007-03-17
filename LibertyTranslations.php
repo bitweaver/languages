@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.10 2006/10/13 12:44:38 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.11 2007/03/17 11:45:36 squareing Exp $
  *
  * @author ?
  */
@@ -16,7 +16,7 @@
 	}
 
 	function getContentTranslations() {
-		global $gBitSystem;
+		global $gBitSystem, $gBitLanguage;
 		$ret = array();
 		if( @BitBase::verifyId( $this->mContentId ) ) {
 			$translationId = $this->mDb->getOne( "SELECT `translation_id` FROM `".BIT_DB_PREFIX."i18n_content_trans_map` WHERE `content_id`=?", array( $this->mContentId ) );
@@ -27,6 +27,10 @@
 					WHERE ictm.`translation_id`=?";
 				$result = $this->mDb->query( $query, array( $translationId ) );
 				while( $aux = $result->fetchRow() ) {
+					// default to site language
+					if( empty( $aux['lang_code'] )) {
+						$aux['lang_code'] = $gBitLanguage->mLanguage;
+					}
 					$ret[$aux['lang_code']] = $aux;
 				}
 			}
@@ -83,6 +87,19 @@
 
 // ================== service functions ==================
 
+function translation_content_display( &$pObject ) {
+	global $gBitSmarty, $gBitLanguage;
+	$trans = new LibertyTranslations( $pObject->mContentId );
+	$translations = $trans->getContentTranslations();
+	// merge this information that we can display the appropriate flags
+	if( count( $translations ) > 1 ) {
+		foreach( $translations as $key => $trans ) {
+			$translations[$key] = array_merge( $gBitLanguage->mLanguageList[$trans['lang_code']], $trans );
+		}
+		$gBitSmarty->assign( 'i18nTranslations', $translations );
+	}
+}
+
 function translation_content_edit( &$pObject, &$pParamHash ) {
 	global $gBitLanguage, $gBitSmarty, $gBitUser;
 	$trans = new LibertyTranslations( $pObject->mContentId );
@@ -103,14 +120,34 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 		// load the content we're translating from
 		$transObject = $trans->getLibertyObject( $_REQUEST['i18n']['from_id'] );
 		$gBitSmarty->assign_by_ref( "translateFrom", $transObject );
+
+		// attempt google translation
+		if( !empty( $_REQUEST['i18n']['google'] ) && !empty( $transObject->mInfo['data'] )) {
+			// temporarily replace \n
+			$replace = 'nlnlnlnlnl';
+			$transObject->mInfo['data'] = preg_replace( '/[\n\r]/', $replace, $transObject->mInfo['data'] );
+			$handle = fopen("http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $transObject->mInfo['data'] )."&langpair=en|{$_REQUEST['i18n']['lang_code']}", "r");
+			if( $handle ) {
+				$data = '';
+				while( !feof( $handle )) {
+					$data .= fread( $handle, 8192 );
+				}
+				fclose( $handle );
+				preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $data, $matches );
+				if( isset( $matches[1][0] )) {
+					$transObject->mInfo['google_guess'] = preg_replace( "/".preg_quote( $replace, "/" )."/", "\n", $matches[1][0] );
+					//$transObject->mInfo['google_guess'] = $matches[1][0];
+				}
+			}
+		}
 	}
 }
 
 // store the content
 function translation_content_store( $pObject, $pParamHash ) {
 	// if we are creating this content and we have a from_id, we know that we're translating a page
-	// i think content_id isn't set when content is created
-	if( !@BitBase::verifyId( $pObject->mInfo['content_id'] ) && @BitBase::verifyId( $_REQUEST['i18n']['from_id'] ) ) {
+	// mInfo['content_id'] isn't set when content is created
+	if( empty( $pObject->mInfo['content_id'] ) && @BitBase::verifyId( $_REQUEST['i18n']['from_id'] ) ) {
 		$trans = new LibertyTranslations();
 		$storeHash = $_REQUEST['i18n'];
 		$storeHash['content_id'] = $pParamHash['content_id'];

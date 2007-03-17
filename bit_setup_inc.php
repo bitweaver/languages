@@ -45,7 +45,7 @@ $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {
 	require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
 	$gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
-		//'content_display_function' => 'translation_content_display',
+		'content_display_function' => 'translation_content_display',
 		//'content_preview_function' => 'translation_content_edit',
 		'content_edit_function' => 'translation_content_edit',
 		'content_store_function' => 'translation_content_store',
@@ -53,7 +53,7 @@ if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_tra
 		//'content_list_sql_function' => 'translation_content_list',
 		//'content_load_sql_function' => 'translation_content_load',
 		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
-		//'content_icon_tpl' => 'bitpackage:languages/translate_service_icon.tpl',
+		'content_icon_tpl' => 'bitpackage:languages/i18n_service_icons.tpl',
 	) );
 }
 
@@ -65,6 +65,9 @@ if( !empty( $_POST['i18n']['translate'] ) ) {
 	}
 	if( @BitBase::verifyId( $_POST['i18n']['translation_id'] ) ) {
 		$get .= '&i18n[translation_id]='.$_POST['i18n']['translation_id'];
+	}
+	if( !empty( $_POST['i18n']['google'] ) ) {
+		$get .= '&i18n[google]=1';
 	}
 	$get .= '&i18n[from_id]='.$_POST['i18n']['from_id'];
 	header( 'Location: '.$_SERVER['PHP_SELF'].'?'.$get );
