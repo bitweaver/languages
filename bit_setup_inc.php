@@ -55,22 +55,22 @@ if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_tra
 		'content_edit_mini_tpl' => 'bitpackage:languages/select_translations.tpl',
 		'content_icon_tpl' => 'bitpackage:languages/i18n_service_icons.tpl',
 	) );
-}
 
-if( !empty( $_POST['i18n']['translate'] ) ) {
-	if( @BitBase::verifyId( $_POST['i18n']['to_id'] ) ) {
-		$get = '&content_id='.$_POST['i18n']['to_id'];
-	} else {
-		$get = 'i18n[lang_code]='.$_POST['i18n']['to_id'];
+	if( !empty( $_POST['i18n']['translate'] ) ) {
+		if( @BitBase::verifyId( $_POST['i18n']['to_id'] ) ) {
+			$get = '&content_id='.$_POST['i18n']['to_id'];
+		} else {
+			$get = 'i18n[lang_code]='.$_POST['i18n']['to_id'];
+		}
+		if( @BitBase::verifyId( $_POST['i18n']['translation_id'] ) ) {
+			$get .= '&i18n[translation_id]='.$_POST['i18n']['translation_id'];
+		}
+		if( !empty( $_POST['i18n']['google'] ) ) {
+			$get .= '&i18n[google]=1';
+		}
+		$get .= '&i18n[from_id]='.$_POST['i18n']['from_id'];
+		header( 'Location: '.$_SERVER['PHP_SELF'].'?'.$get );
+		die;
 	}
-	if( @BitBase::verifyId( $_POST['i18n']['translation_id'] ) ) {
-		$get .= '&i18n[translation_id]='.$_POST['i18n']['translation_id'];
-	}
-	if( !empty( $_POST['i18n']['google'] ) ) {
-		$get .= '&i18n[google]=1';
-	}
-	$get .= '&i18n[from_id]='.$_POST['i18n']['from_id'];
-	header( 'Location: '.$_SERVER['PHP_SELF'].'?'.$get );
-	die;
 }
 ?>
