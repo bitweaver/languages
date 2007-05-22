@@ -16,22 +16,22 @@
 								{formfeedback error=$saveErrors }
 								<input type="hidden" name="update_lang_code" value="{$defaults.lang_code}" />
 								<div class="row">
-									{formlabel label="Native name of the langugage" for="native_name"}
+									{formlabel label="Native name of the language" for="native_name"}
 									{forminput}
 										<input type="text" id="native_name" name="native_name" size="45" value="{$defaults.native_name}" />
 									{/forminput}
 								</div>
 								<div class="row">
-									{formlabel label="English name of the langugage" for="english_name"}
+									{formlabel label="English name of the language" for="english_name"}
 									{forminput}
 										<input type="text" name="english_name" id="english_name" size="45" value="{$defaults.english_name}" />
 									{/forminput}
 								</div>
 								<div class="row">
-									{formlabel label="Langugage code" for="lang_code"}
+									{formlabel label="Language code" for="lang_code"}
 									{forminput}
 										<input type="text" name="lang_code" id="lang_code" size="8" maxlength="32" value="{$defaults.lang_code}" />
-										{formhelp note='For official language codes, see <a class="external" href="http://www.loc.gov/standards/iso639-2/langcodes.html">ISO639-1</a> and to add a localistion you can append the country code from <a class="external" href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO 3166-1</a>.<br />e.g. ISO639-1 for english is "en" and the country code for britain is "uk". The resulting code is "en-uk".'}
+										{formhelp note='For official language codes, see <a class="external" href="http://www.loc.gov/standards/iso639-2/langcodes.html">ISO639-1</a> and to add a localisation you can append the country code from <a class="external" href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO 3166-1</a>.<br />e.g. ISO639-1 for english is "en" and the country code for britain is "uk". The resulting code is "en-uk".'}
 									{/forminput}
 								</div>
 								<div class="row">
@@ -44,7 +44,7 @@
 								<div class="row submit">
 									<input type="submit" name="save_language" value="{tr}Save Language{/tr}" />
 								</div>
-								{formhelp note="A note for localisations: when you have a language, say 'de' and you add a localisation such as 'de-at' it will fist check de-at for a string and then fall back to de. If it still hasn't found a translation, it will default to english."}
+								{formhelp note="A note for localisations: when you have a language, say 'de' and you add a localisation such as 'de-at' it will first check de-at for a string and then fall back to de. If it still hasn't found a translation, it will default to english."}
 							{/form}
 						{/jstab}
 					{/if}
