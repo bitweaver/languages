@@ -7,6 +7,7 @@ $formLanguageToggles = array(
 	'i18n_content_translation' => array(
 		'label' => 'Content Translation',
 		'note' => 'This will activate the content translation service. Users will be given links to content in alternate languages, and prompted to create translation while editing content.',
+		'warning' => 'Please note that this feature is experimental.'
 	),
 	'i18n_interactive_translation' => array(
 		'label' => 'Interactive Translations',
