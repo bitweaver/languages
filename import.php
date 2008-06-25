@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.12 2007/01/24 20:06:43 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.13 2008/06/25 22:21:12 spiderr Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -116,6 +116,6 @@ if (isset($_REQUEST["import"])) {
 
 $gBitSmarty->assign('impmsg', $impMsg);
 
-$gBitSystem->display( $mid, 'Languages Im/Export' );
+$gBitSystem->display( $mid, 'Languages Im/Export' , array( 'display_mode' => 'display' ));
 
 ?>

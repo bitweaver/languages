@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.8 2007/01/04 16:16:50 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.9 2008/06/25 22:21:12 spiderr Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -144,5 +144,5 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 // Display the template
 $gBitSmarty->assign( 'masterMsg', $masterMsg );
 $gBitSmarty->assign( 'feedback', $feedback );
-$gBitSystem->display( 'bitpackage:languages/language_master_strings.tpl', 'Edit Master Strings' );
+$gBitSystem->display( 'bitpackage:languages/language_master_strings.tpl', 'Edit Master Strings' , array( 'display_mode' => 'display' ));
 ?>
