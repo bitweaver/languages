@@ -2,9 +2,9 @@
 <div class="floaticon">{bithelp}</div>
 
 <div class="admin languages">
-    <div class="header">
-        <h1>{tr}Import Languages{/tr}</h1>
-    </div>
+	<div class="header">
+		<h1>{tr}Import Languages{/tr}</h1>
+	</div>
 
 	{formfeedback hash=$impmsg}
 
@@ -66,51 +66,55 @@
 
 			{jstab title="Export Languages"}
 				{form legend="Export language"}
-					<div class="row">
-						{formlabel label="Select the language to Export" for="exp_lang"}
-						{forminput}
-							<select name="export_lang_code" id="export_lang_code">
-								{foreach from=$expLanguages key=langCode item=lang}
-									<option value="{$langCode}" {if $exp_language eq $langCode}selected="selected"{/if}>{$lang.full_name}</option>
-								{/foreach}
-							</select>
-							{formhelp note=""}
-						{/forminput}
-					</div>
-
-					{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
+					{if $expLanguages}
 						<div class="row">
-							{formlabel label="Export All Translations" for="all_trans"}
+							{formlabel label="Select the language to Export" for="exp_lang"}
 							{forminput}
-								<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />
-								{formhelp note="This will export strings for all versions of bitweaver. It is generally a good idea to export these."}
+								<select name="export_lang_code" id="export_lang_code">
+									{foreach from=$expLanguages key=langCode item=lang}
+										<option value="{$langCode}" {if $exp_language eq $langCode}selected="selected"{/if}>{$lang.full_name}</option>
+									{/foreach}
+								</select>
+								{formhelp note=""}
 							{/forminput}
 						</div>
+
+						{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
+							<div class="row">
+								{formlabel label="Export All Translations" for="all_trans"}
+								{forminput}
+									<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />
+									{formhelp note="This will export strings for all versions of bitweaver. It is generally a good idea to export these."}
+								{/forminput}
+							</div>
+						{else}
+							<input type="hidden" name="all_trans" value="y" />
+						{/if}
+
+						<div class="row">
+							{formlabel label="Include Empty" for="include_empty"}
+							{forminput}
+								<input type="checkbox" name="include_empty" id="include_empty" value="y" />
+								{formhelp note="This will include empty translation strings as well. This is generally not needed."}
+							{/forminput}
+						</div>
+
+						<div class="row">
+							{formlabel label="Destination" for="is_disabled"}
+							{forminput}
+								<label><input type="radio" name="target" value="temp" /> {tr}Save to temporary file{/tr}</label><br />
+								{formhelp note="This will save the file to a temporary location on the server."}
+								<label><input type="radio" name="target" value="download" checked="checked" /> {tr}Download translation file{/tr}</label><br/>
+								{formhelp note="Save this to languages/lang/(lang_code)/language.php where lang_code is the language your are downloading."}
+							{/forminput}
+						</div>
+
+						<div class="row submit">
+							<input type="submit" name="export" value="{tr}Export{/tr}" />
+						</div>
 					{else}
-						<input type="hidden" name="all_trans" value="y" />
+						<p class="warning">{biticon iname=dialog-warning iexplain="No Languages to Export"} {tr}You don't have any languages to export.{/tr}</p>
 					{/if}
-
-					<div class="row">
-						{formlabel label="Include Empty" for="include_empty"}
-						{forminput}
-							<input type="checkbox" name="include_empty" id="include_empty" value="y" />
-							{formhelp note="This will include empty translation strings as well. This is generally not needed."}
-						{/forminput}
-					</div>
-
-					<div class="row">
-						{formlabel label="Destination" for="is_disabled"}
-						{forminput}
-							<label><input type="radio" name="target" value="temp" /> {tr}Save to temporary file{/tr}</label><br />
-							{formhelp note="This will save the file to a temporary location on the server."}
-							<label><input type="radio" name="target" value="download" checked="checked" /> {tr}Download translation file{/tr}</label><br/>
-							{formhelp note="Save this to languages/lang/(lang_code)/language.php where lang_code is the language your are downloading."}
-						{/forminput}
-					</div>
-
-					<div class="row submit">
-						<input type="submit" name="export" value="{tr}Export{/tr}" />
-					</div>
 				{/form}
 			{/jstab}
 		{/jstabs}
