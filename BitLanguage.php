@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.23 2007/01/16 11:40:37 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.24 2008/06/29 07:51:35 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -19,6 +19,9 @@ class BitLanguage extends BitBase {
 
 	var $mLanguage;
 
+	/**
+	 * initiate BitLanguage 
+	 */
 	function BitLanguage () {
 		BitBase::BitBase();
 		global $gBitSystem;
@@ -51,14 +54,34 @@ class BitLanguage extends BitBase {
 		}
 	}
 
+	/**
+	 * getLanguage get acvtive language
+	 * 
+	 * @access public
+	 * @return active language
+	 */
 	function getLanguage() {
 		return( $this->mLanguage );
 	}
 
+	/**
+	 * setLanguage set active language
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return void
+	 */
 	function setLanguage( $pLangCode ) {
 		$this->mLanguage = $pLangCode;
 	}
 
+	/**
+	 * verifyLanguage verify language hash before storing it
+	 * 
+	 * @param array $pParamHash parameters that will be stored
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function verifyLanguage( &$pParamHash ) {
 		$langs = $this->listLanguages();
 		if( empty( $pParamHash['lang_code'] ) || strlen( $pParamHash['lang_code'] ) < 2 ) {
@@ -75,6 +98,13 @@ class BitLanguage extends BitBase {
 		return( count( $this->mErrors ) === 0 );
 	}
 
+	/**
+	 * storeLanguage store language in database
+	 * 
+	 * @param array $pParamHash parameters that will be stored
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function storeLanguage( $pParamHash ) {
 		if( $this->verifyLanguage( $pParamHash ) ) {
 			if( empty( $pParamHash['update_lang_code'] ) ) {
@@ -88,6 +118,13 @@ class BitLanguage extends BitBase {
 		return( count( $this->mErrors ) == 0 );
 	}
 
+	/**
+	 * expungeLanguage remove language from database
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return void
+	 */
 	function expungeLanguage( $pLangCode ) {
 		if( !empty( $pLangCode ) ) {
 			$this->mDb->StartTrans();
@@ -99,6 +136,13 @@ class BitLanguage extends BitBase {
 		}
 	}
 
+	/**
+	 * expungeMasterString remove master string from database
+	 * 
+	 * @param string $pSourceHash MD5 hash of master string
+	 * @access public
+	 * @return TRUE on success, FALSE on failure
+	 */
 	function expungeMasterString( $pSourceHash ) {
 		if( !empty( $pSourceHash ) ) {
 			$this->mDb->StartTrans();
@@ -111,6 +155,12 @@ class BitLanguage extends BitBase {
 		}
 	}
 
+	/**
+	 * getImportedLanguages get a list of languages that have been imported
+	 * 
+	 * @access public
+	 * @return array of available languages
+	 */
 	function getImportedLanguages() {
 		$ret = array();
 		if( $rs = $this->mDb->query( 'SELECT DISTINCT(`lang_code`) AS `lang_code` FROM `'.BIT_DB_PREFIX.'i18n_strings`' ) ) {
@@ -127,6 +177,14 @@ class BitLanguage extends BitBase {
 		return $ret;
 	}
 
+	/**
+	 * listLanguages list languages
+	 * 
+	 * @param boolean $pListDisabled 
+	 * @param boolean $pListOnlyImportable 
+	 * @access public
+	 * @return array of languages
+	 */
 	function listLanguages( $pListDisabled=TRUE, $pListOnlyImportable=FALSE ) {
 		$whereSql = '';
 		$langs = array();
@@ -147,26 +205,54 @@ class BitLanguage extends BitBase {
 	}
 
 
+	/**
+	 * verifyMastersLoaded verify that master strings are loaded
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	function verifyMastersLoaded() {
 		// see if there is anything in the table
 		$query = "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."i18n_masters`";
-		$count = $this->mDb->getOne($query);
-		if( empty( $count ) ) {
+		$count = $this->mDb->getOne( $query );
+		if( empty( $count )) {
 			$this->importMasterStrings();
 		}
 	}
 
+	/**
+	 * masterStringExists check to see if a given master string already exists
+	 * 
+	 * @param array $pSourceHash MD5 hash of string to be checked
+	 * @access public
+	 * @return TRUE if found, FALSE otherwise
+	 */
 	function masterStringExists( $pSourceHash ) {
 		return( !empty( $this->mStrings['master'][$pSourceHash] ) );
 	}
 
+	/**
+	 * searchMasterStrings find master string in database
+	 * 
+	 * @param string $pQuerySource string
+	 * @access public
+	 * @return TRUE on success, FALSE on failure
+	 */
 	function searchMasterStrings( $pQuerySource ) {
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `package`, im.`source_hash`
-				  FROM `".BIT_DB_PREFIX."i18n_masters` im
-				  WHERE UPPER( `source` ) LIKE ? ORDER BY im.`source`";
+		$query = "
+			SELECT im.`source_hash` AS `hash_key`, `source`, `package`, im.`source_hash`
+			FROM `".BIT_DB_PREFIX."i18n_masters` im
+			WHERE UPPER( `source` ) LIKE ? ORDER BY im.`source`";
 		return( $this->mDb->getAssoc( $query, array( '%'.strtoupper( $pQuerySource ).'%' ) ) );
 	}
 
+	/**
+	 * loadMasterStrings load all master strings
+	 * 
+	 * @param string $pSourceHash MD5 hash to load
+	 * @access public
+	 * @return all master strings in $this->mStrings['master']
+	 */
 	function loadMasterStrings( $pSourceHash = NULL ) {
 		$this->verifyMastersLoaded();
 		$bindVars = NULL;
@@ -182,6 +268,13 @@ class BitLanguage extends BitBase {
 	}
 
 
+	/**
+	 * storeMasterString store master string
+	 * 
+	 * @param array $pParamHash data to be stored
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function storeMasterString( $pParamHash ) {
 		global $gBitSmarty;
 		if( !empty( $gBitSmarty->mCompileRsrc ) ) {
@@ -224,6 +317,13 @@ class BitLanguage extends BitBase {
 	}
 
 
+	/**
+	 * importMasterStrings 
+	 * 
+	 * @param boolean $pOverwrite 
+	 * @access public
+	 * @return TRUE on success, FALSE on failure
+	 */
 	function importMasterStrings( $pOverwrite=FALSE ) {
 		global $lang;
 		$count = 0;
@@ -247,6 +347,15 @@ class BitLanguage extends BitBase {
 		return( $count );
 	}
 
+	/**
+	 * storeTranslationString 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @param string $pString 
+	 * @param string $pSourceHash MD5 hash of master string
+	 * @access public
+	 * @return void
+	 */
 	function storeTranslationString( $pLangCode, $pString, $pSourceHash ) {
 		$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_strings` WHERE `source_hash`=? AND `lang_code`=?";
 		$result = $this->mDb->query( $query, array( $pSourceHash, $pLangCode ) );
@@ -261,32 +370,73 @@ class BitLanguage extends BitBase {
 		$this->mStrings[$pLangCode][$pSourceHash]['trans'] = $pString;
 	}
 
+	/**
+	 * getTranslatedStrings 
+	 * 
+	 * @param string $pSourceHash MD5 hash of master string
+	 * @access public
+	 * @return array of translated strings
+	 */
 	function getTranslatedStrings( $pSourceHash ) {
-		$query = "SELECT ist.`lang_code` AS `hash_key`, `trans`, ist.`source_hash`, ist.`lang_code`
-				  FROM `".BIT_DB_PREFIX."i18n_strings` ist
-					WHERE ist.`source_hash`=?
-				  ORDER BY ist.`lang_code`";
+		$query = "
+			SELECT ist.`lang_code` AS `hash_key`, `trans`, ist.`source_hash`, ist.`lang_code`
+			FROM `".BIT_DB_PREFIX."i18n_strings` ist
+			WHERE ist.`source_hash`=?
+			ORDER BY ist.`lang_code`";
 		return( $this->mDb->getAssoc( $query, array( $pSourceHash ) ) );
 	}
 
+	/**
+	 * getTranslationString 
+	 * 
+	 * @param string $pSourceHash MD5 hash of master string
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function getTranslationString( $pSourceHash, $pLangCode ) {
 		$this->verifyTranslationLoaded( $pLangCode );
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`
-				  FROM `".BIT_DB_PREFIX."i18n_masters` im
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
-				  WHERE im.`source_hash`=?
-				  ORDER BY im.`source`";
+		$query = "
+			SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`
+			FROM `".BIT_DB_PREFIX."i18n_masters` im
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
+			WHERE im.`source_hash`=?
+			ORDER BY im.`source`";
 		return( $this->mDb->getAssoc( $query, array( $pLangCode, $pSourceHash ) ) );
 	}
 
+	/**
+	 * getLanguageFile 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function getLanguageFile( $pLangCode ) {
 		return( LANGUAGES_PKG_PATH.'lang/'.$pLangCode.'/language.php' );
 	}
 
+	/**
+	 * isImportFileAvailable 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function isImportFileAvailable( $pLangCode ) {
 		return( file_exists( $this->getLanguageFile( $pLangCode ) ) );
 	}
 
+	/**
+	 * importTranslationStrings 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @param boolean $pOverwrite 
+	 * @param string $pTable 
+	 * @param string $pFile path to file
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function importTranslationStrings( $pLangCode, $pOverwrite=FALSE, $pTable='i18n_strings`', $pFile=FALSE ) {
 		$count = 0;
 
@@ -296,7 +446,7 @@ class BitLanguage extends BitBase {
 			}
 		}
 
-		if( !empty ($pFile ) && file_exists( $pFile ) ) {
+		if( !empty( $pFile ) && file_exists( $pFile ) ) {
 			$this->loadMasterStrings();
 
 			// read the file and parse out the master/trans string pairs manually to prevent any evil shit from getting exec'ed
@@ -304,14 +454,12 @@ class BitLanguage extends BitBase {
 			$line = '';
 			while (!feof($handle)) {
 				$line .= fgets( $handle );
-				if (preg_match(
-					'/([\'"])(.*?)(?<!\\\\)\1[\n\r\s]*=>[\n\r\s]*([\'"])(.*?)(?<!\\\\)\3/msS',
-						    $line, $match )) {
-					$lang[stripslashes($match[2])] = stripslashes($match[4]);
+				if( preg_match( '/([\'"])(.*?)(?<!\\\\)\1[\n\r\s]*=>[\n\r\s]*([\'"])(.*?)(?<!\\\\)\3/msS', $line, $match )) {
+					$lang[stripslashes( $match[2] )] = stripslashes( $match[4] );
 					$line = '';
 				}
 			}
-			fclose($handle);
+			fclose( $handle );
 
 			foreach( $lang as $key=>$val ) {
 				$hashKey = $this->getSourceHash( $key );
@@ -342,6 +490,13 @@ class BitLanguage extends BitBase {
 		return( $count );
 	}
 
+	/**
+	 * verifyTranslationLoaded 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return void
+	 */
 	function verifyTranslationLoaded( $pLangCode ) {
 		if ( $pLangCode ) {
 			// see if there is anything in the table
@@ -353,17 +508,32 @@ class BitLanguage extends BitBase {
 		}
 	}
 
+	/**
+	 * loadLanguage 
+	 * 
+	 * @param string $pLangCode Language code
+	 * @access public
+	 * @return void
+	 */
 	function loadLanguage( $pLangCode ) {
 		$this->verifyMastersLoaded();
 		$this->verifyTranslationLoaded( $pLangCode );
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`, ivm.`version`
-				  FROM `".BIT_DB_PREFIX."i18n_masters` im
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( im.`source_hash`=ivm.`source_hash` )
-				  ORDER BY im.`source`";
+		$query = "
+			SELECT im.`source_hash` AS `hash_key`, `source`, `trans`, im.`source_hash`, ivm.`version`
+			FROM `".BIT_DB_PREFIX."i18n_masters` im
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( ist.`source_hash`=im.`source_hash` AND ist.`lang_code`=? )
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_version_map` ivm ON( im.`source_hash`=ivm.`source_hash` )
+			ORDER BY im.`source`";
 		$this->mStrings[$pLangCode] = $this->mDb->getAssoc( $query, array( $pLangCode ) );
 	}
 
+	/**
+	 * translate 
+	 * 
+	 * @param string $pString 
+	 * @access public
+	 * @return translation
+	 */
 	function translate( $pString ) {
 		global $gBitTranslationHash, $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
@@ -413,6 +583,15 @@ class BitLanguage extends BitBase {
 		return $ret;
 	}
 
+	/**
+	 * lookupTranslation 
+	 * 
+	 * @param string $pString 
+	 * @param string $pLangCode Language code
+	 * @param boolean $pOverrideUsage 
+	 * @access public
+	 * @return TRUE on success, FALSE on failure - mErrors will contain reason for failure
+	 */
 	function lookupTranslation( $pString, $pLangCode, $pOverrideUsage = TRUE ) {
 		global $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
@@ -440,15 +619,27 @@ class BitLanguage extends BitBase {
 		return (isset( $ret['trans'] ) ? $ret['trans'] : NULL );
 	}
 
+	/**
+	 * getSourceHash 
+	 * 
+	 * @param string $pString 
+	 * @access public
+	 * @return MD5 hash of string
+	 */
 	function getSourceHash( $pString ) {
-		return( md5( strtolower( trim( $pString ) ) ) );
+		return( md5( strtolower( trim( $pString ))));
 	}
 
+	/**
+	 * clearCache 
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	function clearCache() {
 		unlink_r( TEMP_PKG_PATH."lang/" );
 		unlink_r( TEMP_PKG_PATH."templates_c/" );
 	}
-
 }
 
 ?>
