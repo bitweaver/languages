@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.13 2008/06/25 22:21:12 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.14 2008/06/29 07:29:16 squareing Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -29,10 +29,6 @@ foreach( array_keys($impLanguages) as $langCode ) {
 }
 $gBitSmarty->assign_by_ref('impLanguages', $impLanguages );
 
-// Get languages that can be exported
-$expLanguages = $gBitLanguage->getImportedLanguages();
-$gBitSmarty->assign_by_ref('expLanguages', $expLanguages );
-
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
 	$gBitSmarty->assign('exp_language', $exp_language);
@@ -42,7 +38,7 @@ if (isset($_REQUEST["exp_language"])) {
 if (isset($_REQUEST["import"])) {
 	if( !empty( $_REQUEST['imp_languages'] ) ) {
 		foreach( $_REQUEST['imp_languages'] as $impLang ) {
-			if( $gBitLanguage->importTranslationStrings( $impLang, ($_REQUEST['overwrite'] ) == 'y') ) {
+			if( $gBitLanguage->importTranslationStrings( $impLang, ( $_REQUEST['overwrite'] ) == 'y' )) {
 				$impMsg['success'][] = "Imported lang/" . $impLang . "/language.php";
 			} else {
 				$impMsg['error'][] = "Language could not be imported";
@@ -56,7 +52,7 @@ if (isset($_REQUEST["import"])) {
 	}
 
 	if( !empty( $_FILES['upload_file']['tmp_name'] ) ) {
-		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ($_REQUEST['overwrite'] == 'y'), 'i18n_strings`', $_FILES['upload_file']['tmp_name'] );
+		$gBitLanguage->importTranslationStrings( $_REQUEST['upload_lang_code'], ( $_REQUEST['overwrite'] == 'y' ), 'i18n_strings`', $_FILES['upload_file']['tmp_name'] );
 	}
 
 	if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {
@@ -114,7 +110,11 @@ if (isset($_REQUEST["import"])) {
 	unset( $gBitLanguage->mStrings[$_REQUEST['export_lang_code']] );
 }
 
-$gBitSmarty->assign('impmsg', $impMsg);
+// Get languages that can be exported
+$expLanguages = $gBitLanguage->getImportedLanguages();
+$gBitSmarty->assign_by_ref('expLanguages', $expLanguages );
+
+$gBitSmarty->assign( 'impmsg', $impMsg );
 
 $gBitSystem->display( $mid, 'Languages Im/Export' , array( 'display_mode' => 'display' ));
 
