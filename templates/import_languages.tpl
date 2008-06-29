@@ -64,9 +64,9 @@
 				{/form}
 			{/jstab}
 
-			{jstab title="Export Languages"}
-				{form legend="Export language"}
-					{if $expLanguages}
+			{if $expLanguages}
+				{jstab title="Export Languages"}
+					{form legend="Export language"}
 						<div class="row">
 							{formlabel label="Select the language to Export" for="exp_lang"}
 							{forminput}
@@ -112,11 +112,9 @@
 						<div class="row submit">
 							<input type="submit" name="export" value="{tr}Export{/tr}" />
 						</div>
-					{else}
-						<p class="warning">{biticon iname=dialog-warning iexplain="No Languages to Export"} {tr}You don't have any languages to export.{/tr}</p>
-					{/if}
-				{/form}
-			{/jstab}
+					{/form}
+				{/jstab}
+			{/if}
 		{/jstabs}
 	</div><!-- end .body -->
 </div><!-- end .languages -->
