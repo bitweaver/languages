@@ -12,8 +12,8 @@
 			</select>
 			<br />
 			<input type="submit" name="i18n[translate]" value="{tr}Translate{/tr}" />
-			&nbsp; <label><input type="checkbox" name="i18n[google]" /> {tr}Attempt Google translation (depending on the size of the page, this can take a while).{/tr}</label>
-			{formhelp note="If you feel like translating this page into a different language, please select the correct language above and hit <strong>Translate</strong>."}
+			&nbsp; <label><input type="checkbox" name="i18n[google]" /> {tr}Attempt Google translation{/tr}</label>
+			{formhelp note="To translate this page into a different language, select that language above and click <strong>Translate</strong>. To use Google's translation service, enable the checkbox first (depending on the size of this page's text, Google's translation might take a while). "}
 		{/forminput}
 	</div>
 {/if}
