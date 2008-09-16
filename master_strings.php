@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.9 2008/06/25 22:21:12 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.10 2008/09/16 08:20:56 squareing Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -75,14 +75,14 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	$tranStrings = array();
 	foreach( $tranArray as $toLangCode ) {
 		$handle = fopen("http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $masterString['source'] )."&langpair=en|$toLangCode", "r");
-		if($handle) {
+		if( $handle ) {
 			$contents = '';
-			while (!feof($handle)) {
-				$contents .= fread($handle, 8192);
+			while( !feof( $handle )) {
+				$contents .= fread( $handle, 8192 );
 			}
-			fclose($handle);
+			fclose( $handle );
 			preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $contents, $matches );
-			if( isset( $matches[1][0] ) ) {
+			if( isset( $matches[1][0] )) {
 				$tranStrings[$toLangCode]['guessed'] = TRUE;
 				$tranStrings[$toLangCode]['source_hash'] = $_REQUEST['source_hash'];
 				$tranStrings[$toLangCode]['trans'] = trim( $matches[1][0] );
@@ -118,14 +118,19 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
 	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
 } else {
-	$gBitLanguage->loadMasterStrings();
+	$gBitLanguage->loadMasterStrings(
+		NULL,
+		( !empty( $_REQUEST['filter'] ) ? $_REQUEST['filter'] : NULL ),
+		( !empty( $_REQUEST['filter_lang'] ) ? $_REQUEST['filter_lang'] : NULL )
+	);
+
 	// work out what strings to display
-	if( empty( $_REQUEST['char'] ) ) {
+	if( empty( $_REQUEST['char'] )) {
 		$pattern = "/^a/i";
 	} elseif ( $_REQUEST['char'] == '0-9' ) {
 		$pattern = "/^\d/";
 	} elseif ( $_REQUEST['char'] == '+' ) {
-		$pattern = "/^[^a-zA-Z]/";
+		$pattern = "/^[^a-zA-Z0-9]/";
 	} elseif ( $_REQUEST['char'] == 'all' ) {
 		$pattern = "//";
 	} else {

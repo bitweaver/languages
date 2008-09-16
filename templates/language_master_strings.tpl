@@ -61,8 +61,31 @@
 		{else}
 
 			{minifind name="Search master strings" sort_mode=$sort_mode}
+			{form legend="Translation Filter"}
+				<input type="hidden" name="char" value="{$smarty.request.char}" \>
+				<div class="row">
+					{formlabel label="Filter" for=""}
+					{forminput}
+						<label><input type="radio" name="filter" {if !$smarty.request.filter                 }checked="checked" {/if}value="" /> {tr}No filter{/tr}</label><br />
+						<label><input type="radio" name="filter" {if $smarty.request.filter == 'untranslated'}checked="checked" {/if}value="untranslated" /> {tr}Only untranslated strings{/tr}</label><br />
+						<label><input type="radio" name="filter" {if $smarty.request.filter == 'translated'  }checked="checked" {/if}value="translated" /> {tr}Only translated strings{/tr}</label><br />
+						<select name="filter_lang" id="filter_lang">
+							<option value="">{tr}Any Language{/tr}</option>
+							{foreach from=$languages key=langCode item=lang}
+								<option value="{$langCode}" {if $smarty.request.filter_lang == $langCode}selected="selected"{/if}>{$lang.full_name}</option>
+							{/foreach}
+						</select>
+						{formhelp note="Limit the translated filter to this language"}
+					{/forminput}
+				</div>
+
+				<div class="submit">
+					<input type="submit" name="set_filter" value="{tr}Set Filter{/tr}" />
+				</div>
+			{/form}
+
 			{form legend="Translations" id=formid}
-				{alphabar iall=1}
+				{alphabar iall=1 filter_lang=$smarty.request.filter_lang filter=$smarty.request.filter}
 
 				{formfeedback hash=$feedback}
 

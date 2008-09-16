@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.24 2008/06/29 07:51:35 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.25 2008/09/16 08:20:56 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -250,23 +250,40 @@ class BitLanguage extends BitBase {
 	 * loadMasterStrings load all master strings
 	 * 
 	 * @param string $pSourceHash MD5 hash to load
+	 * @param string $pFilter Limit strings loaded to unlimited (default), translated or untranslated
 	 * @access public
 	 * @return all master strings in $this->mStrings['master']
 	 */
-	function loadMasterStrings( $pSourceHash = NULL ) {
+	function loadMasterStrings( $pSourceHash = NULL, $pFilter = NULL, $pLangCode = NULL ) {
 		$this->verifyMastersLoaded();
-		$bindVars = NULL;
-		$whereSql = NULL;
+		$bindVars = $whereSql = $joinSql = NULL;
+
 		if( $pSourceHash ) {
 			$whereSql = ' WHERE `source_hash`=? ';
 			$bindVars = array( $pSourceHash );
+		} else {
+			// some basic filter options
+			if( !empty( $pFilter )) {
+				$joinSql = "LEFT OUTER JOIN `".BIT_DB_PREFIX."i18n_strings` ist ON( im.`source_hash` = ist.`source_hash` )";
+				if( $pFilter == 'translated' ) {
+					$whereSql = "WHERE ist.`trans` IS NOT NULL";
+					if( !empty( $pLangCode )) {
+						$whereSql .= " AND ist.`lang_code` = ?";
+						$bindVars[] = $pLangCode;
+					}
+				} elseif( $pFilter == 'untranslated' ) {
+					$whereSql = "WHERE ist.`trans` IS NULL";
+					// can't work out SQL to do language limits in this filter
+				}
+			}
 		}
-		$query = "SELECT im.`source_hash` AS `hash_key`, `source`, `package`, im.`source_hash`
-				FROM `".BIT_DB_PREFIX."i18n_masters` im
-				$whereSql ORDER BY im.`source`";
+
+		$query = "
+			SELECT im.`source_hash` AS `hash_key`, `source`, `package`, im.`source_hash`
+			FROM `".BIT_DB_PREFIX."i18n_masters` im
+			$joinSql $whereSql ORDER BY im.`source`";
 		$this->mStrings['master'] = $this->mDb->getAssoc( $query, $bindVars );
 	}
-
 
 	/**
 	 * storeMasterString store master string
