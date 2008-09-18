@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.10 2008/09/16 08:20:56 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.11 2008/09/18 03:57:44 spiderr Exp $
  */
 
 // Copyright (c) 2005, bitweaver.org
@@ -19,22 +19,7 @@ $languages = $gBitLanguage->listLanguages();
 $gBitSmarty->assign_by_ref( 'languages', $languages );
 $feedback = $masterMsg = array();
 
-if( !empty( $_REQUEST['change_master'] ) ) {
-	$newSourceHash = $gBitLanguage->getSourceHash( $_REQUEST['edit_master'] );
-	$gBitLanguage->loadMasterStrings();
-	if( $newSourceHash != $_REQUEST['source_hash'] ) {
-		if( $gBitLanguage->storeMasterString( array( 'source_hash' => $_REQUEST['source_hash'], 'new_source' => $_REQUEST['edit_master'] ) ) ) {
-			$_REQUEST['source_hash'] = $newSourceHash;
-			$masterMsg['success'] = 'Master translation string has been updated';
-		} else {
-			$masterMsg['error'] = $gBitLanguage->mErrors['master'];
-		}
-	}
-	$gBitLanguage->loadMasterStrings( $_REQUEST['source_hash'] );
-	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] ) );
-	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
-} elseif( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) && is_array( $_REQUEST['source_hash'] ) ) {
+if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) && is_array( $_REQUEST['source_hash'] ) ) {
 	if( empty( $_REQUEST['confirm'] ) ) {
 		$gBitSystem->setBrowserTitle( tra( 'Confirm Delete' ) );
 		$formHash['delete_master'] = TRUE;
@@ -64,57 +49,94 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 		}
 	}
 } elseif( !empty( $_REQUEST['guess_translations'] ) ) {
-	$gBitLanguage->loadMasterStrings( $_REQUEST['source_hash'] );
-	$masterStrings = $gBitLanguage->mStrings['master'];
-	if( strlen( $masterStrings[$_REQUEST['source_hash']]['source'] ) > 70 ) {
-		$masterStrings[$_REQUEST['source_hash']]['textarea'] = TRUE;
+	if( is_string(  $_REQUEST['source_hash'] ) ) {
+		 $_REQUEST['source_hash'] = array(  $_REQUEST['source_hash'] );
 	}
-	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
-	$masterString = $gBitLanguage->mStrings['master'][$_REQUEST['source_hash']];
-	$tranArray = array( 'ar', 'de', 'es', 'fr', 'it', 'pt', 'ja', 'ko', 'ru', 'zh-CN' );
-	$tranStrings = array();
-	foreach( $tranArray as $toLangCode ) {
-		$handle = fopen("http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $masterString['source'] )."&langpair=en|$toLangCode", "r");
-		if( $handle ) {
-			$contents = '';
-			while( !feof( $handle )) {
-				$contents .= fread( $handle, 8192 );
-			}
-			fclose( $handle );
-			preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $contents, $matches );
-			if( isset( $matches[1][0] )) {
-				$tranStrings[$toLangCode]['guessed'] = TRUE;
-				$tranStrings[$toLangCode]['source_hash'] = $_REQUEST['source_hash'];
-				$tranStrings[$toLangCode]['trans'] = trim( $matches[1][0] );
-				$tranStrings[$toLangCode]['lang_code'] = $toLangCode;
+	$transCount = 0;
+	$masterStrings = array();
+	foreach(  $_REQUEST['source_hash'] AS $reqSourceHash ) {
+		$gBitLanguage->loadMasterStrings( $reqSourceHash );
+		$masterStrings[$reqSourceHash] = $gBitLanguage->mStrings['master'][$reqSourceHash];
+
+		if( strlen( $masterStrings[$reqSourceHash]['source'] ) > 70 ) {
+			$masterStrings[$reqSourceHash]['textarea'] = TRUE;
+		}
+		$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
+		$masterString = $gBitLanguage->mStrings['master'][$reqSourceHash];
+		$tranArray = array( 'ar', 'bg', 'cs', 'da', 'de', 'el', 'es', 'fi', 'fr', 'hi', 'hr', 'it', 'nl', 'pt', 'ja', 'ko', 'no', 'pl', 'pt', 'ro', 'sv', 'ru', 'zh-CN' );
+
+		$tranStrings[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $reqSourceHash );
+		foreach( $tranArray as $toLangCode ) {
+			$lowerLangCode = strtolower( $toLangCode );
+			if( !empty( $gBitLanguage->mLanguageList[$lowerLangCode] ) && empty( $tranStrings[$reqSourceHash][$lowerLangCode] ) ) {
+				$requestUrl = "http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $masterString['source'] )."&langpair=en|$toLangCode";
+				$handle = fopen( $requestUrl, "r");
+				if($handle) {
+					$transCount++;
+					$contents = '';
+					while (!feof($handle)) {
+						$contents .= fread($handle, 8192);
+					}
+					fclose($handle);
+					preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $contents, $matches );
+					if( isset( $matches[1][0] ) &&  $matches[1][0] != $gBitLanguage->mStrings['master'][$reqSourceHash]['source']  ) {
+						$tranStrings[$reqSourceHash][$lowerLangCode]['guessed'] = TRUE;
+						$tranStrings[$reqSourceHash][$lowerLangCode]['source_hash'] = $reqSourceHash;
+						$tranStrings[$reqSourceHash][$lowerLangCode]['trans'] = trim( $matches[1][0] );
+						$tranStrings[$reqSourceHash][$lowerLangCode]['lang_code'] = $lowerLangCode;
+					}
+				}
 			}
 		}
+		if( $transCount > 200 ) {
+			// avoid abuse of google translate URL and prevent URL timeout
+			break;
+		}
 	}
-	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
+
+	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
 	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
-	$tranStrings = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
-	$gBitSmarty->assign( 'source_hash', $_REQUEST['source_hash'] );
-	$sourceHash = $_REQUEST['source_hash'];
-	foreach( $_REQUEST['edit_trans'] as $langCode => $string ) {
-		// store if (We had a string and it is now empty) or ( we have a new string and it is different from before)
-		if( (empty( $string ) && !empty( $tranStrings[$langCode] ))
-			|| (!empty( $string ) && (empty( $tranStrings[$langCode] ) || $string != $tranStrings[$langCode]['trans']) ) ) {
-			$gBitLanguage->storeTranslationString( $langCode, $string, $sourceHash );
+	foreach( $_REQUEST['edit_trans'] as $sourceHash => $sources ) {
+		foreach( $sources as $langCode => $string ) {
+			$tranStrings[$sourceHash] = $gBitLanguage->getTranslatedStrings( $sourceHash );
+			// store if (We had a string and it is now empty) or ( we have a new string and it is different from before)
+			if( (empty( $string ) && !empty( $tranStrings[$sourceHash][$langCode] ))
+				|| (!empty( $string ) && (empty( $tranStrings[$sourceHash][$langCode] ) || $string != $tranStrings[$sourceHash][$langCode]['trans']) ) ) {
+				$gBitLanguage->storeTranslationString( $langCode, $string, $sourceHash );
+			}
+		}
+		$gBitLanguage->loadMasterStrings( $sourceHash );
+		if( !empty( $_REQUEST['edit_master'][$sourceHash] ) ) {
+			$newSourceHash = $gBitLanguage->getSourceHash( $_REQUEST['edit_master'][$sourceHash] );
+			$gBitLanguage->loadMasterStrings();
+			if( $newSourceHash != $sourceHash ) {
+				if( $gBitLanguage->storeMasterString( array( 'source_hash' => $sourceHash, 'new_source' => $_REQUEST['edit_master'][$sourceHash] ) ) ) {
+					unset( $_REQUEST['source_hash'] );
+					$_REQUEST['source_hash'][] = $newSourceHash;
+					$tranStrings[$newSourceHash] = $gBitLanguage->getTranslatedStrings( $newSourceHash );
+					$masterMsg['success'][] = 'Master translation string has been updated';
+				} else {
+					$masterMsg['error'][] = $gBitLanguage->mErrors['master'];
+				}
+			}
 		}
 	}
-	header( 'Location: '.$_SERVER['PHP_SELF'].'?source_hash='.$_REQUEST['source_hash'] );
-	die;
+	$masterMsg['success'][] = 'Translation strings have been updated';
+	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
+	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['source_hash'] ) && empty( $_REQUEST['cancel'] ) ) {
-	$gBitLanguage->loadMasterStrings( $_REQUEST['source_hash'] );
-	$masterStrings = $gBitLanguage->mStrings['master'];
-	if( strlen( $masterStrings[$_REQUEST['source_hash']]['source'] ) > 70 ) {
-		$masterStrings[$_REQUEST['source_hash']]['textarea'] = TRUE;
+	foreach( $_REQUEST['source_hash'] as $reqSourceHash ) {
+		$gBitLanguage->loadMasterStrings( $reqSourceHash );
+		if( strlen( $gBitLanguage->mStrings['master'][$reqSourceHash]['source'] ) > 70 ) {
+			$gBitLanguage->mStrings['master'][$reqSourceHash]['textarea'] = TRUE;
+		}
+		$translate[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
 	}
-	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
-	$translate = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
+	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
 	$gBitSmarty->assign_by_ref( 'tranStrings', $translate );
-	$gBitSmarty->assign( 'sourceHash', $_REQUEST['source_hash'] );
+	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
 	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
 } else {
@@ -145,7 +167,6 @@ if( !empty( $_REQUEST['change_master'] ) ) {
 	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
 	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
 }
-
 // Display the template
 $gBitSmarty->assign( 'masterMsg', $masterMsg );
 $gBitSmarty->assign( 'feedback', $feedback );

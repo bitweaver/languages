@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.12 2007/03/17 14:42:09 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.13 2008/09/18 03:57:44 spiderr Exp $
  *
  * @author ?
  */
@@ -129,9 +129,9 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 			$transObject->mInfo['google_guess'] = '';
 			// we need to split the strings into small chunks due to url length limitations
 			$strings = str_split( $transObject->mInfo['data'], 1500 );
-
 			foreach( $strings as $string ) {
-				if( $handle = fopen( "http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( preg_replace( '/[\n]/', $nl, $string ))."&langpair=en|{$_REQUEST['i18n']['lang_code']}", "r" )) {
+				$requestUrl = "http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( preg_replace( '/[\n]/', $nl, $string ))."&langpair=en|{$_REQUEST['i18n']['lang_code']}";
+				if( $handle = fopen( $requestUrl, "r" )) {
 					$data = '';
 					while( !feof( $handle )) {
 						$data .= fread( $handle, 8192 );
@@ -143,6 +143,7 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 					}
 				}
 			}
+die;
 		}
 	}
 }

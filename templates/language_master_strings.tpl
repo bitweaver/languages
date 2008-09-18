@@ -7,44 +7,42 @@
 	</div>
 
 	<div class="body">
-		{if $sourceHash}
-			{form legend="Edit Master String"}
-				<input type="hidden" name="source_hash" value="{$sourceHash}" />
-				{formfeedback hash=$masterMsg}
-				{formfeedback warning="You will need to clear the System Cache to see the changes." link="languages/edit_languages.php/System Cache"}
-
-				<div class="row">
-					{formlabel label="Master String" for="master_string"}
-					{forminput}
-						<textarea cols="50" rows="5" name="edit_master" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
-					{/forminput}
-				</div>
-
-				<div class="row submit">
-					<input type="submit" name="delete_master" value="{tr}Delete Master{/tr}" />
-					&nbsp;<input type="submit" name="change_master" value="{tr}Save{/tr}" />
-				</div>
-			{/form}
-
-			{minifind name="Search master strings" sort_mode=$sort_mode}
-
+		{minifind name="Search master strings" sort_mode=$sort_mode}
+		{if $sources}
 			{form legend="Edit Translations"}
-				<input type="hidden" name="source_hash" value="{$sourceHash}" />
-				{tr}Translations strings may appear empty if the language is not loaded. The language will be automatically loaded when you click the edit icon.{/tr}
-				{foreach from=$languages key=langCode item=lang}
-					{if $langCode ne 'en'}
+			{formfeedback hash=$masterMsg}
+			{formfeedback warning="You will need to clear the System Cache to see the changes." link="languages/edit_languages.php/System Cache"}
+			{tr}Translations strings may appear empty if the language is not loaded. The language will be automatically loaded when you click the edit icon.{/tr}
+			{foreach from=$sources item=sourceHash}
+					<input type="hidden" name="source_hash[]" value="{$sourceHash}" />
 					<div class="row">
-						{formlabel label=$lang.native_name}
+						{formlabel label="Master String" for="master_string"}
 						{forminput}
-							{* if results are guessed, we don't need to escape *}
-							{if $masterStrings.$sourceHash.textarea}
-								<textarea name="edit_trans[{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.trans}{else}{$tranStrings.$langCode.trans|escape|stripslashes}{/if}</textarea>
-							{else}
-								<input type="text" name="edit_trans[{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$langCode.guessed}{$tranStrings.$langCode.trans}{else}{$tranStrings.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="255" />
-							{/if}
+							<textarea cols="50" rows="5" name="edit_master[{$sourceHash}]" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
 						{/forminput}
 					</div>
-					{/if}
+{*
+					<div class="row submit">
+						<input type="submit" name="delete_master" value="{tr}Delete Master{/tr}" />
+						&nbsp;<input type="submit" name="change_master" value="{tr}Save{/tr}" />
+					</div>
+*}
+
+					{foreach from=$languages key=langCode item=lang}
+						{if $langCode ne 'en'}
+						<div class="row">
+							{formlabel label=$lang.native_name no_translate=1}
+							{forminput}
+								{* if results are guessed, we don't need to escape *}
+								{if $masterStrings.$sourceHash.textarea}
+									<textarea name="edit_trans[{$sourceHash}][{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}</textarea>
+								{else}
+									<input type="text" name="edit_trans[{$sourceHash}][{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="2048" />
+								{/if}
+							{/forminput}
+						</div>
+						{/if}
+					{/foreach}
 				{/foreach}
 
 				<div class="row submit">
@@ -59,8 +57,6 @@
 			{/form}
 
 		{else}
-
-			{minifind name="Search master strings" sort_mode=$sort_mode}
 			{form legend="Translation Filter"}
 				<input type="hidden" name="char" value="{$smarty.request.char}" \>
 				<div class="row">
@@ -98,11 +94,12 @@
 
 				<ol>
 					{foreach from=$masterStrings key=sourceHash item=master}
-					<li><input type="checkbox" title="{tr}Delete{/tr}" name="source_hash[]" value="{$sourceHash}" /> <a href="{$smarty.server.PHP_SELF}?source_hash={$sourceHash}">{$master.source|escape}</a></li>
+					<li><input type="checkbox" title="{tr}Delete{/tr}" name="source_hash[]" value="{$sourceHash}" /> <a href="{$smarty.server.PHP_SELF}?source_hash[]={$sourceHash}">{$master.source|escape}</a></li>
 					{/foreach}
 				</ol>
 
 				<div class="submit">
+					<input type="submit" name="guess_translations" value="{tr}Guess Translations{/tr}" />
 					<input type="submit" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
 				</div>
 
