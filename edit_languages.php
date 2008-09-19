@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.12 2008/06/25 22:21:12 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/edit_languages.php,v 1.13 2008/09/19 01:34:37 laetzer Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -78,9 +78,9 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 			$formHash['delete_lang_code'] = $_REQUEST['lang'];
 			$formHash['delete_language'] = TRUE;
 			$msgHash = array(
-				'label' => 'Delete Language',
-				'confirm_item' => 'Are you sure you want to remove the language "'.$languages[$_REQUEST['lang']]['native_name'].'"',
-				'warning' => 'This will permanently remove the languages and all translations.',
+				'label' => tra('Delete Language'),
+				'confirm_item' => tra('Are you sure you want to remove this language?') . ' ' . $languages[$_REQUEST['lang']]['native_name'],
+				'warning' => tra('This will permanently remove the languages and all translations.'),
 			);
 			$gBitSystem->confirmDialog( $formHash,$msgHash );
 		}
