@@ -1,6 +1,6 @@
 <?php
 /**
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  * @package  liberty
  * @subpackage plugins_data
  */
@@ -18,7 +18,7 @@
 // | by: StarRider <starrrider@sourceforge.net>
 // | Reworked from: wikiplugin_translated.php - see deprecated code below
 // +----------------------------------------------------------------------+
-// $Id: data.translated.php,v 1.1 2008/07/08 06:57:33 spiderr Exp $
+// $Id: data.translated.php,v 1.2 2008/10/15 14:04:20 laetzer Exp $
 
 /**
  * definitions
@@ -30,8 +30,8 @@ $pluginParams = array (
 	'auto_activate' => FALSE,
 	'requires_pair' => FALSE,
 	'load_function' => 'data_translated',
-	'title' => 'Translated - This plugin is not yet functional.', // Remove this line when the plugin becomes operational
-//	'title' => 'Translated',                                                                                       // and Remove the comment from the start of this line
+	'title' => 'Translated - (not yet functional)', // Remove this line when the plugin becomes operational
+//	'title' => 'Translated', // and Remove the comment from the start of this line, and the comments Help Function below
 	'help_page' => 'DataPluginTranslated',
 	'description' => tra("This plugin is used to create a link to a page that contains a translation. The link can be shown as an Icon for the country or as an abreviation for the language."),
 	'help_function' => 'data_translated_help',
@@ -50,8 +50,8 @@ function data_translated_help() {
 	$back.= "::page::" . tra(" | ::page name:: |  __Manditory__ Is a valid url for the page which contains the translation. The page name can be in the formats [url] or ((wikiname)) or ((inter:interwiki))\n^");
 	$back.= "::lang::" . tra(" | ::abreviation:: | __Manditory__ Is a 2 letter code that specifies the language to use. See the Abreviations given below.\n");
 	$back.= "::flag::" . tra(" | ::flag name:: | __Optional__ Is an image file that can be used as the link. See the Flag Names given below\n");
-	$back.= "^__Flag Names:__ ~pp~American_Samoa / Angola / Antigua / Argentina / Armenia / Australia / Austria / Bahamas / Bahrain / Bangladesh / Barbados / Belgium / Bermuda / Bolivia / Brazil / Brunei / Canada / Cayman_Islands / Chile / China / Colombia / Cook_Islands / Costa_Rica / Croatia / Cuba / Cyprus / Czech_Republic / Denmark / Dominican_Republic / Ecuador / Egypt / El_Salvador / Estonia / Federated_States_of_Micronesia / Fiji / Finland / France / French_Polynesia / Germany / Greece / Guam / Guatemala / Haiti / Honduras / Hungary / Iceland / India / Indonesia / Iran / Iraq / Ireland / Israel / Italy / Jamaica / Japan / Jordan / Kazakstan / Kenya / Kiribati / Kuwait / Latvia / Lebanon / Lithuania / Malawi / Malaysia / Malta / Marshall_Islands / Mauritius / Mexico / Morocco / Mozambique / Nauru / Nepal / Netherlands / New_Caledonia / New_Zealand / Nicaragua / Nigeria / Niue / Norway / Pakistan / Panama / Papua_New_Guinea / Paraguay / Peru / Phillippines / Poland / Portugal / Puerto_Rico / Quatar / Romania / Russia / Samoa / Saudi_Arabia / Singapore / Slovakia / Slovenia / Solomon_Islands / Somalia / South_Africa / South_Korea / Spain / Sri_Lanka / St_Vincent_Grenadines / Surinam / Sweden / Switzerland / Taiwan / Thailand / Tonga / Trinidad_Tobago / Turkey / Tuvalu / Ukraine / United_Arab_Emirates / United_Kingdom / United_States / Uruguay / Vanuatu / Venezuela / Wales / Yugoslavia / Zambia / Zimbabwe~/pp~\n^";
-	$back.= tra("^ __Language Abreviations:__ Chinese (Simplified)=") . "__cn__" . tra(" /  Chinese Traditional=") . "__tw__" . tra(" / Czech=") . "__cs__" . tra(" / Danish=") . "__da__" . tra(" / English=") . "__en__" . tra(" / French=") . "__fr__" . tra(" / German=") . "__de__" . tra(" / Hebrew=") . "__he__" . tra(" / Italian=") . "__it__" . tra(" / Japanese=") . "__ja__" . tra(" / Norwegian=") . "__no__" . tra(" / Polish=") . "__po__" . tra(" / Russian=") . "__ru__" . tra(" / Serbian=") . "__sr__" . tra(" / Slovak=") . "__sk__" . tra(" Spanish=") . "__es__" . tra(" Swedish=") . "__sv__.||^";
+//	$back.= "^__Flag Names:__ ~pp~American_Samoa / Angola / Antigua / Argentina / Armenia / Australia / Austria / Bahamas / Bahrain / Bangladesh / Barbados / Belgium / Bermuda / Bolivia / Brazil / Brunei / Canada / Cayman_Islands / Chile / China / Colombia / Cook_Islands / Costa_Rica / Croatia / Cuba / Cyprus / Czech_Republic / Denmark / Dominican_Republic / Ecuador / Egypt / El_Salvador / Estonia / Federated_States_of_Micronesia / Fiji / Finland / France / French_Polynesia / Germany / Greece / Guam / Guatemala / Haiti / Honduras / Hungary / Iceland / India / Indonesia / Iran / Iraq / Ireland / Israel / Italy / Jamaica / Japan / Jordan / Kazakstan / Kenya / Kiribati / Kuwait / Latvia / Lebanon / Lithuania / Malawi / Malaysia / Malta / Marshall_Islands / Mauritius / Mexico / Morocco / Mozambique / Nauru / Nepal / Netherlands / New_Caledonia / New_Zealand / Nicaragua / Nigeria / Niue / Norway / Pakistan / Panama / Papua_New_Guinea / Paraguay / Peru / Phillippines / Poland / Portugal / Puerto_Rico / Quatar / Romania / Russia / Samoa / Saudi_Arabia / Singapore / Slovakia / Slovenia / Solomon_Islands / Somalia / South_Africa / South_Korea / Spain / Sri_Lanka / St_Vincent_Grenadines / Surinam / Sweden / Switzerland / Taiwan / Thailand / Tonga / Trinidad_Tobago / Turkey / Tuvalu / Ukraine / United_Arab_Emirates / United_Kingdom / United_States / Uruguay / Vanuatu / Venezuela / Wales / Yugoslavia / Zambia / Zimbabwe~/pp~\n^";
+//	$back.= tra("^ __Language Abreviations:__ Chinese (Simplified)=") . "__cn__" . tra(" /  Chinese Traditional=") . "__tw__" . tra(" / Czech=") . "__cs__" . tra(" / Danish=") . "__da__" . tra(" / English=") . "__en__" . tra(" / French=") . "__fr__" . tra(" / German=") . "__de__" . tra(" / Hebrew=") . "__he__" . tra(" / Italian=") . "__it__" . tra(" / Japanese=") . "__ja__" . tra(" / Norwegian=") . "__no__" . tra(" / Polish=") . "__po__" . tra(" / Russian=") . "__ru__" . tra(" / Serbian=") . "__sr__" . tra(" / Slovak=") . "__sk__" . tra(" Spanish=") . "__es__" . tra(" Swedish=") . "__sv__.||^";
 	$back.= tra("^__Example:__ ") . "~np~{TRANSLATED(page=>Home Page,lang=>fr,flag=>France)}~/np~^";
 	return $back;
 }
