@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.25 2008/09/16 08:20:56 squareing Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.26 2008/10/20 20:54:38 squareing Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -323,7 +323,7 @@ class BitLanguage extends BitBase {
 			unset( $this->mStrings[$pParamHash['source_hash']] );
 		} else {
 			$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_masters` (`source`,`source_hash`, `created`, `package`) VALUES (?,?,?,?)";
-			$trans = $this->mDb->query($query, array( $pParamHash['new_source'], $this->getSourceHash( $pParamHash['new_source'] ), time(), $package ) );
+			$trans = $this->mDb->query($query, array( $pParamHash['new_source'], $newSourceHash, time(), $package ) );
 		}
 		if( count( $this->mErrors ) == 0 ) {
 			$this->mStrings['master'][$newSourceHash]['source'] = $pParamHash['new_source'];
@@ -621,9 +621,9 @@ class BitLanguage extends BitBase {
 			$ret = $this->mDb->getRow($query, array( BIT_MAJOR_VERSION, $pLangCode, $sourceHash ) );
 			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'i18n_record_untranslated' ) ) {
 				$query = "SELECT `source_hash` FROM `".BIT_DB_PREFIX."i18n_masters` WHERE `source_hash`=?";
-				$source = $this->mDb->getOne($query, array( $this->getSourceHash( $pString ) ) );
+				$source = $this->mDb->getOne($query, array( $sourceHash ) );
 				if( empty( $source ) ) {
-					$this->storeMasterString( array( 'source_hash' => $this->getSourceHash( $pString ), 'new_source' => $pString ) );
+					$this->storeMasterString( array( 'source_hash' => $sourceHash, 'new_source' => $pString ) );
 				}
 			}
 			if( $pOverrideUsage && $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) ) {
