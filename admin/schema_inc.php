@@ -121,4 +121,11 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', '简体中文', 'Chinese')",
 ) );
 
+// Package dependencies
+$gBitInstaller->registerDependencies( LANGUAGES_PKG_NAME, array(
+	'liberty'   => array( 'min' => '2.1.0' ),
+	'users'     => array( 'min' => '2.1.0' ),
+	'kernel'    => array( 'min' => '2.0.0' ),
+	'themes'    => array( 'min' => '2.0.0' ),
+));
 ?>
