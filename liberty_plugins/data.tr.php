@@ -3,7 +3,7 @@
  * tr translation plugin
  *
  * @author     wjames5 will@tekimaki.com 
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  * @package    liberty
  * @subpackage plugins_data
  * @copyright  Copyright (c) 2008, bitweaver.org
@@ -24,8 +24,6 @@ $pluginParams = array (
 	'description'   => tra( "Use this plugin to mark strings for translation. You should only use this for common short strings, and not entire pages." ),
 	'help_function' => 'data_tr_help',
 	'syntax'        => "{tr}",
-	'path'          => LIBERTY_PKG_PATH.'plugins/data.tr.php',
-	'security'      => 'registered',
 	'plugin_type'   => DATA_PLUGIN
 );
 $gLibertySystem->registerPlugin( PLUGIN_GUID_DATATR, $pluginParams );

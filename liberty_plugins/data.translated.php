@@ -1,6 +1,6 @@
 <?php
 /**
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  * @package  liberty
  * @subpackage plugins_data
  */
@@ -18,7 +18,7 @@
 // | by: StarRider <starrrider@sourceforge.net>
 // | Reworked from: wikiplugin_translated.php - see deprecated code below
 // +----------------------------------------------------------------------+
-// $Id: data.translated.php,v 1.2 2008/10/15 14:04:20 laetzer Exp $
+// $Id: data.translated.php,v 1.3 2008/11/09 09:08:55 squareing Exp $
 
 /**
  * definitions
@@ -36,8 +36,6 @@ $pluginParams = array (
 	'description' => tra("This plugin is used to create a link to a page that contains a translation. The link can be shown as an Icon for the country or as an abreviation for the language."),
 	'help_function' => 'data_translated_help',
 	'syntax' => "{TRANSLATED page= lang= flag= }",
-	'path' => LIBERTY_PKG_PATH.'plugins/data.translated.php',
-	'security' => 'registered',
 	'plugin_type' => DATA_PLUGIN
 );
 $gLibertySystem->registerPlugin( PLUGIN_GUID_DATATRANSLATED, $pluginParams );
