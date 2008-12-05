@@ -68,7 +68,7 @@
 				{jstab title="Export Languages"}
 					{form legend="Export language"}
 						<div class="row">
-							{formlabel label="Select the language to Export" for="exp_lang"}
+							{formlabel label="Language to export" for="exp_lang"}
 							{forminput}
 								<select name="export_lang_code" id="export_lang_code">
 									{foreach from=$expLanguages key=langCode item=lang}
@@ -81,10 +81,10 @@
 
 						{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
 							<div class="row">
-								{formlabel label="Export All Translations" for="all_trans"}
+								{formlabel label="All translations" for="all_trans"}
 								{forminput}
 									<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />
-									{formhelp note="This will export strings for all versions of bitweaver. It is generally a good idea to export these."}
+									{formhelp note="This will export all strings of the chosen language for all versions of bitweaver. It is generally a good idea to export these."}
 								{/forminput}
 							</div>
 						{else}
