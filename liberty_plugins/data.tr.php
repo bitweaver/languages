@@ -3,7 +3,7 @@
  * tr translation plugin
  *
  * @author     wjames5 will@tekimaki.com 
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  * @package    liberty
  * @subpackage plugins_data
  * @copyright  Copyright (c) 2008, bitweaver.org
@@ -15,8 +15,8 @@
 define( 'PLUGIN_GUID_DATATR', 'datatr' );
 global $gLibertySystem;
 $pluginParams = array (
-	'tag'           => 'TR',
-	'auto_activate' => TRUE,
+	'tag'           => 'tr',
+	'auto_activate' => FALSE,
 	'requires_pair' => TRUE,
 	'load_function' => 'data_tr',
 	'title'         => 'Translate',
