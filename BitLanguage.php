@@ -1,11 +1,11 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.27 2009/10/01 13:45:43 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.28 2009/10/01 14:17:01 wjames5 Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
- * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * All Rights Reserved. See below for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details
  * @author spider <spider@steelsun.com>
  */
