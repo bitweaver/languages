@@ -70,15 +70,6 @@ $gBitInstaller->registerPreferences( LANGUAGES_PKG_NAME, array(
 	array( LANGUAGES_PKG_NAME, 'i18n_record_untranslated','y' ),
 ) );
 
-// ### Default UserPermissions
-$gBitInstaller->registerUserPermissions( LANGUAGES_PKG_NAME, array(
-	array('p_languages_create', 'Can create new languages', 'admin', LANGUAGES_PKG_NAME),
-	array('p_languages_edit', 'Can edit translations', 'editors', LANGUAGES_PKG_NAME),
-	array('p_languages_delete', 'Can delete languages', 'admin', LANGUAGES_PKG_NAME),
-	array('p_languages_edit_master', 'Can edit master translation strings', 'admin', LANGUAGES_PKG_NAME),
-	array('p_languages_import', 'Can import and export language files', 'editors', LANGUAGES_PKG_NAME),
-) );
-
 $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`,`right_to_left`) VALUES ('ar', 'ﺎﻠﻋﺮﺒﻳﺓ', 'Arabic','y' )",
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('ca', 'Català', 'Catalan')",
@@ -121,6 +112,16 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 	"INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`native_name`,`english_name`) VALUES ('zh-cn', '简体中文', 'Chinese')",
 ) );
 
+/*
+// ### Default UserPermissions
+$gBitInstaller->registerUserPermissions( LANGUAGES_PKG_NAME, array(
+	array('p_languages_create', 'Can create new languages', 'admin', LANGUAGES_PKG_NAME),
+	array('p_languages_edit', 'Can edit translations', 'editors', LANGUAGES_PKG_NAME),
+	array('p_languages_delete', 'Can delete languages', 'admin', LANGUAGES_PKG_NAME),
+	array('p_languages_edit_master', 'Can edit master translation strings', 'admin', LANGUAGES_PKG_NAME),
+	array('p_languages_import', 'Can import and export language files', 'editors', LANGUAGES_PKG_NAME),
+) );
+
 // Package requirements
 $gBitInstaller->registerRequirements( LANGUAGES_PKG_NAME, array(
 	'liberty'   => array( 'min' => '2.1.0' ),
@@ -128,4 +129,4 @@ $gBitInstaller->registerRequirements( LANGUAGES_PKG_NAME, array(
 	'kernel'    => array( 'min' => '2.0.0' ),
 	'themes'    => array( 'min' => '2.0.0' ),
 ));
-?>
+*/

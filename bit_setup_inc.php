@@ -17,6 +17,7 @@ if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
 	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
 	$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 }
+/*
 if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'p_languages_edit' ) ) {
 	$menuHash = array(
 		'package_name'  => LANGUAGES_PKG_NAME,
@@ -25,6 +26,7 @@ if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'p_
 	);
 	$gBitSystem->registerAppMenu( $menuHash );
 }
+*/
 
 if( $gBitSystem->isFeatureActive( 'users_preferences' ) && $gBitUser->isRegistered() ) {
 	if( $gBitSystem->isFeatureActive( 'users_change_language' ) ) {
