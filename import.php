@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.16 2009/10/01 14:17:01 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/import.php,v 1.17 2010/02/08 21:27:23 wjames5 Exp $
  */
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -12,7 +12,7 @@
 /**
  * Initialization
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 $gBitSystem->verifyPermission( 'p_languages_import' );
 

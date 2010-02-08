@@ -2,13 +2,13 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.9 2006/04/19 17:18:14 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.10 2010/02/08 21:27:23 wjames5 Exp $
  */
 
 /**
  * Initialization
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 include_once( KERNEL_PKG_PATH.'BitBase.php' );
 
 if (isset($_SERVER['HTTP_REFERER'])) {

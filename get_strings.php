@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/get_strings.php,v 1.4 2009/10/01 14:17:01 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/get_strings.php,v 1.5 2010/02/08 21:27:23 wjames5 Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -147,7 +147,7 @@ function writeTranslationPair ($fd, $key, $val) {
 
 ////////////////////////////////////////////////////////////////////////////
 
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 if(!$gBitUser->isAdmin()) {
   die("You need to be admin to run this script");
