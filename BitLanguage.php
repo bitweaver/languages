@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.28 2009/10/01 14:17:01 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.29 2010/03/04 20:55:14 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -34,7 +34,7 @@ class BitLanguage extends BitBase {
 			$this->mLanguage = $_SESSION['bitlanguage'];
 		} elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $gBitSystem->isFeatureActive( 'i18n_browser_languages' )) {
 			// Get supported languages
-			if( $browserLangs = split( ',', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ) ) {
+			if( $browserLangs = preg_split( '/,/', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ) ) {
 				foreach( $browserLangs as $bl ) {
 					if( !empty( $this->mLanguageList[$bl] ) ) {
 						$this->setLanguage( $bl );
