@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.29 2010/03/04 20:55:14 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_languages/BitLanguage.php,v 1.30 2010/03/16 22:11:28 spiderr Exp $
  *
  * Copyright (c) 2005 bitweaver.org
  * Copyright (c) 2004-2005, Christian Fowler, et. al.
@@ -295,8 +295,8 @@ class BitLanguage extends BitBase {
 	function storeMasterString( $pParamHash ) {
 		global $gBitSmarty;
 		if( !empty( $gBitSmarty->mCompileRsrc ) ) {
-			list($type, $location) = split( ':', $gBitSmarty->mCompileRsrc );
-			list($package, $file) = split( '/', $location );
+			list($type, $location) = explode( ':', $gBitSmarty->mCompileRsrc );
+			list($package, $file) = explode( '/', $location );
 		} else {
 			$package = NULL;
 		}
