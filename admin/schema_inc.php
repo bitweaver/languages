@@ -123,7 +123,7 @@ $gBitInstaller->registerSchemaDefault( LANGUAGES_PKG_NAME, array(
 
 // Package requirements
 $gBitInstaller->registerRequirements( LANGUAGES_PKG_NAME, array(
-	'liberty'   => array( 'min' => '2.1.0' ),
+	'liberty'   => array( 'min' => '2.1.4' ),
 	'users'     => array( 'min' => '2.1.0' ),
 	'kernel'    => array( 'min' => '2.0.0' ),
 	'themes'    => array( 'min' => '2.0.0' ),
