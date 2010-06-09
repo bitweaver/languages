@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/switch_lang.php,v 1.10 2010/02/08 21:27:23 wjames5 Exp $
+ * @version $Header$
  */
 
 /**

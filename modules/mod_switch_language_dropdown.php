@@ -4,7 +4,7 @@
  *
  * @package languages
  * @subpackage modules
- * @version $Header: /cvsroot/bitweaver/_bit_languages/modules/mod_switch_language_dropdown.php,v 1.6 2006/01/10 21:13:02 squareing Exp $
+ * @version $Header$
  */ 
 global $gBitLanguage, $gBitUser;
 //vd($_COOKIE);

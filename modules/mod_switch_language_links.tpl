@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_languages/modules/mod_switch_language_links.tpl,v 1.2 2005/08/07 17:39:28 squareing Exp $ *}
+{* $Header$ *}
 {strip}
 {bitmodule title="$moduleTitle" name="switch_language_links"}
 	{foreach from=$languages item=lang key=langCode}

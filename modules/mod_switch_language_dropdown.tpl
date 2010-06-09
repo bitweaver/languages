@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_languages/modules/mod_switch_language_dropdown.tpl,v 1.1 2005/06/19 04:55:13 bitweaver Exp $ *}
+{* $Header$ *}
 {strip}
 {bitmodule title="$moduleTitle" name="switch_language_dropdown"}
 	{form method="get" ipackage='languages' ifile='switch_lang.php'}

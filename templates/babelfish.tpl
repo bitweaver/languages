@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_languages/templates/babelfish.tpl,v 1.4 2006/02/06 22:56:47 squareing Exp $ *}
+{* $Header$ *}
 
 {if $gBitSystem->isFeatureActive( 'babelfish' ) and $gBitSystem->isFeatureActive( 'babelfish_logo' )}
 

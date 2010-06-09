@@ -1,7 +1,7 @@
 <?php
 /**
  * @package languages
- * @version $Header: /cvsroot/bitweaver/_bit_languages/LibertyTranslations.php,v 1.13 2008/09/18 03:57:44 spiderr Exp $
+ * @version $Header$
  *
  * @author ?
  */

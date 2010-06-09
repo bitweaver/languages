@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/master_strings.php,v 1.14 2010/02/08 21:27:23 wjames5 Exp $
+ * @version $Header$
  */
 
 // Copyright (c) 2005, bitweaver.org

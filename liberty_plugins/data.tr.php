@@ -3,7 +3,7 @@
  * tr translation plugin
  *
  * @author     wjames5 will@tekimaki.com 
- * @version    $Revision: 1.3 $
+ * @version    $Revision$
  * @package    liberty
  * @subpackage plugins_data
  * @copyright  Copyright (c) 2008, bitweaver.org

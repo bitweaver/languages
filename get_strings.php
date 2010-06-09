@@ -2,7 +2,7 @@
 /**
  * @package languages
  * @subpackage functions
- * @version $Header: /cvsroot/bitweaver/_bit_languages/get_strings.php,v 1.5 2010/02/08 21:27:23 wjames5 Exp $
+ * @version $Header$
  *
  * Copyright (c) 2005 bitweaver.org
  * Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
