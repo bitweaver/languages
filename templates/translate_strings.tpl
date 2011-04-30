@@ -5,15 +5,31 @@
 {literal}
 var ajax = new BitBase.SimpleAjax();
 function autoTranslate( pElementId ) {
-console.log( pElementId );
 	ajax.connect( "{/literal}{$smarty.const.LANGUAGES_PKG_URL}ajax_translate.php{literal}"
 		, "lang={/literal}{$editLang}{literal}&source_hash=" + escape( pElementId )
-		, function (r) { 
-				document.getElementById( 'h_'+pElementId ).value = r.responseText; 
-			}
+		, updateTranslation
 		, "GET"
 	);
 }
+
+function updateTranslation( pResponse ) {
+	rObj = eval('(' + pResponse.responseText  + ')');
+	document.getElementById( rObj.source_hash ).value = rObj.translation;
+}
+
+function autoTranslateEmpty() {
+	var elem = document.getElementById('translateform').elements;
+	for(var i = 0; i < elem.length; i++) {
+		if( elem[i].type == 'text' || elem[i].type == 'textarea' ) {
+			if( !elem[i].value && elem[i].id ) {
+console.log( elem[i].type + " -> " + elem[i].id );
+				autoTranslate( elem[i].id );
+return;
+			}
+		}
+	} 
+}
+
 {/literal}
 /* ]]> */</script>
 
@@ -23,7 +39,7 @@ console.log( pElementId );
     </div>
 
 	<div class="body">
-		{form}
+		{form id="translateform"}
 			<div class="row">
 				{formlabel label="Select the language to edit" for="select_language"}
 				{forminput}
@@ -38,7 +54,7 @@ console.log( pElementId );
 				{/forminput}
 			</div>
 
-			{alphabar iall=1 lang=$smarty.request.lang translate=1 un_trans=$unTrans all_trans=$allTrans}
+			{alphabar iall=1 choose_lang=$smarty.request.lang translate=1 un_trans=$unTrans all_trans=$allTrans}
 
 			<input type="hidden" name="lang" value="{$editLang}" />
 			<input type="hidden" name="char" value="{$char}" />
@@ -49,7 +65,7 @@ console.log( pElementId );
 						{if $allTrans || (!$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) || $tran.version)}
 							<div class="row{if !$tran.version and !allTrans} warning{/if}">
 								<div class="formlabel">
-									<label for="h_{$sourceHash}">{tr}Translate{/tr}</label>
+									<label for="{$sourceHash}">{tr}Translate{/tr}</label>
 									{if $gBitSystem->getConfig('google_api_key')}
 										<div class="autotranslate" onclick="autoTranslate('{$sourceHash}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
 									{/if}
@@ -57,9 +73,9 @@ console.log( pElementId );
 								{forminput}
 									{$tran.source|escape|nl2br}<br/>
 									{if $tran.textarea}
-										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
+										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 									{else}
-										<input style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="h_{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
+										<input style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
 									{/if}
 								{/forminput}
 							</div>
@@ -69,6 +85,9 @@ console.log( pElementId );
 					<div class="row submit">
 						<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
 						<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
+						{if $gBitSystem->getConfig('google_api_key')}
+						<div class="button" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
+						{/if}
 					</div>
 
 					{alphabar iall=1 lang=$editLang translate=1 un_trans=$unTrans all_trans=$allTrans}

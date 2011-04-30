@@ -17,8 +17,8 @@ if( !empty( $_REQUEST['lang'] ) && !empty( $_REQUEST['source_hash'] ) ) {
 		}
 		if( !empty( $data->data->translations[0]->translatedText ) ) {
 			$translation = $data->data->translations[0]->translatedText;
+			print json_encode( array( 'source_hash' => $_REQUEST['source_hash'], 'translation' => $translation ) );
 		}
 	}
 }
 
-print $translation;
