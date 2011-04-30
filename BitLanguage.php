@@ -637,6 +637,17 @@ class BitLanguage extends BitBase {
 	}
 
 	/**
+	 * getMasterString
+	 * 
+	 * @param string $pSourceHash
+	 * @access public
+	 * @return master string with given source hash
+	 */
+	function getMasterString( $pSourceHash ) {
+		return( $this->mDb->getOne( "SELECT `source` FROM `" . BIT_DB_PREFIX . "i18n_masters` WHERE `source_hash` = ? ", array( $pSourceHash ) ) );
+	}
+
+	/**
 	 * getSourceHash 
 	 * 
 	 * @param string $pString 
