@@ -3,8 +3,11 @@
 
 <script type="text/javascript">/* <![CDATA[ */
 {literal}
+var autoHashArray = new Array();
 var ajax = new BitBase.SimpleAjax();
+
 function autoTranslate( pElementId ) {
+console.log( "auto trans " + pElementId );
 	ajax.connect( "{/literal}{$smarty.const.LANGUAGES_PKG_URL}ajax_translate.php{literal}"
 		, "lang={/literal}{$editLang}{literal}&source_hash=" + escape( pElementId )
 		, updateTranslation
@@ -13,8 +16,16 @@ function autoTranslate( pElementId ) {
 }
 
 function updateTranslation( pResponse ) {
-	rObj = eval('(' + pResponse.responseText  + ')');
-	document.getElementById( rObj.source_hash ).value = rObj.translation;
+console.log( pResponse );
+	if( pResponse.responseText ) {
+console.log( pResponse.responseText );
+		rObj = eval('(' + pResponse.responseText  + ')');
+console.log( rObj );
+		document.getElementById( rObj.source_hash ).value = rObj.translation;
+	}
+	if( autoHashArray.length ) {
+		autoTranslate( autoHashArray.pop() );
+	}
 }
 
 function autoTranslateEmpty() {
@@ -22,12 +33,14 @@ function autoTranslateEmpty() {
 	for(var i = 0; i < elem.length; i++) {
 		if( elem[i].type == 'text' || elem[i].type == 'textarea' ) {
 			if( !elem[i].value && elem[i].id ) {
-console.log( elem[i].type + " -> " + elem[i].id );
-				autoTranslate( elem[i].id );
-return;
+				autoHashArray.push( elem[i].id );
 			}
 		}
 	} 
+console.log( autoHashArray );
+	if( autoHashArray.length ) {
+		autoTranslate( autoHashArray.pop() );
+	}
 }
 
 {/literal}
@@ -54,12 +67,12 @@ return;
 				{/forminput}
 			</div>
 
-			{alphabar iall=1 choose_lang=$smarty.request.lang translate=1 un_trans=$unTrans all_trans=$allTrans}
+			{alphabar iall=1 choose_lang=$editLang translate=1 un_trans=$unTrans all_trans=$allTrans}
 
 			<input type="hidden" name="lang" value="{$editLang}" />
 			<input type="hidden" name="char" value="{$char}" />
 
-			{if $smarty.request.lang}
+			{if $editLang}
 				{legend legend="Edit `$languages.$lang.full_name` Language"}
 					{foreach from=$tranStrings key=sourceHash item=tran}
 						{if $allTrans || (!$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) || $tran.version)}

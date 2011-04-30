@@ -30,7 +30,7 @@ if( !empty( $_REQUEST['un_trans'] ) ) {
 }
 
 
-if( !empty( $_REQUEST['save_translations'] ) ) {
+if( isset( $_REQUEST['save_translations'] ) ) {
 	$editLang = $_REQUEST['lang'];
 	$gBitLanguage->loadLanguage( $editLang );
 	$storedStrings = NULL;
@@ -58,41 +58,40 @@ if( !empty( $_REQUEST['save_translations'] ) ) {
 	$gBitSmarty->assign( 'storedStrings', $storedStrings );
 }
 
-if( !empty( $_REQUEST['choose_lang'] ) ) {
+if( !empty( $_REQUEST['hash'] ) ) {
+	$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
+	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+} elseif( !empty( $_REQUEST['choose_lang'] ) ) {
 	$editLang = $_REQUEST['choose_lang'];
 	$gBitSmarty->assign( 'editLang', $editLang );
-	if( !empty( $_REQUEST['hash'] ) ) {
-		$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
-		$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+	// what strings do we want to display?
+	if( empty( $_REQUEST['char'] ) ) {
+		$pattern = "/^a/i";
+	} elseif ( $_REQUEST['char'] == '0-9' ) {
+		$pattern = "/^\d/";
+	} elseif ( $_REQUEST['char'] == '+' ) {
+		$pattern = "/^[^a-zA-Z]/";
+	} elseif ( $_REQUEST['char'] == 'all' ) {
+		$pattern = NULL;
 	} else {
-		// what strings do we want to display?
-		if( empty( $_REQUEST['char'] ) ) {
-			$pattern = "/^a/i";
-		} elseif ( $_REQUEST['char'] == '0-9' ) {
-			$pattern = "/^\d/";
-		} elseif ( $_REQUEST['char'] == '+' ) {
-			$pattern = "/^[^a-zA-Z]/";
-		} elseif ( $_REQUEST['char'] == 'all' ) {
-			$pattern = "//";
-		} else {
-			$pattern = "/^".$_REQUEST['char']."/i";
-		}
-		$gBitLanguage->loadLanguage( $editLang );
-		$tranStr = $gBitLanguage->mStrings[$editLang];
-		foreach( $tranStr as $key => $tran ) {
-			// display only the wanted strings and apply a textbox if the string is too long
-			if( !empty( $_REQUEST['un_trans'] ) && empty( $tran['trans'] ) || empty( $_REQUEST['un_trans'] ) ) {
-				if( preg_match( $pattern, $tran['source'] ) ) {
-					$tranStrings[$key] = $tran;
-					if( strlen( $tran['source'] ) > 50 ) {
-						$tranStrings[$key]['textarea'] = TRUE;
-					}
+		$pattern = "/^".$_REQUEST['char']."/i";
+	}
+	$gBitLanguage->loadLanguage( $editLang );
+	$tranStr = $gBitLanguage->mStrings[$editLang];
+
+	foreach( $tranStr as $key => $tran ) {
+		// display only the wanted strings and apply a textbox if the string is too long
+		if( !empty( $_REQUEST['un_trans'] ) && empty( $tran['trans'] ) || empty( $_REQUEST['un_trans'] ) ) {
+			if( empty( $pattern ) || preg_match( $pattern, $tran['source'] ) ) {
+				$tranStrings[$key] = $tran;
+				if( strlen( $tran['source'] ) > 50 ) {
+					$tranStrings[$key]['textarea'] = TRUE;
 				}
 			}
 		}
-		$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-		$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 	}
+	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 }
 
 $gBitSystem->display( 'bitpackage:languages/translate_strings.tpl', tra( 'Edit Translations' ) , array( 'display_mode' => 'edit' ));
