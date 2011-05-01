@@ -73,7 +73,7 @@ console.log( autoHashArray );
 			<input type="hidden" name="char" value="{$char}" />
 
 			{if $editLang}
-				{legend legend="Edit `$languages.$lang.full_name` Language"}
+				{legend legend=$languages.$lang.full_name}
 					{foreach from=$tranStrings key=sourceHash item=tran}
 						{if $allTrans || (!$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) || $tran.version)}
 							<div class="row{if !$tran.version and !allTrans} warning{/if}">
@@ -84,7 +84,7 @@ console.log( autoHashArray );
 									{/if}
 								</div>
 								{forminput}
-									{$tran.source|escape|nl2br}<br/>
+									<a href="{$smarty.const.LANGUAGES_PKG_URL}master_strings.php?source_hash={$sourceHash}">{$tran.source|escape|nl2br}</a><br/>
 									{if $tran.textarea}
 										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 									{else}
