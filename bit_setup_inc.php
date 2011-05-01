@@ -40,6 +40,7 @@ if( !empty( $_REQUEST['oe'] ) && !empty( $gBitLanguage->mLanguageList[$_REQUEST[
 	$gBitLanguage->setLanguage( $_REQUEST['oe'] );
 }
 
+$gBitSmarty->assign_by_ref('gBitLanguage', $gBitLanguage);
 $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
 if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {

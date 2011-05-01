@@ -31,7 +31,7 @@ class BitLanguage extends BitBase {
 
 		if (isset($_SESSION['bitlanguage'])) {
 			// users not logged that change the preference
-			$this->mLanguage = $_SESSION['bitlanguage'];
+			$this->setLanguage( $_SESSION['bitlanguage'] );
 		} elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $gBitSystem->isFeatureActive( 'i18n_browser_languages' )) {
 			// Get supported languages
 			if( $browserLangs = preg_split( '/,/', preg_replace('/;q=[0-9.]+/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ) ) {
@@ -50,7 +50,7 @@ class BitLanguage extends BitBase {
 			}
 		}
 		if( empty( $this->mLanguage ) ) {
-			$this->mLanguage = $gBitSystem->getConfig('bitlanguage', 'en');
+			$this->setLanguage( $gBitSystem->getConfig('bitlanguage', 'en') );
 		}
 	}
 
@@ -73,6 +73,11 @@ class BitLanguage extends BitBase {
 	 */
 	function setLanguage( $pLangCode ) {
 		$this->mLanguage = $pLangCode;
+		$this->mLanguageInfo = $this->mDb->getRow( "SELECT il.* FROM `".BIT_DB_PREFIX."i18n_languages` il WHERE `lang_code` = ?", array( $pLangCode ) );
+	}
+
+	function isLanguageRTL () {
+		return( !empty( $this->mLanguageInfo['right_to_left'] ) );
 	}
 
 	/**
