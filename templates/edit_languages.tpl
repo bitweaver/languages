@@ -88,19 +88,7 @@
 					<div class="row submit">
 						<input type="submit" name="delete_language" value="{tr}Delete Language{/tr}" />&nbsp;
 						<input type="submit" name="edit_language" value="{tr}Edit Description{/tr}" />&nbsp;
-						<input type="submit" name="translate" value="{tr}Edit Translations{/tr}" />
 					</div>
-
-					{formhelp note="
-						<dl>
-							<dt>Delete Language</dt>
-							<dd>Delete the language from your server.</dd>
-							<dt>Edit Description</dt>
-							<dd>Edit the description of the language, including language code.</dd>
-							<dt>Edit Translations</dt>
-							<dd>Edit the translated strings of the selected language.</dd>
-						</dl>
-					"}
 
 					{if $gBitUser->hasPermission( 'p_languages_create' )}
 						<div class="row submit">
