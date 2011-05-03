@@ -23,6 +23,15 @@
 		</div>
 	{/foreach}
 
+	<div class="row">
+		{formlabel label="Google API Key" for="google_api_key"}
+		{forminput}
+			{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"}
+			<input type="text" name="google_api_key" value="{$gBitSystem->getConfig('google_api_key')}" style="width:30em"/>
+			{formhelp note="Enter your <a href='http://www.google.com/search?q=Google+translate+API'>Google Translate API KEY</a>"}
+		{/forminput}
+	</div>
+
 	<div class="row submit">
 		<input type="submit" name="prefs" value="{tr}Change Settings{/tr}" />
 	</div>

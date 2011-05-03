@@ -53,6 +53,9 @@ if( isset( $_REQUEST["prefs"] )) {
 	}
 	global $gBitLanguage;
 	$gBitLanguage->setLanguage( $gBitSystem->getConfig( 'bitlanguage' ));
+
+	$gBitSystem->storeConfig( 'google_api_key', $_REQUEST['google_api_key'] );
+
 } else {
 	$gBitSmarty->assign( "language", $gBitSystem->getConfig( "language", "en" ));
 }

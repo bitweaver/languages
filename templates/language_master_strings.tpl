@@ -1,6 +1,8 @@
 {strip}
 <div class="floaticon">{bithelp}</div>
 
+{include file="bitpackage:lanaguages/translate_google_ajax_inc.tpl"}
+
 <div class="edit languages">
 	<div class="header">
 		<h1>{tr}Master Language Strings{/tr}</h1>
@@ -9,7 +11,7 @@
 	<div class="body">
 		{minifind name="Search master strings" sort_mode=$sort_mode}
 		{if $sources}
-			{form legend="Edit Translations"}
+			{form legend="Edit Translations" id="translateform"}
 			{formfeedback hash=$masterMsg}
 			{formfeedback warning="You will need to clear the System Cache to see the changes." link="languages/edit_languages.php/System Cache"}
 			{tr}Translations strings may appear empty if the language is not loaded. The language will be automatically loaded when you click the edit icon.{/tr}
@@ -31,13 +33,18 @@
 					{foreach from=$languages key=langCode item=lang}
 						{if $langCode ne 'en'}
 						<div class="row">
-							{formlabel label=$lang.native_name no_translate=1}
+							<div class="formlabel">
+								{$lang.native_name}
+								{if $gBitSystem->getConfig('google_api_key')}
+									<div class="autotranslate" onclick="autoTranslate('{$sourceHash}','{$langCode}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
+								{/if}
+							</div>
 							{forminput}
 								{* if results are guessed, we don't need to escape *}
 								{if $masterStrings.$sourceHash.textarea}
-									<textarea name="edit_trans[{$sourceHash}][{$langCode}]" id="h_{$sourceHash}" rows="5" cols="50">{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}</textarea>
+									<textarea name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" rows="3" cols="50">{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}</textarea>
 								{else}
-									<input type="text" name="edit_trans[{$sourceHash}][{$langCode}]" id="h_{$sourceHash}" value="{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="2048" />
+									<input type="text" name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" value="{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="2048" />
 								{/if}
 							{/forminput}
 						</div>
@@ -47,12 +54,15 @@
 
 				<div class="row submit">
 					<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />
-					&nbsp;<input type="submit" name="guess_translations" value="{tr}Guess Translations{/tr}" />
-					&nbsp;<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
+					<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
+					<input type="submit" name="delete_master" value="{tr}Delete Master String{/tr}" />
+					{if $gBitSystem->getConfig('google_api_key')}
+					<div class="button" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
+					{/if}
 				</div>
 
 				<div class="row">
-					{formhelp note="Guess Translations will try and get an estimated translation using google language tools. Please make sure you check the returned strings for messed up HTML."}
+					{formhelp note="Auto Translations will try and get an estimated translation using google language tools. Please make sure you check the returned strings for incorrect formatting."}
 				</div>
 			{/form}
 
@@ -80,7 +90,7 @@
 				</div>
 			{/form}
 
-			{form legend="Translations" id=formid}
+			{form legend="Translations" id="translateform"}
 				{alphabar iall=1 filter_lang=$smarty.request.filter_lang filter=$smarty.request.filter}
 
 				{formfeedback hash=$feedback}
@@ -99,7 +109,6 @@
 				</ol>
 
 				<div class="submit">
-					<input type="submit" name="guess_translations" value="{tr}Guess Translations{/tr}" />
 					<input type="submit" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
 				</div>
 

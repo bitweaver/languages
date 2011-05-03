@@ -1,51 +1,6 @@
 {strip}
 <div class="floaticon">{bithelp}</div>
-
-<script type="text/javascript">/* <![CDATA[ */
-{literal}
-var autoHashArray = new Array();
-var ajax = new BitBase.SimpleAjax();
-
-function autoTranslate( pElementId ) {
-console.log( "auto trans " + pElementId );
-	ajax.connect( "{/literal}{$smarty.const.LANGUAGES_PKG_URL}ajax_translate.php{literal}"
-		, "lang={/literal}{$editLang}{literal}&source_hash=" + escape( pElementId )
-		, updateTranslation
-		, "GET"
-	);
-}
-
-function updateTranslation( pResponse ) {
-console.log( pResponse );
-	if( pResponse.responseText ) {
-console.log( pResponse.responseText );
-		rObj = eval('(' + pResponse.responseText  + ')');
-console.log( rObj );
-		document.getElementById( rObj.source_hash ).value = rObj.translation;
-	}
-	if( autoHashArray.length ) {
-		autoTranslate( autoHashArray.pop() );
-	}
-}
-
-function autoTranslateEmpty() {
-	var elem = document.getElementById('translateform').elements;
-	for(var i = 0; i < elem.length; i++) {
-		if( elem[i].type == 'text' || elem[i].type == 'textarea' ) {
-			if( !elem[i].value && elem[i].id ) {
-				autoHashArray.push( elem[i].id );
-			}
-		}
-	} 
-console.log( autoHashArray );
-	if( autoHashArray.length ) {
-		autoTranslate( autoHashArray.pop() );
-	}
-}
-
-{/literal}
-/* ]]> */</script>
-
+{include file="bitpackage:lanaguages/translate_google_ajax_inc.tpl"}
 <div class="edit languages">
     <div class="header">
         <h1>{tr}Edit Languages{/tr}</h1>
@@ -80,15 +35,15 @@ console.log( autoHashArray );
 								<div class="formlabel">
 									<label for="{$sourceHash}">{tr}Translate{/tr}</label>
 									{if $gBitSystem->getConfig('google_api_key')}
-										<div class="autotranslate" onclick="autoTranslate('{$sourceHash}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
+										<div class="autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
 									{/if}
 								</div>
 								{forminput}
 									<a href="{$smarty.const.LANGUAGES_PKG_URL}master_strings.php?source_hash={$sourceHash}">{$tran.source|escape|nl2br}</a><br/>
 									{if $tran.textarea}
-										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$sourceHash}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
+										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 									{else}
-										<input style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$sourceHash}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
+										<input style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
 									{/if}
 								{/forminput}
 							</div>

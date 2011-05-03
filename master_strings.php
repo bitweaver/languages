@@ -19,7 +19,11 @@ $languages = $gBitLanguage->listLanguages();
 $gBitSmarty->assign_by_ref( 'languages', $languages );
 $feedback = $masterMsg = array();
 
-if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) && is_array( $_REQUEST['source_hash'] ) ) {
+if( !empty( $_REQUEST['source_hash'] ) && !is_array( $_REQUEST['source_hash'] ) ) {
+	$_REQUEST['source_hash'] = array( $_REQUEST['source_hash'] );
+}
+
+if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) ) {
 	if( empty( $_REQUEST['confirm'] ) ) {
 		$gBitSystem->setBrowserTitle( tra( 'Confirm Delete' ) );
 		$formHash['delete_master'] = TRUE;
@@ -30,7 +34,7 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) &
 		);
 		foreach( $_REQUEST['source_hash'] as $source_hash ) {
 			$gBitLanguage->loadMasterStrings( $source_hash );
-			$formHash['input'][] = '<input type="hidden" name="source_hash[]" value="'.$source_hash.'"/>'.$gBitLanguage->mStrings['master'][$source_hash]['source'];
+			$formHash['input'][] = '<input type="hidden" name="source_hash[]" value="'.$source_hash.'"/>'.htmlentities( $gBitLanguage->mStrings['master'][$source_hash]['source'] );
 		}
 		$gBitSystem->confirmDialog( $formHash, $msgHash );
 	} else {
@@ -48,54 +52,6 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) &
 			$feedback['success'] = 'The requested master strings were successfully deleted.';
 		}
 	}
-} elseif( !empty( $_REQUEST['guess_translations'] ) ) {
-	if( is_string(  $_REQUEST['source_hash'] ) ) {
-		 $_REQUEST['source_hash'] = array(  $_REQUEST['source_hash'] );
-	}
-	$transCount = 0;
-	$masterStrings = array();
-	foreach(  $_REQUEST['source_hash'] AS $reqSourceHash ) {
-		$gBitLanguage->loadMasterStrings( $reqSourceHash );
-		$masterStrings[$reqSourceHash] = $gBitLanguage->mStrings['master'][$reqSourceHash];
-
-		if( strlen( $masterStrings[$reqSourceHash]['source'] ) > 70 ) {
-			$masterStrings[$reqSourceHash]['textarea'] = TRUE;
-		}
-		$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
-		$masterString = $gBitLanguage->mStrings['master'][$reqSourceHash];
-		$tranArray = array( 'ar', 'bg', 'cs', 'da', 'de', 'el', 'es', 'fi', 'fr', 'hi', 'hr', 'it', 'nl', 'pt', 'ja', 'ko', 'no', 'pl', 'pt', 'ro', 'sv', 'ru', 'zh-CN' );
-
-		$tranStrings[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $reqSourceHash );
-		foreach( $tranArray as $toLangCode ) {
-			$lowerLangCode = strtolower( $toLangCode );
-			if( !empty( $gBitLanguage->mLanguageList[$lowerLangCode] ) && empty( $tranStrings[$reqSourceHash][$lowerLangCode] ) ) {
-				$requestUrl = "http://translate.google.com/translate_t?ie=UTF-8&oe=UTF-8&text=".urlencode( $masterString['source'] )."&langpair=en|$toLangCode";
-				$handle = fopen( $requestUrl, "r");
-				if($handle) {
-					$transCount++;
-					$contents = '';
-					while (!feof($handle)) {
-						$contents .= fread($handle, 8192);
-					}
-					fclose($handle);
-					preg_match_all( "!<div id=result_box[^>]*>([^<]*)</div>.*!", $contents, $matches );
-					if( isset( $matches[1][0] ) &&  $matches[1][0] != $gBitLanguage->mStrings['master'][$reqSourceHash]['source']  ) {
-						$tranStrings[$reqSourceHash][$lowerLangCode]['guessed'] = TRUE;
-						$tranStrings[$reqSourceHash][$lowerLangCode]['source_hash'] = $reqSourceHash;
-						$tranStrings[$reqSourceHash][$lowerLangCode]['trans'] = trim( $matches[1][0] );
-						$tranStrings[$reqSourceHash][$lowerLangCode]['lang_code'] = $lowerLangCode;
-					}
-				}
-			}
-		}
-		if( $transCount > 200 ) {
-			// avoid abuse of google translate URL and prevent URL timeout
-			break;
-		}
-	}
-
-	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
 } elseif( !empty( $_REQUEST['save_translations'] ) ) {
 	foreach( $_REQUEST['edit_trans'] as $sourceHash => $sources ) {
 		foreach( $sources as $langCode => $string ) {
@@ -123,20 +79,6 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) &
 		}
 	}
 	$masterMsg['success'][] = 'Translation strings have been updated';
-	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
-	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
-} elseif( !empty( $_REQUEST['source_hash'] ) && empty( $_REQUEST['cancel'] ) ) {
-	foreach( $_REQUEST['source_hash'] as $reqSourceHash ) {
-		$gBitLanguage->loadMasterStrings( $reqSourceHash );
-		if( strlen( $gBitLanguage->mStrings['master'][$reqSourceHash]['source'] ) > 70 ) {
-			$gBitLanguage->mStrings['master'][$reqSourceHash]['textarea'] = TRUE;
-		}
-		$translate[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
-	}
-	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $translate );
-	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
 	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
 } else {
@@ -167,6 +109,21 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) &
 	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
 	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
 }
+
+
+if( !empty( $_REQUEST['source_hash'] ) && empty( $_REQUEST['cancel'] ) ) {
+	foreach( $_REQUEST['source_hash'] as $reqSourceHash ) {
+		$gBitLanguage->loadMasterStrings( $reqSourceHash );
+		if( strlen( $gBitLanguage->mStrings['master'][$reqSourceHash]['source'] ) > 100 ) {
+			$gBitLanguage->mStrings['master'][$reqSourceHash]['textarea'] = TRUE;
+		}
+		$translate[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
+	}
+	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
+	$gBitSmarty->assign_by_ref( 'tranStrings', $translate );
+	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
+}
+
 // Display the template
 $gBitSmarty->assign( 'masterMsg', $masterMsg );
 $gBitSmarty->assign( 'feedback', $feedback );

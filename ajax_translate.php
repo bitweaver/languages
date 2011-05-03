@@ -7,8 +7,8 @@ $translation = NULL;
 
 if( !empty( $_REQUEST['lang'] ) && !empty( $_REQUEST['source_hash'] ) ) {
 	if( $masterString = $gBitLanguage->getMasterString( $_REQUEST['source_hash'] ) ) {
-		// convert smarty to tags so it is shielded from translation, escape <> tags with htmlentities before inserting our <smarty></smarty> wrappers
-		$preppedMaster = preg_replace( '/\{/', '<smarty ', htmlentities( $masterString ) );
+		// convert smarty to tags so it is shielded from translation
+		$preppedMaster = preg_replace( '/\{/', '<smarty ', $masterString );
 		// needs to be a full tag so we can cleanly de-tagify after translation
 		$preppedMaster = preg_replace( '/}/', '></smarty>', $preppedMaster );
 
@@ -21,13 +21,14 @@ if( !empty( $_REQUEST['lang'] ) && !empty( $_REQUEST['source_hash'] ) ) {
 		}
 		if( !empty( $data->data->translations[0]->translatedText ) ) {
 			$translation = urldecode( $data->data->translations[0]->translatedText );
-
-			//detagify
-			$preppedTranslation = preg_replace( '/<smarty /', '{', $translation );
-			// needs to be a full tag so we can cleanly de-tagify after translation
-			$preppedTranslation = preg_replace( '/><\/smarty>/', '}', $preppedTranslation );
-			
-			print json_encode( array( 'source_hash' => $_REQUEST['source_hash'], 'translation' => html_entity_decode( $preppedTranslation ) ) );
+			if( $translation != $masterString ) {
+				//detagify
+				$preppedTranslation = preg_replace( '/<smarty /', '{', $translation );
+				// needs to be a full tag so we can cleanly de-tagify after translation
+				$preppedTranslation = preg_replace( '/><\/smarty>/', '}', $preppedTranslation );
+				
+				print json_encode( array( 'lang_code' => $_REQUEST['lang'], 'source_hash' => $_REQUEST['source_hash'], 'translation' => $preppedTranslation ) );
+			}
 		}
 	}
 }
