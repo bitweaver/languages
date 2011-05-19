@@ -388,7 +388,8 @@ class BitLanguage extends BitBase {
 			$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_strings` (`lang_code`,`trans`,`source_hash`, `last_modified`) values (?,?,?,?)";
 			$result = $this->mDb->query( $query, array( $pLangCode, $pString, $pSourceHash, time() ) );
 		}
-
+		// pretty brutal on mass-saving, but cache always needs purging after translation saved.
+		$this->clearCache();
 		$this->mStrings[$pLangCode][$pSourceHash]['trans'] = $pString;
 	}
 
