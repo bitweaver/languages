@@ -118,7 +118,7 @@ function translation_content_edit( &$pObject, &$pParamHash ) {
 
 	if( @BitBase::verifyId( $_REQUEST['i18n']['from_id'] ) ) {
 		// load the content we're translating from
-		$transObject = $trans->getLibertyObject( $_REQUEST['i18n']['from_id'] );
+		$transObject = LibertyBase::getLibertyObject( $_REQUEST['i18n']['from_id'] );
 		$gBitSmarty->assign_by_ref( "translateFrom", $transObject );
 
 		// attempt google translation
