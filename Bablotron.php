@@ -48,7 +48,7 @@ class Bablotron extends BitBase
     */
     function Bablotron( $lan )
     {
-        BitBase::BitBase();
+        parent::__construct();
         $this->lan = $lan;
     }
     /**
