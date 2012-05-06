@@ -10,9 +10,9 @@
  * @package languages
  */
  class LibertyTranslations extends LibertyBase {
-	function LibertyTranslations( $pContentId = NULL ) {
+	function __construct( $pContentId = NULL ) {
 		$this->mContentId = $pContentId;
-		LibertyBase::LibertyBase();
+		parent::__construct();
 	}
 
 	function getContentTranslations() {

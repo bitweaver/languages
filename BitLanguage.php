@@ -22,7 +22,7 @@ class BitLanguage extends BitBase {
 	/**
 	 * initiate BitLanguage 
 	 */
-	function BitLanguage () {
+	function __construct() {
 		parent::__construct();
 		global $gBitSystem;
 

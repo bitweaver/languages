@@ -46,7 +46,7 @@ class Bablotron extends BitBase
     /**
     * Spellchecking and finding of alternative words
     */
-    function Bablotron( $lan )
+    function __construct( $lan )
     {
         parent::__construct();
         $this->lan = $lan;
