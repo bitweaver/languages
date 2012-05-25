@@ -104,7 +104,7 @@
 
 				<ol>
 					{foreach from=$masterStrings key=sourceHash item=master}
-					<li><input type="checkbox" title="{tr}Delete{/tr}" name="source_hash[]" value="{$sourceHash}" /> <a href="{$smarty.server.PHP_SELF}?source_hash[]={$sourceHash}">{$master.source|escape}</a></li>
+					<li><input type="checkbox" title="{tr}Delete{/tr}" name="source_hash[]" value="{$sourceHash}" /> <a href="{$smarty.server.SCRIPT_NAME}?source_hash[]={$sourceHash}">{$master.source|escape}</a></li>
 					{/foreach}
 				</ol>
 

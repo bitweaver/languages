@@ -70,7 +70,7 @@ if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_tra
 			$get .= '&i18n[google]=1';
 		}
 		$get .= '&i18n[from_id]='.$_POST['i18n']['from_id'];
-		header( 'Location: '.$_SERVER['PHP_SELF'].'?'.$get );
+		header( 'Location: '.$_SERVER['SCRIPT_NAME'].'?'.$get );
 		die;
 	}
 }
