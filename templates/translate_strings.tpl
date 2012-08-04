@@ -1,6 +1,6 @@
 {strip}
 <div class="floaticon">{bithelp}</div>
-{include file="bitpackage:lanaguages/translate_google_ajax_inc.tpl"}
+{include file="bitpackage:languages/translate_google_ajax_inc.tpl"}
 <div class="edit languages">
     <div class="header">
         <h1>{tr}Edit Languages{/tr}</h1>
