@@ -7,6 +7,7 @@ $lang=Array(
 'Add' => 'اضف',
 'add comment' => 'أضف تعليق',
 'Add New Group' => 'إضافة مجموعة جديدة',
+'Add New Role' => 'إضافة مجموعة جديدة',
 'Admin categories' => 'تصنيفات المسؤول',
 'Admin (click!)' => 'مدير (اضغط!)',
 'admin content templates' => 'محتوى قوالب المدير',

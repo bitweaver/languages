@@ -56,6 +56,7 @@ $lang=Array(
 'add new' => 'pridať novú',
 'Add new category' => 'Pridať novú kategóriu',
 'Add New Group' => 'Pridať novú skupinu',
+'Add New Role' => 'Pridať novú skupinu',
 'Add new mail account' => 'Pridať nový emailový účet',
 'Add notification' => 'Pridať upozorňovanie',
 'Add objects to category' => 'Pridať objekty do kategórie',

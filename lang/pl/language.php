@@ -56,6 +56,7 @@ $lang=Array(
 'add new' => 'add new',
 'Add new category' => 'Dodaj nową kategorię',
 'Add New Group' => 'Dodaj nową grupę',
+'Add New Role' => 'Dodaj nową grupę',
 'Add new mail account' => 'Dodaj nowe konto pocztowe',
 'Add notification' => 'Add notification',
 'Add objects to category' => 'Dodaj obiekty do kategorii',

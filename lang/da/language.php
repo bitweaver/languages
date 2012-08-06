@@ -58,6 +58,7 @@ $lang=Array(
 'add new' => 'tilføj ny',
 'Add new category' => 'opret ny kategori',
 'Add New Group' => 'Tilføj Ny Gruppe',
+'Add New Role' => 'Tilføj Ny Gruppe',
 'Add new mail account' => 'Tilføj ny mailkonto',
 'Add notification' => 'Tilføj besked',
 'Add objects to category' => 'Tilføj objekter til kategori',

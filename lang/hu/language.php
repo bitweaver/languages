@@ -34,6 +34,7 @@ $lang=Array(
 'Add messages from this email to the forum' => 'Az alábbi e-mail üzeneteket adja a fórumhoz',
 'Add new category' => 'Új kategória hozzáadása',
 'Add New Group' => 'Új csoport hozzáadása',
+'Add New Role' => 'Új csoport hozzáadása',
 'Add new mail account' => 'Új postaláda hozzáadása',
 'Add notification' => 'Értesítás hozzáadása',
 'Add objects to category' => 'Elemek hozzáadása a kategóriához',

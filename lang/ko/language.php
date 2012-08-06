@@ -17,6 +17,7 @@ $lang=Array(
 'add comment' => '커멘트 하기',
 'Add new category' => '새 분류 추가',
 'Add New Group' => '새 그룹 추가',
+'Add New Role' => '새 그룹 추가',
 'Add or edit a process' => '프로세스 추가/수정',
 'Add or edit a URL' => 'URL 추가/수정',
 'Add or edit event' => '이벤트 추가 혹은 수정',

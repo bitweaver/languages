@@ -82,6 +82,7 @@ $lang=Array(
 'add new' => 'Přidat novou',
 'Add new category' => 'Přidat novou kategorii',
 'Add New Group' => 'Přidat novou skupinu',
+'Add New Role' => 'Přidat novou skupinu',
 'Add new mail account' => 'Přidat nový účet',
 'Add new Mail-in account' => 'Přidat novou (nový/nové) Mail-in account',
 'Add new rule' => 'Přidat pravidlo',

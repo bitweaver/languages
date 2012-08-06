@@ -67,6 +67,7 @@ $lang=Array(
 'add new' => 'skapa ny',
 'Add new category' => 'Skapa ny kategori',
 'Add New Group' => 'Skapa ny grupp',
+'Add New Role' => 'Skapa ny grupp',
 'Add new mail account' => 'SKapa ett nytt mejlkonto',
 'Add new rule' => 'Lägg till en ny regel',
 'Add notification' => 'Skapa besked',

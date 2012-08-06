@@ -56,6 +56,7 @@ $lang=Array(
 'add new' => 'додани нову',
 'Add new category' => 'Додати нову категорію',
 'Add New Group' => 'Додати нову групу',
+'Add New Role' => 'Додати нову групу',
 'Add new mail account' => 'Додати новий поштовий рахунок',
 'Add notification' => 'Додати сповіщення',
 'Add objects to category' => 'Додати об\'єкти до категорії',

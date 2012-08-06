@@ -63,6 +63,7 @@ $lang=Array(
 'add new' => 'adem go niu',
 'Add new category' => 'Adem go niu category',
 'Add New Group' => 'Adem go Niu Grup',
+'Add New Role' => 'Adem go Niu Grup',
 'Add new mail account' => 'Adem go niu mel account',
 'Add notification' => 'Addem go notification',
 'Add objects to category' => 'Adem go olketa object go long category',

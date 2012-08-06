@@ -38,6 +38,7 @@ $lang=Array(
 'Add messages from this email to the forum' => 'このメール・アドレスから着信したメッセージはフォーラムに追加する',
 'Add new category' => '新規カテゴリ',
 'Add New Group' => '新規グループ',
+'Add New Role' => '新規グループ',
 'Add new mail account' => 'メールアカウントの新規作成',
 'Add notification' => '新規通知の追加',
 'Add objects to category' => 'オブジェクトをカテゴリに加える',

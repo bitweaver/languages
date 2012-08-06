@@ -65,6 +65,7 @@ $lang=Array(
 'add new' => 'dodaj novo',
 'Add new category' => 'Dodaj novu kategoriju',
 'Add New Group' => 'Dodaj novu grupu',
+'Add New Role' => 'Dodaj novu grupu',
 'Add new mail account' => 'Dodaj novi email nalog',
 'Add new rule' => 'Dodaj novo pravilo',
 'Add notification' => 'Dodaj obaveštenje',

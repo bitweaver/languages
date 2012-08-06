@@ -1771,6 +1771,7 @@ $lang=Array(
   "fields" => "fields",
   "Admin groups" => "Admin groups",
   "Add New Group" => "Add New Group",
+  "Add New Role" => "Add New Role",
   "Edit this group:" => "Edit this group:",
   "Desc" => "Desc",
   "Include" => "Include",

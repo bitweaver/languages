@@ -14,6 +14,7 @@ $lang=Array(
 'Additional arguments and values depend on the selected module.' => 'Dodatne nastavitve se vežejo na izbrani modul.',
 'Add Module' => 'Dodaj modul',
 'Add New Group' => 'Dodaj novo skupino',
+'Add New Role' => 'Dodaj novo skupino',
 'Add or edit a folder' => 'Dodaj ali uredi mapo',
 'Add or Edit a Group' => 'Dodaj ali uredi Skupino',
 'Add or edit an item' => 'Dodaj ali uredi postavko',
