@@ -17,14 +17,14 @@
 			{tr}Translations strings may appear empty if the language is not loaded. The language will be automatically loaded when you click the edit icon.{/tr}
 			{foreach from=$sources item=sourceHash}
 					<input type="hidden" name="source_hash[]" value="{$sourceHash}" />
-					<div class="row">
+					<div class="control-group">
 						{formlabel label="Master String" for="master_string"}
 						{forminput}
 							<textarea cols="50" rows="5" name="edit_master[{$sourceHash}]" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
 						{/forminput}
 					</div>
 {*
-					<div class="row submit">
+					<div class="control-group submit">
 						<input type="submit" name="delete_master" value="{tr}Delete Master{/tr}" />
 						&nbsp;<input type="submit" name="change_master" value="{tr}Save{/tr}" />
 					</div>
@@ -32,7 +32,7 @@
 
 					{foreach from=$languages key=langCode item=lang}
 						{if $langCode ne 'en'}
-						<div class="row">
+						<div class="control-group">
 							<div class="formlabel">
 								{$lang.native_name}
 								{if $gBitSystem->getConfig('google_api_key')}
@@ -52,16 +52,16 @@
 					{/foreach}
 				{/foreach}
 
-				<div class="row submit">
+				<div class="control-group submit">
 					<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />
 					<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
 					<input type="submit" name="delete_master" value="{tr}Delete Master String{/tr}" />
 					{if $gBitSystem->getConfig('google_api_key')}
-					<div class="button" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
+					<div class="btn" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
 					{/if}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formhelp note="Auto Translations will try and get an estimated translation using google language tools. Please make sure you check the returned strings for incorrect formatting."}
 				</div>
 			{/form}
@@ -69,7 +69,7 @@
 		{else}
 			{form legend="Translation Filter"}
 				<input type="hidden" name="char" value="{$smarty.request.char}" \>
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Filter" for=""}
 					{forminput}
 						<label><input type="radio" name="filter" {if !$smarty.request.filter                 }checked="checked" {/if}value="" /> {tr}No filter{/tr}</label><br />

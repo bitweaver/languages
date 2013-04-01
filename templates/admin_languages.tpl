@@ -1,7 +1,7 @@
 {form legend="Language Settings"}
 	<input type="hidden" name="page" value="{$page}" />
 
-	<div class="row">
+	<div class="control-group">
 		{formlabel label="Language" for="bitlanguage"}
 		{forminput}
 			<select name="bitlanguage" id="bitlanguage">
@@ -14,7 +14,7 @@
 	</div>
 
 	{foreach from=$formLanguageToggles key=feature item=output}
-		<div class="row">
+		<div class="control-group">
 			{formlabel label=`$output.label` for=$feature}
 			{forminput}
 				{html_checkboxes name=$feature values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
@@ -23,7 +23,7 @@
 		</div>
 	{/foreach}
 
-	<div class="row">
+	<div class="control-group">
 		{formlabel label="Google API Key" for="google_api_key"}
 		{forminput}
 			{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"}
@@ -32,7 +32,7 @@
 		{/forminput}
 	</div>
 
-	<div class="row submit">
+	<div class="control-group submit">
 		<input type="submit" name="prefs" value="{tr}Change Settings{/tr}" />
 	</div>
 {/form}

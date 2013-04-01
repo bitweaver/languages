@@ -1,6 +1,6 @@
 {* don't show if this is the page creation *}
 {if $gContent->mContentId}
-	<div class="row">
+	<div class="control-group">
 		{formlabel label="Translations" for="to_id"}
 		{forminput}
 			<input type="hidden" name="i18n[translation_id]" value="{$translationId}" />
