@@ -25,8 +25,8 @@
 					</div>
 {*
 					<div class="control-group submit">
-						<input type="submit" name="delete_master" value="{tr}Delete Master{/tr}" />
-						&nbsp;<input type="submit" name="change_master" value="{tr}Save{/tr}" />
+						<input type="submit" class="btn" name="delete_master" value="{tr}Delete Master{/tr}" />
+						&nbsp;<input type="submit" class="btn" name="change_master" value="{tr}Save{/tr}" />
 					</div>
 *}
 
@@ -53,9 +53,9 @@
 				{/foreach}
 
 				<div class="control-group submit">
-					<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />
-					<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
-					<input type="submit" name="delete_master" value="{tr}Delete Master String{/tr}" />
+					<input type="submit" class="btn" name="cancel" value="{tr}Cancel{/tr}" />
+					<input type="submit" class="btn" name="save_translations" value="{tr}Save{/tr}" />
+					<input type="submit" class="btn" name="delete_master" value="{tr}Delete Master String{/tr}" />
 					{if $gBitSystem->getConfig('google_api_key')}
 					<div class="btn" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
 					{/if}
@@ -86,7 +86,7 @@
 				</div>
 
 				<div class="submit">
-					<input type="submit" name="set_filter" value="{tr}Set Filter{/tr}" />
+					<input type="submit" class="btn" name="set_filter" value="{tr}Set Filter{/tr}" />
 				</div>
 			{/form}
 
@@ -109,7 +109,7 @@
 				</ol>
 
 				<div class="submit">
-					<input type="submit" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
+					<input type="submit" class="btn" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
 				</div>
 
 				{alphabar iall=1}

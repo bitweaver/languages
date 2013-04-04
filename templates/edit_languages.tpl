@@ -41,7 +41,7 @@
 								{/forminput}
 							</div>
 							<div class="control-group submit">
-								<input type="submit" name="save_language" value="{tr}Save Language{/tr}" />
+								<input type="submit" class="btn" name="save_language" value="{tr}Save Language{/tr}" />
 							</div>
 							{formhelp note="A note for localisations: when you have a language, say 'de' and you add a localisation such as 'de-at' it will first check de-at for a string and then fall back to de. If it still hasn't found a translation, it will default to english."}
 						{/form}
@@ -86,13 +86,13 @@
 					{formfeedback warning="Editing a language for the first time will cause an import of the language. this can take several minutes, depending on your configuration."}
 
 					<div class="control-group submit">
-						<input type="submit" name="delete_language" value="{tr}Delete Language{/tr}" />&nbsp;
-						<input type="submit" name="edit_language" value="{tr}Edit Description{/tr}" />&nbsp;
+						<input type="submit" class="btn" name="delete_language" value="{tr}Delete Language{/tr}" />&nbsp;
+						<input type="submit" class="btn" name="edit_language" value="{tr}Edit Description{/tr}" />&nbsp;
 					</div>
 
 					{if $gBitUser->hasPermission( 'p_languages_create' )}
 						<div class="control-group submit">
-							<input type="submit" name="new_language" value="{tr}Create New Language{/tr}" />
+							<input type="submit" class="btn" name="new_language" value="{tr}Create New Language{/tr}" />
 						</div>
 					{/if}
 				{/form}
@@ -104,7 +104,7 @@
 					<div class="control-group">
 						{formlabel label="Clear Language Cache" for="clear_cache"}
 						{forminput}
-							<input type="submit" name="clear_cache" id="clear_cache" value="{tr}Clear Cache{/tr}" />
+							<input type="submit" class="btn" name="clear_cache" id="clear_cache" value="{tr}Clear Cache{/tr}" />
 							{formhelp note="Clear the cached language translations for all languages. It is necessary to clear the cache when you have made changes to the language database."}
 						{/forminput}
 					</div>

@@ -38,7 +38,7 @@
 			{/foreach}
 
 			<div class="control-group submit">
-				<input type="submit" name="resolve" value="{tr}Import{/tr}" />
+				<input type="submit" class="btn" name="resolve" value="{tr}Import{/tr}" />
 			</div>
 		{/form}
 	</div><!-- end .body -->

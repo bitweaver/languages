@@ -51,8 +51,8 @@
 					{/foreach}
 
 					<div class="control-group submit">
-						<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
-						<input type="submit" name="save_translations" value="{tr}Save{/tr}" />
+						<input type="submit" class="btn" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
+						<input type="submit" class="btn" name="save_translations" value="{tr}Save{/tr}" />
 						{if $gBitSystem->getConfig('google_api_key')}
 						<div class="btn" onclick="return autoTranslateEmpty()">{tr}Auto Translate Empty Strings{/tr}</div>
 						{/if}
