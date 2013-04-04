@@ -1,6 +1,6 @@
 {strip}
 <li class="dropdown-submenu">
-    <a href="#" onclick="return(false);" tabindex="-1" class="sub-menu-root">{tr}{$smarty.const.LANGUAGES_PKG_NAME|capitalize}{/tr}</a>
+    <a href="#" onclick="return(false);" tabindex="-1" class="sub-menu-root">{tr}{$smarty.const.LANGUAGES_PKG_DIR|capitalize}{/tr}</a>
 	<ul class="dropdown-menu sub-menu">
 		<li><a class="item" href="{$smarty.const.KERNEL_PKG_URL}admin/index.php?page=languages">{tr}Language Settings{/tr}</a></li>
 		<li><a class="item" href="{$smarty.const.LANGUAGES_PKG_URL}edit_languages.php">{tr}Edit Languages{/tr}</a></li>
