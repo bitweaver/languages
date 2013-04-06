@@ -15,7 +15,7 @@
 
 	{foreach from=$formLanguageToggles key=feature item=output}
 		<div class="control-group">
-			{formlabel label=`$output.label` for=$feature}
+			{formlabel label=$output.label for=$feature}
 			{forminput}
 				{html_checkboxes name=$feature values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
 				{formhelp hash=$output}
