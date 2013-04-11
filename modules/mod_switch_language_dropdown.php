@@ -13,5 +13,5 @@ $sel_lang = !empty( $gBitUser->mInfo['bitlanguage'] ) ? $gBitUser->mInfo['bitlan
 $_template->tpl_vars['sel_lang'] = new Smarty_variable( $sel_lang );
 $languages = array();
 $languages = $gBitLanguage->listLanguages( FALSE );
-$gBitSmarty->assign_by_ref('languages', $languages);
+$_template->tpl_vars['languages'] = new Smarty_variable( $languages);
 ?>
