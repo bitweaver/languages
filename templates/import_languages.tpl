@@ -81,22 +81,20 @@
 
 						{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
 							<div class="control-group">
-								{formlabel label="All translations" for="all_trans"}
-								{forminput}
-									<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />
+								<label class="checkbox">
+									<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />All translations
 									{formhelp note="This will export all strings of the chosen language for all versions of bitweaver. It is generally a good idea to export these."}
-								{/forminput}
+								</label>
 							</div>
 						{else}
 							<input type="hidden" name="all_trans" value="y" />
 						{/if}
 
 						<div class="control-group">
-							{formlabel label="Include Empty" for="include_empty"}
-							{forminput}
-								<input type="checkbox" name="include_empty" id="include_empty" value="y" />
+							<label class="checkbox">
+								<input type="checkbox" name="include_empty" id="include_empty" value="y" />Include Empty
 								{formhelp note="This will include empty translation strings as well. This is generally not needed."}
-							{/forminput}
+							</label>
 						</div>
 
 						<div class="control-group">
