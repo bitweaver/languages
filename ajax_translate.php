@@ -1,5 +1,18 @@
 <?php
+/**
+ * @package languages
+ * @subpackage functions
+ * @version $Header$
+ *
+ * Copyright (c) 2005 bitweaver.org
+ * Copyright (c) 2004-2005, Christian Fowler, et. al.
+ * All Rights Reserved. See below for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details
+ */
 
+/**
+ * Initialization
+ */
 $gLightweightScan = TRUE;
 require_once( '../kernel/setup_inc.php' );
 
