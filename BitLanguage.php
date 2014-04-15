@@ -13,7 +13,7 @@
 /**
  * @package languages
  */
-class BitLanguage extends BitBase {
+class BitLanguage extends BitSingleton {
 	// list of available (non-disabled) languages
 	var $mLanguageList;
 
@@ -676,4 +676,3 @@ class BitLanguage extends BitBase {
 	}
 }
 
-?>
