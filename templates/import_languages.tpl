@@ -59,7 +59,7 @@
 					</div>
 
 					<div class="control-group submit">
-						<input type="submit" class="btn" name="import" value="{tr}Import{/tr}" />
+						<input type="submit" class="btn btn-default" name="import" value="{tr}Import{/tr}" />
 					</div>
 				{/form}
 			{/jstab}
@@ -108,7 +108,7 @@
 						</div>
 
 						<div class="control-group submit">
-							<input type="submit" class="btn" name="export" value="{tr}Export{/tr}" />
+							<input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}" />
 						</div>
 					{/form}
 				{/jstab}

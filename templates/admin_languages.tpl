@@ -33,6 +33,6 @@
 	</div>
 
 	<div class="control-group submit">
-		<input type="submit" class="btn" name="prefs" value="{tr}Change Settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="prefs" value="{tr}Change Settings{/tr}" />
 	</div>
 {/form}
