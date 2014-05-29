@@ -35,7 +35,7 @@
 								<div class="formlabel">
 									<label for="{$sourceHash}">{tr}Translate{/tr}</label>
 									{if $gBitSystem->getConfig('google_api_key')}
-										<br/><div class="btn btn-mini autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
+										<br/><div class="btn btn-xs autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
 									{/if}
 								</div>
 								{forminput}
