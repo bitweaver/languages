@@ -8,7 +8,7 @@
 
 	<div class="body">
 		{form id="translateform"}
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Select the language to edit" for="select_language"}
 				{forminput}
 					<select name="choose_lang" id="select_language" onchange="this.form.submit()">
@@ -50,7 +50,7 @@
 						{/if}
 					{/foreach}
 
-					<div class="control-group submit">
+					<div class="form-group submit">
 						<input type="submit" class="btn btn-default" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
 						<input type="submit" class="btn btn-default" name="save_translations" value="{tr}Save{/tr}" />
 						{if $gBitSystem->getConfig('google_api_key')}

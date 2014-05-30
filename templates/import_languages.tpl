@@ -12,7 +12,7 @@
 		{jstabs}
 			{jstab title="Import Languages"}
 				{form legend="Import languages" enctype="multipart/form-data"}
-					<div class="control-group">
+					<div class="form-group">
 						{formlabel label="Select the languages to Import"}
 						{forminput}
 							{formhelp note="Languages that are checked below will be imported from the language string files in the bitweaver distribution. If you have your own language file, please choose it below."}
@@ -28,7 +28,7 @@
 						{/forminput}
 					</div>
 
-					<div class="control-group">
+					<div class="form-group">
 						{formlabel label="Upload Language File"}
 						{forminput}
 							{formhelp note="Choose a language file to upload..."}
@@ -44,7 +44,7 @@
 						{/forminput}
 					</div>
 
-					<div class="control-group">
+					<div class="form-group">
 						{formlabel label="Options"}
 						{forminput}
 							<label><input type="radio" name="overwrite" value="n" />
@@ -58,7 +58,7 @@
 						{/forminput}
 					</div>
 
-					<div class="control-group submit">
+					<div class="form-group submit">
 						<input type="submit" class="btn btn-default" name="import" value="{tr}Import{/tr}" />
 					</div>
 				{/form}
@@ -67,7 +67,7 @@
 			{if $expLanguages}
 				{jstab title="Export Languages"}
 					{form legend="Export language"}
-						<div class="control-group">
+						<div class="form-group">
 							{formlabel label="Language to export" for="exp_lang"}
 							{forminput}
 								<select name="export_lang_code" id="export_lang_code">
@@ -80,7 +80,7 @@
 						</div>
 
 						{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
-							<div class="control-group">
+							<div class="form-group">
 								<label class="checkbox">
 									<input type="checkbox" name="all_trans" id="all_trans" checked="checked" value="y" />All translations
 									{formhelp note="This will export all strings of the chosen language for all versions of bitweaver. It is generally a good idea to export these."}
@@ -90,14 +90,14 @@
 							<input type="hidden" name="all_trans" value="y" />
 						{/if}
 
-						<div class="control-group">
+						<div class="form-group">
 							<label class="checkbox">
 								<input type="checkbox" name="include_empty" id="include_empty" value="y" />Include Empty
 								{formhelp note="This will include empty translation strings as well. This is generally not needed."}
 							</label>
 						</div>
 
-						<div class="control-group">
+						<div class="form-group">
 							{formlabel label="Destination" for="is_disabled"}
 							{forminput}
 								<label><input type="radio" name="target" value="temp" /> {tr}Save to temporary file{/tr}</label><br />
@@ -107,7 +107,7 @@
 							{/forminput}
 						</div>
 
-						<div class="control-group submit">
+						<div class="form-group submit">
 							<input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}" />
 						</div>
 					{/form}
