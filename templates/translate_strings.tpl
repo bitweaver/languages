@@ -8,7 +8,7 @@
 
 	<div class="body">
 		{form id="translateform"}
-			<div class="control-group">
+			<div class="control-group column-group gutters">
 				{formlabel label="Select the language to edit" for="select_language"}
 				{forminput}
 					<select name="choose_lang" id="select_language" onchange="this.form.submit()">
@@ -35,7 +35,7 @@
 								<div class="formlabel">
 									<label for="{$sourceHash}">{tr}Translate{/tr}</label>
 									{if $gBitSystem->getConfig('google_api_key')}
-										<br/><div class="btn btn-xs autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
+										<br/><div class="btn btn-mini autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
 									{/if}
 								</div>
 								{forminput}
@@ -51,10 +51,10 @@
 					{/foreach}
 
 					<div class="control-group submit">
-						<input type="submit" class="btn btn-default" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
-						<input type="submit" class="btn btn-default" name="save_translations" value="{tr}Save{/tr}" />
+						<input type="submit" class="ink-button" name="cancel" value="{tr}Cancel{/tr}" />&nbsp;
+						<input type="submit" class="ink-button" name="save_translations" value="{tr}Save{/tr}" />
 						{if $gBitSystem->getConfig('google_api_key')}
-						<div class="btn btn-default" onclick="return autoTranslateEmpty()">{tr}Auto Translate Empty Strings{/tr}</div>
+						<div class="ink-button" onclick="return autoTranslateEmpty()">{tr}Auto Translate Empty Strings{/tr}</div>
 						{/if}
 					</div>
 

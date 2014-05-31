@@ -13,21 +13,21 @@
 			{foreach from=$impConflicts key=lang item=langConflicts}
 				<h2>{tr}Conflicts{/tr}: {$impLanguages.$lang.translated_name}</h2>
 				{foreach from=$langConflicts key=sourceHash item=conflict}
-					<div class="control-group">
+					<div class="control-group column-group gutters">
 						{formlabel label="Master String"}
 						{forminput}
 								{$conflict.master|escape|nl2br}
 						{/forminput}
 					</div>
 
-					<div class="control-group">
+					<div class="control-group column-group gutters">
 						{formlabel label="Existing"}
 						{forminput}
 							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="" checked="checked" /> {$conflict.existing|escape|nl2br}</label>
 						{/forminput}
 					</div>
 
-					<div class="control-group">
+					<div class="control-group column-group gutters">
 						{formlabel label="Imported"}
 						{forminput}
 							<label><input type="radio" name="conflict[{$lang}][{$sourceHash}]" value="{$conflict.import}" /> {$conflict.import|escape|nl2br}</label>
@@ -38,7 +38,7 @@
 			{/foreach}
 
 			<div class="control-group submit">
-				<input type="submit" class="btn btn-default" name="resolve" value="{tr}Import{/tr}" />
+				<input type="submit" class="ink-button" name="resolve" value="{tr}Import{/tr}" />
 			</div>
 		{/form}
 	</div><!-- end .body -->
