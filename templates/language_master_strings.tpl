@@ -17,22 +17,22 @@
 			{tr}Translations strings may appear empty if the language is not loaded. The language will be automatically loaded when you click the edit icon.{/tr}
 			{foreach from=$sources item=sourceHash}
 					<input type="hidden" name="source_hash[]" value="{$sourceHash}" />
-					<div class="control-group column-group gutters">
+					<div class="form-group">
 						{formlabel label="Master String" for="master_string"}
 						{forminput}
 							<textarea cols="50" rows="5" name="edit_master[{$sourceHash}]" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
 						{/forminput}
 					</div>
 {*
-					<div class="control-group submit">
-						<input type="submit" class="ink-button" name="delete_master" value="{tr}Delete Master{/tr}" />
-						&nbsp;<input type="submit" class="ink-button" name="change_master" value="{tr}Save{/tr}" />
+					<div class="form-group submit">
+						<input type="submit" class="btn btn-default" name="delete_master" value="{tr}Delete Master{/tr}" />
+						&nbsp;<input type="submit" class="btn btn-default" name="change_master" value="{tr}Save{/tr}" />
 					</div>
 *}
 
 					{foreach from=$languages key=langCode item=lang}
 						{if $langCode ne 'en'}
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							<div class="formlabel">
 								{$lang.native_name}
 								{if $gBitSystem->getConfig('google_api_key')}
@@ -52,16 +52,16 @@
 					{/foreach}
 				{/foreach}
 
-				<div class="control-group submit">
-					<input type="submit" class="ink-button" name="cancel" value="{tr}Cancel{/tr}" />
-					<input type="submit" class="ink-button" name="save_translations" value="{tr}Save{/tr}" />
-					<input type="submit" class="ink-button" name="delete_master" value="{tr}Delete Master String{/tr}" />
+				<div class="form-group submit">
+					<input type="submit" class="btn btn-default" name="cancel" value="{tr}Cancel{/tr}" />
+					<input type="submit" class="btn btn-default" name="save_translations" value="{tr}Save{/tr}" />
+					<input type="submit" class="btn btn-default" name="delete_master" value="{tr}Delete Master String{/tr}" />
 					{if $gBitSystem->getConfig('google_api_key')}
-					<div class="ink-button" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
+					<div class="btn btn-default" onclick="return autoTranslateEmpty()">Auto Translate Empty Strings</div>
 					{/if}
 				</div>
 
-				<div class="control-group column-group gutters">
+				<div class="form-group">
 					{formhelp note="Auto Translations will try and get an estimated translation using google language tools. Please make sure you check the returned strings for incorrect formatting."}
 				</div>
 			{/form}
@@ -69,7 +69,7 @@
 		{else}
 			{form legend="Translation Filter"}
 				<input type="hidden" name="char" value="{$smarty.request.char}" \>
-				<div class="control-group column-group gutters">
+				<div class="form-group">
 					{formlabel label="Filter" for=""}
 					{forminput}
 						<label><input type="radio" name="filter" {if !$smarty.request.filter                 }checked="checked" {/if}value="" /> {tr}No filter{/tr}</label><br />
@@ -86,7 +86,7 @@
 				</div>
 
 				<div class="submit">
-					<input type="submit" class="ink-button" name="set_filter" value="{tr}Set Filter{/tr}" />
+					<input type="submit" class="btn btn-default" name="set_filter" value="{tr}Set Filter{/tr}" />
 				</div>
 			{/form}
 
@@ -109,7 +109,7 @@
 				</ol>
 
 				<div class="submit">
-					<input type="submit" class="ink-button" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
+					<input type="submit" class="btn btn-default" name="delete_master" value="{tr}Delete Seleted Master Strings{/tr}" />
 				</div>
 
 				{alphabar iall=1}
