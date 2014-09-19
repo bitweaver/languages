@@ -57,7 +57,7 @@
 							<select name="lang" id="select_language">
 								{foreach from=$languages key=langCode item=lang}
 									{if $langCode != 'en'}
-										<option value="{$langCode}" {if $defaults.lang_code eq $langCode}selected="selected"{/if}>{$lang.full_name}</option>
+										<option value="{$langCode}" {if $defaults.lang_code eq $langCode}selected="selected"{/if}>{$lang.full_name} {if $lang.is_disabled}*{tr}DISABLED{/tr}*{/if}</option>
 									{/if}
 								{/foreach}
 							</select>
@@ -84,14 +84,12 @@
 
 					<div class="form-group submit">
 						<input type="submit" class="btn btn-default" name="delete_language" value="{tr}Delete Language{/tr}" />&nbsp;
-						<input type="submit" class="btn btn-default" name="edit_language" value="{tr}Edit Description{/tr}" />&nbsp;
+						<input type="submit" class="btn btn-default" name="edit_language" value="{tr}Edit Language{/tr}" />&nbsp;
+					{if $gBitUser->hasPermission( 'p_languages_create' )}
+							<button class="btn btn-default pull-right" name="new_language">{booticon iname="icon-plus-sign-alt"} {tr}New Language{/tr}</button>
+					{/if}
 					</div>
 
-					{if $gBitUser->hasPermission( 'p_languages_create' )}
-						<div class="form-group submit">
-							<input type="submit" class="btn btn-default" name="new_language" value="{tr}Create New Language{/tr}" />
-						</div>
-					{/if}
 				{/form}
 			{/jstab}
 

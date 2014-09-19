@@ -100,6 +100,7 @@ class BitLanguage extends BitSingleton {
 		if( !isset( $pParamHash['english_name'] ) ) {
 			$pParamHash['english_name'] = NULL;
 		}
+		$pParamHash['is_disabled'] = !empty( $pParamHash['is_disabled'] ) ? 'y' : NULL;
 		return( count( $this->mErrors ) === 0 );
 	}
 
@@ -113,11 +114,11 @@ class BitLanguage extends BitSingleton {
 	function storeLanguage( $pParamHash ) {
 		if( $this->verifyLanguage( $pParamHash ) ) {
 			if( empty( $pParamHash['update_lang_code'] ) ) {
-				$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`english_name`,`native_name`) values (?,?,?)";
-				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'] ) );
+				$query = "INSERT INTO `".BIT_DB_PREFIX."i18n_languages` (`lang_code`,`english_name`,`native_name`,`is_disabled`) values (?,?,?,?)";
+				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'], $pParamHash['is_disabled'] ) );
 			} else {
-				$query = "UPDATE `".BIT_DB_PREFIX."i18n_languages` SET `lang_code`=?, `english_name`=?, `native_name`=? WHERE `lang_code`=?";
-				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'], $pParamHash['update_lang_code'] ) );
+				$query = "UPDATE `".BIT_DB_PREFIX."i18n_languages` SET `lang_code`=?, `english_name`=?, `native_name`=?, `is_disabled`=? WHERE `lang_code`=?";
+				$result = $this->mDb->query( $query, array( $pParamHash['lang_code'], $pParamHash['english_name'], $pParamHash['native_name'], $pParamHash['is_disabled'], $pParamHash['update_lang_code'] ) );
 			}
 		}
 		return( count( $this->mErrors ) == 0 );
