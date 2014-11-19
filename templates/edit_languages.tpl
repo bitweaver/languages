@@ -34,10 +34,10 @@
 								{/forminput}
 							</div>
 							<div class="form-group">
-								<label class="checkbox">
+								{forminput label="checkbox"}
 									<input type="checkbox" name="is_disabled" id="is_disabled" {if $isDisabled || $defaults.is_disabled}checked="checked"{/if} value="y" />Disabled
 									{formhelp note="Disabling a language will remove it from available language menus."}
-								</label>
+								{/forminput}
 							</div>
 							<div class="form-group submit">
 								<input type="submit" class="btn btn-default" name="save_language" value="{tr}Save Language{/tr}" />
@@ -66,18 +66,18 @@
 
 					{if $gBitSystem->isFeatureActive( 'i18n_track_translation_usage' )}
 						<div class="form-group">
-							<label class="checkbox">
+							{forminput label="checkbox"}
 								<input type="checkbox" id="all_trans" name="all_trans" {if $allTrans}checked="checked"{/if} value="y" />Display all strings
 								{formhelp note="This will display translation strings for all bitweaver versions. This means it will also show strings that are not used at all and might be useless to you."}
-							</label>
+							{/forminput}
 						</div>
 					{/if}
 
 					<div class="form-group">
-						<label class="checkbox">
+						{forminput label="checkbox"}
 							<input type="checkbox" id="un_trans" name="un_trans" />Only Untranslated
 							{formhelp note="Display only untranslated strings when editing the language translations."}
-						</label>
+						{/forminput}
 					</div>
 
 					{formfeedback warning="Editing a language for the first time will cause an import of the language. this can take several minutes, depending on your configuration."}
