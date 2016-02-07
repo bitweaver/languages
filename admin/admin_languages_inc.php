@@ -63,5 +63,5 @@ if( isset( $_REQUEST["prefs"] )) {
 // Get list of available languages
 $languages = array();
 $languages = $gBitLanguage->listLanguages();
-$gBitSmarty->assign_by_ref( "languages", $languages );
+$gBitSmarty->assignByRef( "languages", $languages );
 ?>

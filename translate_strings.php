@@ -19,7 +19,7 @@ $gBitSystem->verifyPermission( 'p_languages_edit' );
 
 // Get available languages from DB
 $languages = $gBitLanguage->listLanguages();
-$gBitSmarty->assign_by_ref('languages', $languages);
+$gBitSmarty->assignByRef('languages', $languages);
 
 if( !empty( $_REQUEST['all_trans'] ) ) {
 	$gBitSmarty->assign( 'allTrans', 1 );
@@ -51,7 +51,7 @@ if( isset( $_REQUEST['save_translations'] ) ) {
 		}
 	}
 	$tranStrings = $gBitLanguage->getTranslationString( $sourceHash, $editLang );
-	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+	$gBitSmarty->assignByRef('tranStrings', $tranStrings );
 	$gBitSmarty->assign( 'lang', $editLang );
 	$gBitSmarty->assign( 'translate', TRUE );
 	$gBitSmarty->assign( 'saveSuccess', tra( "The following items have been saved successfully" ).":" );
@@ -60,7 +60,7 @@ if( isset( $_REQUEST['save_translations'] ) ) {
 
 if( !empty( $_REQUEST['hash'] ) ) {
 	$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
-	$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+	$gBitSmarty->assignByRef('tranStrings', $tranStrings );
 } elseif( !empty( $_REQUEST['choose_lang'] ) ) {
 	$editLang = $_REQUEST['choose_lang'];
 	$gBitSmarty->assign( 'editLang', $editLang );
@@ -91,7 +91,7 @@ if( !empty( $_REQUEST['hash'] ) ) {
 		}
 	}
 	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
+	$gBitSmarty->assignByRef( 'tranStrings', $tranStrings );
 }
 
 $gBitSystem->display( 'bitpackage:languages/translate_strings.tpl', tra( 'Edit Translations' ) , array( 'display_mode' => 'edit' ));

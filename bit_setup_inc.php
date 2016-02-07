@@ -11,7 +11,7 @@ $gBitSystem->registerPackage( $registerHash );
 // **********  BABELFISH  ************
 if ($gBitSystem->isFeatureActive('babelfish') ) {
 	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
-	$gBitSmarty->assign_by_ref('babelfish_links', Babelfish::links( $gBitSystem->getConfig('language', 'en') ));
+	$gBitSmarty->assignByRef('babelfish_links', Babelfish::links( $gBitSystem->getConfig('language', 'en') ));
 }
 if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
 	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
@@ -40,7 +40,7 @@ if( !empty( $_REQUEST['oe'] ) && !empty( $gBitLanguage->mLanguageList[$_REQUEST[
 	$gBitLanguage->setLanguage( $_REQUEST['oe'] );
 }
 
-$gBitSmarty->assign_by_ref('gBitLanguage', $gBitLanguage);
+$gBitSmarty->assignByRef('gBitLanguage', $gBitLanguage);
 $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
 if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {

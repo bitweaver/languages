@@ -27,7 +27,7 @@ foreach( array_keys($impLanguages) as $langCode ) {
 		unset( $impLanguages[$langCode] );
 	}
 }
-$gBitSmarty->assign_by_ref('impLanguages', $impLanguages );
+$gBitSmarty->assignByRef('impLanguages', $impLanguages );
 
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
@@ -58,7 +58,7 @@ if (isset($_REQUEST["import"])) {
 	if( ($_REQUEST['overwrite'] == 'r') && !empty( $gBitLanguage->mImportConflicts ) ) {
 		unset( $impMsg['error'] );
 		$impMsg['warning'][] = tra( "Conflicts occured during language import" );
-		$gBitSmarty->assign_by_ref( 'impConflicts', $gBitLanguage->mImportConflicts );
+		$gBitSmarty->assignByRef( 'impConflicts', $gBitLanguage->mImportConflicts );
 		$mid = 'bitpackage:languages/import_resolve.tpl';
 	}
 
@@ -112,7 +112,7 @@ if (isset($_REQUEST["import"])) {
 
 // Get languages that can be exported
 $expLanguages = $gBitLanguage->getImportedLanguages();
-$gBitSmarty->assign_by_ref('expLanguages', $expLanguages );
+$gBitSmarty->assignByRef('expLanguages', $expLanguages );
 
 $gBitSmarty->assign( 'impmsg', $impMsg );
 

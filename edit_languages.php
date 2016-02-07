@@ -19,7 +19,7 @@ $gBitSystem->verifyPermission( 'p_languages_edit' );
 
 // Get available languages from DB
 $languages = $gBitLanguage->listLanguages();
-$gBitSmarty->assign_by_ref('languages', $languages);
+$gBitSmarty->assignByRef('languages', $languages);
 
 if( !empty( $_REQUEST['all_trans'] ) ) {
 	$gBitSmarty->assign( 'allTrans', 1 );
@@ -39,7 +39,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	$gBitSmarty->assign( 'translate', TRUE );
 	if( !empty( $_REQUEST['hash'] ) ) {
 		$tranStrings = $gBitLanguage->getTranslationString( $_REQUEST['hash'], $editLang );
-		$gBitSmarty->assign_by_ref('tranStrings', $tranStrings );
+		$gBitSmarty->assignByRef('tranStrings', $tranStrings );
 	} else {
 		// what strings do we want to display?
 		if( empty( $_REQUEST['char'] ) ) {
@@ -67,7 +67,7 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 			}
 		}
 		$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-		$gBitSmarty->assign_by_ref( 'tranStrings', $tranStrings );
+		$gBitSmarty->assignByRef( 'tranStrings', $tranStrings );
 	}
 } elseif( isset($_REQUEST["delete_language"] ) ) {
 	if( $gBitUser->hasPermission( 'p_languages_delete' ) ) {
@@ -89,17 +89,17 @@ if( !empty( $_REQUEST['clear_cache'] ) ) {
 	if( $gBitLanguage->storeLanguage( $_REQUEST ) ) {
 		$languages = $gBitLanguage->listLanguages();
 		$gBitSmarty->assign( 'saveSuccess', tra( 'The language has been saved.' ) );
-		$gBitSmarty->assign_by_ref( 'defaults', $_REQUEST );
+		$gBitSmarty->assignByRef( 'defaults', $_REQUEST );
 	} else {
-		$gBitSmarty->assign_by_ref( 'saveErrors', $gBitLanguage->mErrors );
-		$gBitSmarty->assign_by_ref( 'defaults', $_REQUEST );
+		$gBitSmarty->assignByRef( 'saveErrors', $gBitLanguage->mErrors );
+		$gBitSmarty->assignByRef( 'defaults', $_REQUEST );
 		$gBitSmarty->assign( 'editDescription', TRUE );
 	}
 } elseif( isset($_REQUEST["new_language"] ) ) {
 	$gBitSmarty->assign( 'editDescription', TRUE );
 } elseif( isset($_REQUEST["edit_language"] ) ) {
 	if( !empty( $languages[$_REQUEST['lang']] ) ) {
-		$gBitSmarty->assign_by_ref( 'defaults', $languages[$_REQUEST['lang']] );
+		$gBitSmarty->assignByRef( 'defaults', $languages[$_REQUEST['lang']] );
 	}
 	$gBitSmarty->assign( 'editDescription', TRUE );
 }

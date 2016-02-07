@@ -16,7 +16,7 @@ require_once( '../kernel/setup_inc.php' );
 $gBitSystem->verifyPermission( 'p_languages_edit_master' );
 
 $languages = $gBitLanguage->listLanguages();
-$gBitSmarty->assign_by_ref( 'languages', $languages );
+$gBitSmarty->assignByRef( 'languages', $languages );
 $feedback = $masterMsg = array();
 
 if( !empty( $_REQUEST['source_hash'] ) && !is_array( $_REQUEST['source_hash'] ) ) {
@@ -80,7 +80,7 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) )
 	}
 	$masterMsg['success'][] = 'Translation strings have been updated';
 } elseif( !empty( $_REQUEST['find'] ) && !empty( $_REQUEST['search'] ) ) {
-	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
+	$gBitSmarty->assignByRef( 'masterStrings', $gBitLanguage->searchMasterStrings( $_REQUEST['find'] ) );
 } else {
 	$gBitLanguage->loadMasterStrings(
 		NULL,
@@ -107,7 +107,7 @@ if( !empty( $_REQUEST['delete_master'] ) && !empty( $_REQUEST['source_hash'] ) )
 		}
 	}
 	$gBitSmarty->assign( 'char', empty( $_REQUEST['char'] ) ? '' : $_REQUEST['char'] );
-	$gBitSmarty->assign_by_ref( 'masterStrings', $masterStrings );
+	$gBitSmarty->assignByRef( 'masterStrings', $masterStrings );
 }
 
 
@@ -119,8 +119,8 @@ if( !empty( $_REQUEST['source_hash'] ) && empty( $_REQUEST['cancel'] ) ) {
 		}
 		$translate[$reqSourceHash] = $gBitLanguage->getTranslatedStrings( $_REQUEST['source_hash'] );
 	}
-	$gBitSmarty->assign_by_ref( 'masterStrings', $gBitLanguage->mStrings['master'] );
-	$gBitSmarty->assign_by_ref( 'tranStrings', $translate );
+	$gBitSmarty->assignByRef( 'masterStrings', $gBitLanguage->mStrings['master'] );
+	$gBitSmarty->assignByRef( 'tranStrings', $translate );
 	$gBitSmarty->assign( 'sources', $_REQUEST['source_hash'] );
 }
 
