@@ -133,12 +133,12 @@ class BitLanguage extends BitSingleton {
 	 */
 	function expungeLanguage( $pLangCode ) {
 		if( !empty( $pLangCode ) ) {
-			$this->mDb->StartTrans();
+			$this->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_strings` WHERE `lang_code`=?";
 			$result = $this->mDb->query( $query, array( $pLangCode ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_languages` WHERE `lang_code`=?";
 			$result = $this->mDb->query( $query, array( $pLangCode ) );
-			$this->mDb->CompleteTrans();
+			$this->CompleteTrans();
 		}
 	}
 
@@ -151,12 +151,12 @@ class BitLanguage extends BitSingleton {
 	 */
 	function expungeMasterString( $pSourceHash ) {
 		if( !empty( $pSourceHash ) ) {
-			$this->mDb->StartTrans();
+			$this->StartTrans();
 			$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_strings` WHERE `source_hash`=?";
 			$result = $this->mDb->query( $query, array( $pSourceHash ) );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."i18n_masters` WHERE `source_hash`=?";
 			$result = $this->mDb->query( $query, array( $pSourceHash ) );
-			$this->mDb->CompleteTrans();
+			$this->CompleteTrans();
 			return TRUE;
 		}
 	}
@@ -307,7 +307,7 @@ class BitLanguage extends BitSingleton {
 			$package = NULL;
 		}
 
-		$this->mDb->StartTrans();
+		$this->StartTrans();
 		$newSourceHash = $this->getSourceHash( $pParamHash['new_source'] );
 		if( $this->masterStringExists( $newSourceHash ) ) {
 			$oldCount = $this->mDb->getOne( "SELECT COUNT(`source_hash`) FROM `".BIT_DB_PREFIX."i18n_strings` WHERE `source_hash`=?",  array( $pParamHash['source_hash'] ) );
@@ -335,7 +335,7 @@ class BitLanguage extends BitSingleton {
 			$this->mStrings['master'][$newSourceHash]['source'] = $pParamHash['new_source'];
 			$this->mStrings['master'][$newSourceHash]['source_hash'] = $newSourceHash;
 		}
-		$this->mDb->CompleteTrans();
+		$this->CompleteTrans();
 		return( count( $this->mErrors ) == 0 );
 	}
 
