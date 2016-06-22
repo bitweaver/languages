@@ -15,9 +15,9 @@
  */
 class BitLanguage extends BitSingleton {
 	// list of available (non-disabled) languages
-	var $mLanguageList;
+	public $mLanguageList;
 
-	var $mLanguage;
+	public $mLanguage;
 
 	/**
 	 * initiate BitLanguage 

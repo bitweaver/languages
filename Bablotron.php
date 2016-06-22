@@ -32,17 +32,17 @@ class Bablotron extends BitBase
     /**
     * @todo Variable is scoped here but not really used in this scope below.
     */
-    var $words;
+    public $words;
     /**
     * Used to store the current language.
     *
     * @todo Not sure where this gets set from. Is used in other libraries.
     */
-    var $lan;
+    public $lan;
     /**
     * @todo Empty variable - does nothing
     */
-    var $db;
+    public $db;
     /**
     * Spellchecking and finding of alternative words
     */
