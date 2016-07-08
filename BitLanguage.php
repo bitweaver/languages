@@ -24,10 +24,18 @@ class BitLanguage extends BitSingleton {
 	 */
 	function __construct() {
 		parent::__construct();
-		global $gBitSystem;
+		$this->load();
+	}
 
-		# TODO - put '@' here due to beta1->beta2 upgrades - wolff_borg
-		$this->mLanguageList = $this->listLanguages();
+	protected function load() {
+		if( parent::load() ) {
+			$this->mLanguageList = $this->listLanguages();
+			$this->autoSetLanguage();
+		}
+	}
+
+	protected function autoSetLanguage() {
+		global $gBitSystem;
 
 		if (isset($_SESSION['bitlanguage'])) {
 			// users not logged that change the preference
@@ -54,6 +62,21 @@ class BitLanguage extends BitSingleton {
 		}
 	}
 
+	function isCacheableObject() {
+		return !empty( $this->mLanguageList );
+	}
+
+	public function __wakeup() {
+		parent::__wakeup();
+		if( empty( $this->mLanguageList ) ) {
+			$this->load();
+		}
+	}
+
+	public function __sleep() {
+		return array_merge( parent::__sleep(), array( 'mLanguageList' ) );
+	}
+
 	/**
 	 * getLanguage get acvtive language
 	 * 
@@ -73,11 +96,10 @@ class BitLanguage extends BitSingleton {
 	 */
 	function setLanguage( $pLangCode ) {
 		$this->mLanguage = $pLangCode;
-		$this->mLanguageInfo = $this->mDb->getRow( "SELECT il.* FROM `".BIT_DB_PREFIX."i18n_languages` il WHERE `lang_code` = ?", array( $pLangCode ) );
 	}
 
 	function isLanguageRTL () {
-		return( !empty( $this->mLanguageInfo['right_to_left'] ) );
+		return( !empty( $this->mLanguageList[$this->mLanguage]['right_to_left'] ) );
 	}
 
 	/**
