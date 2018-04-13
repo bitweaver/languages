@@ -31,19 +31,20 @@
 				{legend legend=$languages.$lang.full_name}
 					{foreach from=$tranStrings key=sourceHash item=tran}
 						{if $allTrans || (!$gBitSystem->isFeatureActive( 'i18n_track_translation_usage' ) || $tran.version)}
-							<div class="row{if !$tran.version and !allTrans} warning{/if}">
-								<div class="formlabel">
-									<label for="{$sourceHash}">{tr}Translate{/tr}</label>
-									{if $gBitSystem->getConfig('google_api_key')}
-										<br/><div class="btn btn-xs autotranslate" onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
-									{/if}
-								</div>
+							<div class="{if !$tran.version and !allTrans} warning{/if}">
 								{forminput}
 									<a href="{$smarty.const.LANGUAGES_PKG_URL}master_strings.php?source_hash={$sourceHash}">{$tran.source|escape|nl2br}</a><br/>
 									{if $tran.textarea}
-										<textarea style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
+										<textarea class="form-control" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" rows="5" cols="50">{$tran.trans|escape|stripslashes}</textarea>
 									{else}
-										<input style="font-size:medium;width:100%" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" value="{$tran.trans|escape|stripslashes}" size="45" maxlength="255" />
+									<div class="input-group">
+										{if $gBitSystem->getConfig('google_api_key')}
+										<div class="input-group-addon">
+											<div onclick="autoTranslate('{$sourceHash}','{$editLang}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} {tr}Auto{/tr}</div>
+										</div>
+										{/if}
+										<input class="form-control" name="edit_trans[{$sourceHash}]" id="{$editLang}_{$sourceHash}" lang="{$editLang}" value="{$tran.trans|escape|stripslashes}" maxlength="2048" />
+									</div>
 									{/if}
 								{/forminput}
 							</div>

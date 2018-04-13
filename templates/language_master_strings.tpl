@@ -20,7 +20,7 @@
 					<div class="form-group">
 						{formlabel label="Master String" for="master_string"}
 						{forminput}
-							<textarea cols="50" rows="5" name="edit_master[{$sourceHash}]" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
+							<textarea class="form-control" name="edit_master[{$sourceHash}]" id="master_string">{$masterStrings.$sourceHash.source|escape}</textarea>
 						{/forminput}
 					</div>
 {*
@@ -33,19 +33,24 @@
 					{foreach from=$languages key=langCode item=lang}
 						{if $langCode ne 'en'}
 						<div class="form-group">
-							<div class="formlabel">
-								{$lang.native_name}
-								{if $gBitSystem->getConfig('google_api_key')}
-									<div class="autotranslate" onclick="autoTranslate('{$sourceHash}','{$langCode}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
-								{/if}
-							</div>
 							{forminput}
 								{* if results are guessed, we don't need to escape *}
 								{if $masterStrings.$sourceHash.textarea}
-									<textarea name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" rows="3" cols="50">{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}</textarea>
+									<textarea class="form-control" name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" rows="3" cols="50">{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}</textarea>
+										{if $gBitSystem->getConfig('google_api_key')}
+											<div class="pull-left"><div class="btn btn-xs btn-default" onclick="autoTranslate('{$sourceHash}','{$langCode}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div></div>
+										{/if}
 								{else}
-									<input type="text" name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" value="{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}" size="45" maxlength="2048" />
+									<div class="input-group">
+										{if $gBitSystem->getConfig('google_api_key')}
+										<div class="input-group-addon">
+											<div class="autotranslate" onclick="autoTranslate('{$sourceHash}','{$langCode}')">{biticon iname="google-favicon" ipackage="languages" iexplain="Auto-Translate"} Auto</div>
+										</div>
+										{/if}
+										<input type="text" class="form-control" name="edit_trans[{$sourceHash}][{$langCode}]" id="{$langCode}_{$sourceHash}" lang="{$langCode}" value="{if $tranStrings.$sourceHash.$langCode.guessed}{$tranStrings.$sourceHash.$langCode.trans}{else}{$tranStrings.$sourceHash.$langCode.trans|escape|stripslashes}{/if}" maxlength="2048" />
+									</div>
 								{/if}
+								<div class="help-block">{$lang.native_name}</div>
 							{/forminput}
 						</div>
 						{/if}
