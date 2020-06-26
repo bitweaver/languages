@@ -284,7 +284,8 @@ class BitLanguage extends BitSingleton {
 	 */
 	function loadMasterStrings( $pSourceHash = NULL, $pFilter = NULL, $pLangCode = NULL ) {
 		$this->verifyMastersLoaded();
-		$bindVars = $whereSql = $joinSql = NULL;
+		$bindVars = FALSE;
+		$whereSql = $joinSql = NULL;
 
 		if( $pSourceHash ) {
 			$whereSql = ' WHERE `source_hash`=? ';
@@ -581,6 +582,7 @@ class BitLanguage extends BitSingleton {
 	 * @return translation
 	 */
 	function translate( $pString ) {
+return $pString;
 		global $gBitTranslationHash, $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
 		$cacheFile = TEMP_PKG_PATH."lang/".$this->mLanguage."/".$sourceHash;
