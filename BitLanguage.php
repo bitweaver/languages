@@ -582,7 +582,6 @@ class BitLanguage extends BitSingleton {
 	 * @return translation
 	 */
 	function translate( $pString ) {
-return $pString;
 		global $gBitTranslationHash, $gBitSystem;
 		$sourceHash = $this->getSourceHash( $pString );
 		$cacheFile = TEMP_PKG_PATH."lang/".$this->mLanguage."/".$sourceHash;
