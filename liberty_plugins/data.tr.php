@@ -39,7 +39,7 @@ function data_tr( $pData, $pParams, $pCommonObject ) {
 	$parseHash = $pCommonObject->mInfo;
 	$parseHash['no_cache'] = TRUE;
 	$parseHash['data'] = $transString;
-	$parsedData = $pCommonObject->parseData( $parseHash );
+	$parsedData = LibertyContent::parseDataHash( $parseHash );
 	$parsedData = preg_replace( '|<br\s*/?>$|', '', $parsedData );
 	return $parsedData;
 }
