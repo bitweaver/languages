@@ -195,7 +195,7 @@ $wordlist = Array ();
 ## a (sub)directory that is excluded. In this (unfortunate) case it seems that
 ## the file is placed in a logical location.
 collect_files ( BIT_ROOT_PATH );
-hardwire_file ( LANGUAGES_PKG_PATH.'lang_mapping_inc.php');
+hardwire_file ( LANGUAGES_PKG_INCLUDE_PATH.'lang_mapping_inc.php');
 
 
 
