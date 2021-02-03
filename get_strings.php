@@ -147,7 +147,7 @@ function writeTranslationPair ($fd, $key, $val) {
 
 ////////////////////////////////////////////////////////////////////////////
 
-require_once( '../kernel/setup_inc.php' );
+require_once( '../kernel/includes/setup_inc.php' );
 
 if(!$gBitUser->isAdmin()) {
   die("You need to be admin to run this script");
