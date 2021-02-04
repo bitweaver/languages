@@ -10,11 +10,11 @@ $gBitSystem->registerPackage( $registerHash );
 
 // **********  BABELFISH  ************
 if ($gBitSystem->isFeatureActive('babelfish') ) {
-	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
+	require_once(LANGUAGES_PKG_CLASS_PATH.'Babelfish.php');
 	$gBitSmarty->assignByRef('babelfish_links', Babelfish::links( $gBitSystem->getConfig('language', 'en') ));
 }
 if ($gBitSystem->isFeatureActive('babelfish_logo') ) {
-	require_once(LANGUAGES_PKG_PATH . 'Babelfish.php');
+	require_once(LANGUAGES_PKG_CLASS_PATH.'Babelfish.php');
 	$gBitSmarty->assign('babelfish_logo', Babelfish::logo($gBitLanguage->mLanguage));
 }
 if( $gBitSystem->isPackageActive( 'languages' ) && $gBitUser->hasPermission( 'p_languages_edit' ) ) {
@@ -44,7 +44,7 @@ $gBitSmarty->assignByRef('gBitLanguage', $gBitLanguage);
 $gBitSmarty->assign('bitlanguage', $gBitLanguage->mLanguage);
 
 if( !empty( $gLibertySystem ) && $gBitSystem->isFeatureActive( 'i18n_content_translation' ) ) {
-	require_once( LANGUAGES_PKG_PATH . 'LibertyTranslations.php' );
+	require_once( LANGUAGES_PKG_CLASS_PATH.'LibertyTranslations.php' );
 	$gLibertySystem->registerService( LIBERTY_SERVICE_TRANSLATION, LANGUAGES_PKG_NAME, array(
 		'content_display_function' => 'translation_content_display',
 		//'content_preview_function' => 'translation_content_edit',
