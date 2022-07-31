@@ -86,7 +86,7 @@
 						<input type="submit" class="btn btn-default" name="delete_language" value="{tr}Delete Language{/tr}" />&nbsp;
 						<input type="submit" class="btn btn-default" name="edit_language" value="{tr}Edit Language{/tr}" />&nbsp;
 					{if $gBitUser->hasPermission( 'p_languages_create' )}
-							<button class="btn btn-default pull-right" name="new_language">{booticon iname="icon-plus-sign-alt"} {tr}New Language{/tr}</button>
+							<button class="btn btn-default pull-right" name="new_language">{booticon iname="fa-square-plus"} {tr}New Language{/tr}</button>
 					{/if}
 					</div>
 
