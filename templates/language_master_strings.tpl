@@ -101,7 +101,7 @@
 				{formfeedback hash=$feedback}
 
 				{if $masterStrings}
-					<script type="text/javascript">/* <![CDATA[ check / uncheck all */
+					<script>/* <![CDATA[ check / uncheck all */
 						document.write("<input name=\"switcher\" id=\"switcher\" type=\"checkbox\" onclick=\"BitBase.switchCheckboxes(this.form.id,'source_hash[]','switcher')\" />");
 						document.write("<label for=\"switcher\">{tr}Select All{/tr}</label> ");
 					/* ]]> */</script>

@@ -1,4 +1,4 @@
-<script type="text/javascript">/* <![CDATA[ */
+<script>/* <![CDATA[ */
 {literal}
 var autoHashArray = new Array();
 var ajax = new BitBase.SimpleAjax();
