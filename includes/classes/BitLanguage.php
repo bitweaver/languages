@@ -583,48 +583,52 @@ class BitLanguage extends BitSingleton {
 	 */
 	function translate( $pString ) {
 		global $gBitTranslationHash, $gBitSystem;
-		$sourceHash = $this->getSourceHash( $pString );
-		$cacheFile = TEMP_PKG_PATH."lang/".$this->mLanguage."/".$sourceHash;
-		if( $this->mLanguage == 'en' ) {
-			$ret = $pString;
-		} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
-			$ret = $this->mStrings[$this->mLanguage][$sourceHash]['trans'];
-		} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
-			$ret = file_get_contents( $cacheFile );
-		} else {
-			if( empty( $this->mStrings[$this->mLanguage] ) ) {
-				$this->verifyTranslationLoaded( $this->mLanguage );
-			}
-			$tran = $this->lookupTranslation( $pString, $this->mLanguage );
-			if( empty( $tran ) ) {
-				// lookup failed. let's snag the first part of the langCode if it is a dialect (e.g. pt-br )
-				$dialect = strpos( $this->mLanguage, '-' );
-				if( $dialect ) {
-					$tran = $this->lookupTranslation( $pString, substr( $this->mLanguage, 0, $dialect ) );
+		if( !empty( $pString ) ) {
+			$sourceHash = $this->getSourceHash( $pString );
+			$cacheFile = TEMP_PKG_PATH."lang/".$this->mLanguage."/".$sourceHash;
+			if( $this->mLanguage == 'en' ) {
+				$ret = $pString;
+			} elseif( !empty( $this->mStrings[$this->mLanguage][$sourceHash] ) ) {
+				$ret = $this->mStrings[$this->mLanguage][$sourceHash]['trans'];
+			} elseif( file_exists( $cacheFile ) && !$gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
+				$ret = file_get_contents( $cacheFile );
+			} else {
+				if( empty( $this->mStrings[$this->mLanguage] ) ) {
+					$this->verifyTranslationLoaded( $this->mLanguage );
 				}
+				$tran = $this->lookupTranslation( $pString, $this->mLanguage );
 				if( empty( $tran ) ) {
-					$tran = $pString;
+					// lookup failed. let's snag the first part of the langCode if it is a dialect (e.g. pt-br )
+					$dialect = strpos( $this->mLanguage, '-' );
+					if( $dialect ) {
+						$tran = $this->lookupTranslation( $pString, substr( $this->mLanguage, 0, $dialect ) );
+					}
+					if( empty( $tran ) ) {
+						$tran = $pString;
+					}
 				}
+				// write out the cache - translated or not so we don't keep hitting the database
+				mkdir_p( dirname( $cacheFile ) );
+				$fp = fopen( $cacheFile, 'w' );
+				fwrite( $fp, $tran );
+				fclose( $fp );
+				$this->mStrings[$this->mLanguage][$sourceHash]['trans'] = $tran;
+				$ret = $tran;
 			}
-			// write out the cache - translated or not so we don't keep hitting the database
-			mkdir_p( dirname( $cacheFile ) );
-			$fp = fopen( $cacheFile, 'w' );
-			fwrite( $fp, $tran );
-			fclose( $fp );
-			$this->mStrings[$this->mLanguage][$sourceHash]['trans'] = $tran;
-			$ret = $tran;
-		}
 
-		// interactive translation process
-		if( $gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
-			if( empty( $gBitTranslationHash ) ) {
-				$gBitTranslationHash = array();
+			// interactive translation process
+			if( $gBitSystem->isFeatureActive( 'i18n_interactive_translation' ) ) {
+				if( empty( $gBitTranslationHash ) ) {
+					$gBitTranslationHash = array();
+				}
+				if( !$index = array_search( $sourceHash, $gBitTranslationHash ) ) {
+					$gBitTranslationHash[] = $sourceHash;
+					$index = count( $gBitTranslationHash ) - 1;
+				}
+				$ret .= '_'.$index;
 			}
-			if( !$index = array_search( $sourceHash, $gBitTranslationHash ) ) {
-				$gBitTranslationHash[] = $sourceHash;
-				$index = count( $gBitTranslationHash ) - 1;
-			}
-			$ret .= '_'.$index;
+		} else {
+			$ret = $pString;
 		}
 
 		return $ret;
